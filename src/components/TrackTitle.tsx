@@ -4,7 +4,7 @@ function TrackTitle() {
   return (
     <div className="track__title">
     <div className="track__title-image">
-        <svg className="track__title-svg" alt="music">
+        <svg className="track__title-svg">
             <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
         </svg>
     </div>
