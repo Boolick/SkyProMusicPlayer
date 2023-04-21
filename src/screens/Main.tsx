@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/Header";
+import Header from "../components/BurgerMenu/Burger";
 import Centerblock from "../components/Centerblock";
 import Sidebar from "../components/Sidebar";
 import Bar from "../components/Bar";

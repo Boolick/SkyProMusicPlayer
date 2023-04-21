@@ -46,7 +46,6 @@ body {
 .wrapper {
   width: 100%;
   min-height: 100%;
-  /* overflow: hidden; */
   background-color: #383838;
 }
 
@@ -94,6 +93,7 @@ body {
   display: flex;
   flex-wrap: nowrap;
   justify-content: space-between;
+  background-color: #0f1010;
 }
 
 .main__nav {
@@ -105,12 +105,13 @@ body {
 .main__centerblock {
   width: auto;
   flex-grow: 3;
-  padding: 20px 40px 20px 111px;
+  padding: 20px 40px 20px 210px;
 }
 
 .main__sidebar {
   max-width: 418px;
   padding: 20px 90px 20px 78px;
+  background-color: firebrick;
 }
 
 .nav__logo {
@@ -167,7 +168,7 @@ body {
 .centerblock__search {
   width: 100%;
   border-bottom: 1px solid #4E4E4E;
-  margin-bottom: 51px;
+
   display: flex;
   flex-direction: row;
   align-items: center;
