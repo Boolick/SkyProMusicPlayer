@@ -1,20 +1,17 @@
-import React from 'react'
-import Item from './Item'
+import React from "react";
+import Item from "./Item";
+import TrackList, { Track } from "./Request/Request";
 
-function Playlist() {
-  return (
-    <div className="content__playlist playlist">
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-    </div>
-  ) 
+interface PlaylistProps {
+  tracks: Track[];
 }
 
-export default Playlist
+const Playlist: React.FC<PlaylistProps> = ({ tracks }) => {
+  return (
+    <div className="content__playlist playlist">
+      <TrackList />
+    </div>
+  );
+};
+
+export default Playlist;

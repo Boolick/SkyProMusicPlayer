@@ -5,7 +5,7 @@ function NotFound() {
     <div className="wrapper">
       <h1>Not Found :/</h1>
       <div>
-        <img src="NotFound_dark.png" alt="Not found" />
+        <img src="public\img\Not_found1.png" alt="Not found" />
       </div>
     </div>
   );

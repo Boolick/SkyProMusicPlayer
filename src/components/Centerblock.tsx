@@ -1,15 +1,22 @@
 import React from 'react'
 import Search from './Search'
-import Filter from './Filter'
+import Filter from './Filter/Filter'
 import Content from './Content'
+import TracksList, {Track} from './Request/Request'
 
-function Centerblock() {
+interface CenterblockProps {
+  tracks: Track[];
+}
+
+const Centerblock: React.FC<CenterblockProps> = ({ tracks }) => {
+
   return (
     <div className="main__centerblock centerblock">
       <Search />
       <h2 className="centerblock__h2">Треки</h2>
-    <Filter/>
-    <Content/>
+    <Filter tracks={tracks}/>
+    <Content tracks={tracks}/>
+    
     </div>
 
   )

@@ -249,6 +249,7 @@ body {
   border: 1px solid #FFFFFF;
   border-radius: 60px;
   padding: 6px 20px;
+  margin-bottom: 10px;
 }
 
 .filter__button:not(:last-child) {
