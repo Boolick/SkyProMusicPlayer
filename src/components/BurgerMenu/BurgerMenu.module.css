@@ -1,11 +1,12 @@
 .main__nav {
 
     position: fixed;
-    background-color: #0f1010;;
+    background-color: #0f1010;
+    ;
     top: 0;
-   /*  left: -100; */
+    /*  left: -100; */
     width: 200px;
-   /*  height: 100vh; */
+    /*  height: 100vh; */
     padding: 30px;
     overflow-y: auto;
     overflow-x: hidden;

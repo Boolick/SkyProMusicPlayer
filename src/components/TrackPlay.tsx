@@ -1,24 +1,59 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
+
+interface BarProps {
+  loading: boolean;
+}
 
 function TrackPlay() {
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 5000);
+  }, []);
+
   return (
     <div className="player__track-play track-play">
       <div className="track-play__contain">
         <div className="track-play__image">
-          <svg className="track-play__svg" /*  alt="music" */>
-            <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
-          </svg>
+          {isLoading ? (
+            <Skeleton
+              width={51}
+              height={51}
+              baseColor="#313131"
+              highlightColor="#181818"
+            />
+          ) : (
+            <svg className="track-play__svg" /*  alt="music" */>
+              <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+            </svg>
+          )}
         </div>
-        <div className="track-play__author">
-          <a className="track-play__author-link" href="http://">
-            Ты та...
-          </a>
-        </div>
-        <div className="track-play__album">
-          <a className="track-play__album-link" href="http://">
-            Баста
-          </a>
-        </div>
+        {isLoading ? (
+          <Skeleton
+            width={59}
+            height={15}
+            baseColor="#313131"
+            highlightColor="#181818"
+          />
+        ) : (
+          <div className="track-play__author">
+            <a className="track-play__author-link" href="http://"></a>
+          </div>
+        )}
+        {isLoading ? (
+          <Skeleton
+            width={59}
+            height={15}
+            baseColor="#313131"
+            highlightColor="#181818"
+          />
+        ) : (
+          <div className="track-play__album">
+            <a className="track-play__album-link" href="http://"></a>
+          </div>
+        )}
       </div>
 
       <div className="track-play__like-dis">

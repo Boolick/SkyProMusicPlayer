@@ -1,7 +1,6 @@
 import { useState } from "react";
 import styles from "./BurgerMenu.module.css";
 import cn from "classnames";
-import { NavLink } from "react-router-dom";
 import NavBar from "../NavBar";
 
 function Burger() {

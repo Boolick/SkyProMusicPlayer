@@ -1,5 +1,5 @@
 import React from "react";
-import Item from "../components/Item";
+import Item from "../components/Item/Item";
 import Playlist from "../components/Playlist";
 import Bar from "../components/Bar";
 import TracksList, { Track } from "../components/Request/Request";

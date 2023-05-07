@@ -1,4 +1,3 @@
-import styles from "./NavBar.module.css";
 import { NavLink } from "react-router-dom";
 import cn from "classnames";
 

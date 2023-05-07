@@ -50,8 +50,7 @@ body {
 }
 
 .container {
-  max-width: 1920px;
-  height: 100vh;
+ 
   margin: 0 auto;
   position: relative;
   background-color: #181818;
@@ -98,20 +97,22 @@ body {
 
 .main__nav {
   width: 244px;
-  background-color: #181818;
+  background-color: transparent;
   padding: 20px 0 20px 36px;
 }
 
 .main__centerblock {
-  width: auto;
+  width: 1349px;
   flex-grow: 3;
-  padding: 20px 40px 20px 210px;
+  padding-top: 39px;
+  padding-left: 294px;
 }
 
 .main__sidebar {
   max-width: 418px;
-  padding: 20px 90px 20px 78px;
-  background-color: firebrick;
+  padding-right: 78px; 
+  padding-left: 78px;
+  background-color: #0f1010;
 }
 
 .nav__logo {
@@ -321,7 +322,7 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 447px;
+  width: 416px;
 }
 
 .track__title-image {
@@ -374,7 +375,7 @@ body {
 }
 
 .track__album {
-  width: 245px;
+  width: 200px;
 }
 
 .track__album-link {
@@ -427,7 +428,7 @@ body {
 }
 
 .sidebar__block {
-  height: 100%;
+   
   padding: 240px 0 0 0;
   display: flex;
   flex-direction: column;
@@ -464,7 +465,9 @@ body {
   bottom: 0;
   left: 0;
   width: 100%;
-  background: rgba(28, 28, 28, 0.5);
+  /* background: rgba(28, 28, 28, 0.5); */
+  background: #181818;
+
 }
 
 .bar__content {

@@ -1,6 +1,12 @@
 import { useState, useEffect } from "react";
+import Main from "./Main";
+import { Track } from "../components/Request/Request";
 
-const LoadingPage = () => {
+interface LoadingPageProps {
+  tracks: Track[];
+}
+
+const LoadingPage: React.FC<LoadingPageProps> = ({ tracks }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -11,14 +17,19 @@ const LoadingPage = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  /*   return (
+  return (
     <>
       {isLoading ? (
         // отображение скелетонов
+        <div>
+          <input></input>
+          <button>Button</button>
+        </div>
       ) : (
         // отображение главной страницы
+        <Main tracks={tracks} />
       )}
     </>
-  ); */
+  );
 };
 export default LoadingPage;

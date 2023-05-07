@@ -2,7 +2,7 @@ import React from 'react'
 import Search from './Search'
 import Filter from './Filter/Filter'
 import Content from './Content'
-import TracksList, {Track} from './Request/Request'
+import {Track} from './Request/Request'
 
 interface CenterblockProps {
   tracks: Track[];

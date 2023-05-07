@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import TrackTime from "../TrackTime";
-import Item from "../Item";
+import Item from "../Item/Item";
 import TrackAuthor from "../TrackAuthor/TrackAuthor";
 import Genres from "../Genres/Genres";
 
-// Определите здесь свойства трека
+// Cвойства Track
 export interface Track {
-  // Определите здесь свойства трека
-
   id: number;
   name: string;
   author: string;
@@ -25,14 +23,12 @@ const TracksList: React.FC = () => {
     fetch("https://painassasin.online/catalog/track/all/")
       .then((response) => response.json())
       .then((data) => setTracks(data));
-      
   }, []);
 
   return (
     <div>
       <Item tracks={tracks} />
     </div>
-    
   );
 };
 

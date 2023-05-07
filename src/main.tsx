@@ -8,22 +8,7 @@ interface Props {
   tracks:Track[];
 }
 
-const tracks: Track[] = [
-/*   {
-    "id": 8,
-    "name": "Chase",
-    "author": "Alexander Nakarada",
-    "release_date": "2005-06-11",
-    "genre": "Классическая музыка",
-    "duration_in_seconds": 205,
-    "album": "Chase",
-    "logo": null,
-    "track_file": "https://painassasin.online/media/music_files/Alexander_Nakarada_-_Chase.mp3"
-  }, */
-
-  // Здесь вы можете определить массив треков
-];
-
+const tracks: Track[]= [];
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
