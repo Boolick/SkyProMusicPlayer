@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Track } from "../Request/Request";
 import Skeleton from "react-loading-skeleton";
+
+import { Track } from "../Request/Request";
 import "react-loading-skeleton/dist/skeleton.css";
 import styles from "./Item.module.css";
 

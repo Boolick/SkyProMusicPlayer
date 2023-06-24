@@ -1,20 +1,20 @@
-import { useState, useEffect } from "react";
 import "./css/style.css";
 import AppRoutes from "./routes";
 import { Track } from "./components/Request/Request";
-import Skeletones from "./screens/Skeletones";
+import Main from "./screens/Main";
 
-interface AppProps {
-  tracks: Track[];
-}
+const tracks: Track[] = [];
 
-const App: React.FC<AppProps> = ({ tracks }) => {
-
+const App: React.FC = () => {
   return (
     <div className="wrapper">
-     
       <div className="container">
-        <AppRoutes tracks={tracks} />
+        <AppRoutes
+          isAuthenticated={true}
+          path={"/"}
+          element={<Main tracks={tracks} />}
+          tracks={tracks}
+        />
       </div>
     </div>
   );

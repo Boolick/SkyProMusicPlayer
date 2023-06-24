@@ -20,7 +20,7 @@ function NavBar() {
       </li>
       <li className="menu__item">
         <NavLink
-          to="/Myplaylist"
+          to="/MyPaylist"
           className={({ isActive }) =>
             cn("menu__link", {
               [activeClassName]: isActive,
@@ -32,7 +32,7 @@ function NavBar() {
       </li>
       <li className="menu__item">
         <NavLink
-          to="/Login"
+          to="/LoginPage"
           className={({ isActive }) =>
             cn("menu__link", {
               [activeClassName]: isActive,

@@ -1,6 +1,7 @@
 import React from "react";
+
 import Playlist from "./Playlist";
-import TracksList, { Track } from "./Request/Request";
+import { Track } from "./Request/Request";
 
 interface ContentProps {
   tracks: Track[];

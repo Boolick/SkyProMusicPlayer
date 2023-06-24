@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
-import TrackTime from "../TrackTime";
+
 import Item from "../Item/Item";
-import TrackAuthor from "../TrackAuthor/TrackAuthor";
-import Genres from "../Genres/Genres";
 
 // Cвойства Track
 export interface Track {
@@ -19,10 +17,13 @@ export interface Track {
 
 const TracksList: React.FC = () => {
   const [tracks, setTracks] = useState<Track[]>([]);
+
   useEffect(() => {
     fetch("https://painassasin.online/catalog/track/all/")
       .then((response) => response.json())
-      .then((data) => setTracks(data));
+      .then((data) => {
+        setTracks(data);
+      });
   }, []);
 
   return (

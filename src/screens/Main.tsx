@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import Header from "../components/BurgerMenu/Burger";
+
+import Burger from "../components/BurgerMenu/Burger";
 import Centerblock from "../components/Centerblock";
 import Sidebar from "../components/Sidebar";
 import Bar from "../components/Bar";
 import { Track } from "../components/Request/Request";
-import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 interface MainProps {
@@ -16,18 +16,16 @@ const Main: React.FC<MainProps> = ({ tracks }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(false);
-      setIsLoading(false);
-    }, 5000);
+    setLoading(false);
+    setIsLoading(false);
   }, []);
 
   return (
     <div className="main">
-      <Header />
+      <Burger />
       <Centerblock tracks={tracks} />
       <Sidebar />
-      <Bar loading={loading} />;
+      <Bar loading={false} />;
     </div>
   );
 };

@@ -1,8 +1,11 @@
 import React from "react";
-import Item from "../components/Item/Item";
-import Playlist from "../components/Playlist";
+
+import "../css/style.css";
+import Burger from "../components/BurgerMenu/Burger";
 import Bar from "../components/Bar";
-import TracksList, { Track } from "../components/Request/Request";
+import { Track } from "../components/Request/Request";
+import Content from "../components/Content";
+import Search from "../components/Search/Search";
 
 interface MyPlaylistProps {
   tracks: Track[];
@@ -11,11 +14,13 @@ interface MyPlaylistProps {
 const MyPlaylist: React.FC<MyPlaylistProps> = ({ tracks }) => {
   return (
     <>
-      <h1>My playlist</h1>
-
-      <Playlist tracks={tracks} />
-
-      <Bar />
+      <Burger />
+      <div className="main__centerblock centerblock">
+        <Search />
+        <h2 className="centerblock__h2">Мой плейлист</h2>
+        <Content tracks={tracks} />
+      </div>
+      <Bar loading={false} />
     </>
   );
 };
