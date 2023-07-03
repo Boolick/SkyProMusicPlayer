@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import cn from "classnames";
 
 function NavBar() {
-  const activeClassName = "underline";
+  const activeClassName = "link_active";
 
   return (
     <ul className="menu__list">

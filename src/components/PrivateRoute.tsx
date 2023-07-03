@@ -7,7 +7,7 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({
-  isAuthenticated,
+  isAuthenticated = true,
   redirectPath,
 }) => {
   return isAuthenticated ? <Outlet /> : <Navigate to={redirectPath} />;
