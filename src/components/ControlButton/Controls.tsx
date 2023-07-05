@@ -1,5 +1,9 @@
 import React from "react";
 
+import StopButton from "./StopButton";
+import PlayButton from "./PlayButton";
+import Player from "./Player";
+
 function Controls() {
   return (
     <div className="player__controls">
@@ -8,11 +12,8 @@ function Controls() {
           <use xlinkHref="img/icon/sprite.svg#icon-prev"></use>
         </svg>
       </div>
-      <div className="player__btn-play _btn">
-        <svg className="player__btn-play-svg" /* alt="play" */>
-          <use xlinkHref="img/icon/sprite.svg#icon-play"></use>
-        </svg>
-      </div>
+      <Player />
+
       <div className="player__btn-next">
         <svg className="player__btn-next-svg" /* alt="next" */>
           <use xlinkHref="img/icon/sprite.svg#icon-next"></use>
