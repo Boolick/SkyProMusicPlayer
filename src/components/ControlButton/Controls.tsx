@@ -1,7 +1,3 @@
-import React from "react";
-
-import StopButton from "./StopButton";
-import PlayButton from "./PlayButton";
 import Player from "./Player";
 
 function Controls() {

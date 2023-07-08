@@ -9,8 +9,6 @@ const Genres: React.FC = () => {
   const genresTracks = tracks.map((track) => track.genre);
   const newTracks = [...new Set(genresTracks)];
 
-  console.log(newTracks);
-
   useEffect(() => {
     fetch("https://painassasin.online/catalog/track/all/")
       .then((response) => response.json())

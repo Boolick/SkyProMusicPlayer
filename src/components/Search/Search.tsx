@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import styles from "./Search.module.css";
 import { useGetTracksByIdQuery } from "../trackApi";
 
 function Search() {
   const [id, setId] = useState("");
-  console.log(useState);
   const { data: tracks, isLoading } = useGetTracksByIdQuery(id);
 
   return (

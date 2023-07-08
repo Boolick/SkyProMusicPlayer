@@ -17,8 +17,7 @@ const Item: React.FC<ItemProps> = ({ tracks }) => {
       setLoading(false);
     }, 5000);
   });
-  console.log(tracks);
-
+   
   return (
     <div>
       {tracks.map((track) => (
