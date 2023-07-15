@@ -3,6 +3,7 @@ import cn from "classnames";
 
 import styles from "./BurgerMenu.module.css";
 import NavBar from "../NavBar";
+import ThemeToggleButton from "../ChooseTheme/ChooseTheme";
 
 function Burger() {
   const [isOpened, setIsOpened] = useState<boolean>(false);
@@ -17,6 +18,7 @@ function Burger() {
         <span className={styles.burger__line}></span>
         <span className={styles.burger__line}></span>
       </button>
+
       <div
         onClick={() => setIsOpened(false)}
         className={cn(styles.cover, { [styles.coverShow]: isOpened })}
