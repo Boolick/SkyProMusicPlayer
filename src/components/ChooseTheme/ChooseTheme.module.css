@@ -5,3 +5,12 @@
     cursor: pointer;
     border: none;
 }
+
+.lightTheme {
+    /* стили для светлой темы */
+  }
+  
+  .darkTheme {
+    /* стили для темной темы */
+  }
+  

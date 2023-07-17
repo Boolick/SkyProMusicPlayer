@@ -1,10 +1,13 @@
 import * as React from "react";
 
 import styles from "./ChooseTheme.module.css";
-import { useTheme } from "../../Context/ThemeContext";
+import { ThemeContext } from "../../Context/ThemeContext";
+
+
 
 const ThemeToggleButton: React.FC = () => {
-  const { theme, toggleTheme } = useTheme();
+  const { theme, toggleTheme } = React.useContext(ThemeContext);
+
 
   return (
     <svg className={styles.theme_button} onClick={toggleTheme}>

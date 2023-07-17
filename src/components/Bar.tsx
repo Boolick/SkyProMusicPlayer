@@ -19,6 +19,6 @@ function Bar() {
       </div>
     </div>
   );
-}
+};
 
 export default Bar;

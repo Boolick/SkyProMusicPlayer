@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import cn from "classnames";
+
 import ThemeToggleButton from "./ChooseTheme/ChooseTheme";
 
 function NavBar() {

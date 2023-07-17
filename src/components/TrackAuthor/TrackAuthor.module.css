@@ -29,7 +29,7 @@
 
 .track__title_link {
 
-    color: #FFFFFF;
+    color: var(--color-text);
 }
 
 .track__title_link:hover {

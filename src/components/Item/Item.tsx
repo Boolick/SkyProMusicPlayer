@@ -17,7 +17,7 @@ const Item: React.FC<ItemProps> = ({ tracks }) => {
       setLoading(false);
     }, 5000);
   });
-   
+
   return (
     <div>
       {tracks.map((track) => (
@@ -68,7 +68,7 @@ const Item: React.FC<ItemProps> = ({ tracks }) => {
                 </a>
               )}
             </div>
-            <div className="track__album">
+            <div className={styles.track__album}>
               {loading ? (
                 <Skeleton
                   width={305}
@@ -77,17 +77,17 @@ const Item: React.FC<ItemProps> = ({ tracks }) => {
                   highlightColor="#181818"
                 />
               ) : (
-                <a className="track__album-link" href="http://">
+                <a className={styles.track__album_link} href="http://">
                   {track.album}
                 </a>
               )}
             </div>
             <div className={styles.track__time}>
-              <svg className="track__time-svg">
+              <svg className={styles.track__time_svg}>
                 <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
               </svg>
 
-              <span className="track__time-text">
+              <span className={styles.track__time_text}>
                 {track.duration_in_seconds}
               </span>
             </div>

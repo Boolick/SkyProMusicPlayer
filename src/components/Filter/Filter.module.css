@@ -1,6 +1,11 @@
+.track__title-link {
+    color: var(--color-text);
+}
+
 .filter_container {
     position: relative;
     width: auto;
+
 
 }
 
@@ -8,10 +13,12 @@
     display: none;
     position: absolute;
     padding: 34px;
+
     gap: 10px;
     top: 100%;
-    background: #313131;
+    background: var(--color-img);
     border-radius: 12px;
+
 
 
 }
@@ -19,6 +26,7 @@
 .popup__active {
     display: block;
     position: absolute;
+
 
 }
 
@@ -32,6 +40,7 @@
     height: 232px;
     max-height: 200px;
     overflow: auto;
+
 }
 
 .list::-webkit-scrollbar {
@@ -57,6 +66,7 @@
     flex-wrap: nowrap;
     gap: 20px;
     width: 250px;
+
 }
 
 
@@ -71,10 +81,13 @@
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
-    border: 1px solid #FFFFFF;
+    color: var(--color-text);
+    border: 1px solid var(--color-text);
     border-radius: 60px;
     padding: 6px 20px;
     margin-bottom: 10px;
+    transition: border 3s ease;
+
 
 }
 
@@ -127,6 +140,8 @@
   border: 0px solid #cabcbc; */
     text-align: center;
     margin-right: 4px;
+  
+    
 }
 
 .input {

@@ -1,17 +1,22 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 
 import styles from "./Search.module.css";
-import { useGetTracksByIdQuery } from "../trackApi";
+import { ThemeContext } from "../../Context/ThemeContext";
 
 function Search() {
   const [id, setId] = useState("");
-  const { data: tracks, isLoading } = useGetTracksByIdQuery(id);
+  const { theme } = useContext(ThemeContext);
 
   return (
     <div className={styles.centerblock__search}>
       <svg className={styles.search__svg}>
-        <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
+        {theme === "light" ? (
+          <use xlinkHref="img/icon/sprite.svg#icon-search-black"></use>
+        ) : (
+          <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
+        )}
       </svg>
+
       <input
         className={styles.search__text}
         type="search"
@@ -20,16 +25,6 @@ function Search() {
         value={id}
         onChange={(e) => setId(e.target.value)}
       />
-      {/* Отображение результатов поиска */}
-      {/* {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <ul>
-          {tracks?.map((track) => (
-            <li key={track.id}>{track.author}</li>
-          ))}
-        </ul>
-      )} */}
     </div>
   );
 }
