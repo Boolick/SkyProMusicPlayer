@@ -314,33 +314,11 @@ body {
   width: 416px;
 }
 
-.track__title-image {
-  width: 51px;
-  height: 51px;
-  padding: 16px;
-  background-color: var(--color-img);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 17px;
-  transition: background-color 0.8s ease-in-out;
-}
 
-.track__title-svg {
-  width: 18px;
-  height: 17px;
-  fill: transparent;
-  stroke: #1291124e;
-}
 
-.track__title-link {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--color-text);
- 
-}
+
+
+
 
 .track__title-span {
   font-style: normal;
@@ -348,7 +326,7 @@ body {
   font-size: 16px;
   line-height: 24px;
   color: var(--color-text);
-  
+
 }
 
 .track__author {
@@ -368,10 +346,6 @@ body {
 }
 
 
-
-
-
-
 .sidebar__personal {
   display: flex;
   flex-direction: row;
@@ -385,15 +359,16 @@ body {
   font-weight: 400;
   font-size: 16px;
   line-height: 24px;
-  color: var(--color-text);
+  /* color: var(--color-text); */
   transition: color 0.3s ease, color 0.3s ease;
   margin-right: 16px;
 }
 
 .sidebar__avatar {
-  width: 43px;
-  height: 43px;
+  width: 40px;
+  height: 40px;
   background-color: var(--color-background);
+  cursor: pointer;
   border-radius: 50%;
   transition: background-color 0.3s ease, color 0.3s ease;
 }

@@ -24,31 +24,29 @@ const Item: React.FC<ItemProps> = ({ tracks }) => {
         <div key={track.id} className="playlist__item hid">
           <div className="playlist__track track">
             <div className="track__title">
-              <div className="track__title-image">
+              <div className={styles.track__title_image}>
                 {loading ? (
                   <Skeleton
-                    width={50}
-                    height={50}
-                    baseColor="#313131"
-                    highlightColor="#181818"
+                    width={51}
+                    height={51}
+                    baseColor="var(--color-img)"
+                    highlightColor="var(--color-background)"
                   />
                 ) : (
-                  <svg className="track__title-svg">
+                  <svg className={styles.track__title_svg}>
                     <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
                   </svg>
                 )}
               </div>
 
-              <div className="track__title-text">
+              <div className={styles.track__title_text}>
                 {loading ? (
                   <Skeleton
-                    width={356}
-                    height={19}
-                    baseColor="#313131"
-                    highlightColor="#181818"
+                    baseColor="var(--color-img)"
+                    highlightColor="var(--color-background)"
                   />
                 ) : (
-                  <a className="track__title-link" href="http://">
+                  <a className={styles.track__title_link} href="http://">
                     {track.name} <span className="track__title-span"></span>
                   </a>
                 )}
@@ -59,8 +57,8 @@ const Item: React.FC<ItemProps> = ({ tracks }) => {
                 <Skeleton
                   width={271}
                   height={19}
-                  baseColor="#313131"
-                  highlightColor="#181818"
+                  baseColor="var(--color-img)"
+                  highlightColor="var(--color-background)"
                 />
               ) : (
                 <a className="track__author-link" href="http://">
@@ -71,10 +69,10 @@ const Item: React.FC<ItemProps> = ({ tracks }) => {
             <div className={styles.track__album}>
               {loading ? (
                 <Skeleton
-                  width={305}
+                  width={320}
                   height={19}
-                  baseColor="#313131"
-                  highlightColor="#181818"
+                  baseColor="var(--color-img)"
+                  highlightColor="var(--color-background)"
                 />
               ) : (
                 <a className={styles.track__album_link} href="http://">
