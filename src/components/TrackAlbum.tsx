@@ -1,24 +1,76 @@
-import { useSelector } from "react-redux";
-
+import React, {useState} from "react";
 import { RootState } from "../Store/store";
-import { useGetAllTracksQuery } from "../components/trackApi";
+import Skeleton from "react-loading-skeleton";
+import { useDispatch, useSelector } from "react-redux";
 
-import styles from "./TrackAlbum.module.css";
+import { useGetAllTracksQuery } from "../components/trackApi";
+import styles from "./Item/Item.module.css";
+import { addTrack, removeTrack } from "../Store/Reducers/favoriteSlice";
 
 function TrackAlbum() {
-  const { data } = useGetAllTracksQuery();
-  const tracks = useSelector((state: RootState) => data);
+  const { data, error, isLoading } = useGetAllTracksQuery();
+  const dispatch = useDispatch();
+  const favoritetracks =useSelector((state:RootState)=> 
+  state.favorite.tracks
+  );
 
-  if (!tracks) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div>
+        <div>
+          <Skeleton
+            count={29}
+            baseColor="var(--color-img)"
+            highlightColor="var(--color-background)"
+          ></Skeleton>
+        </div>
+      </div>
+    );
+
+  if (error) return <div>Error:{error.toString()}</div>;
 
   return (
-    <div className={styles.track__album}>
-      {tracks.map((track) => (
-        <a key={track.id} className={styles.track__album_link} href="http://">
-          {track.album}
-        </a>
+    <ul className={styles.playlist}>
+      {data?.map((track) => (
+        <li key={track.id} className={styles.playlist__item}>
+          {isLoading ? (
+            <Skeleton />
+          ) : (
+            <div className={styles.track__title_image}>
+              <svg className={styles.track__title_svg}>
+                <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+              </svg>
+            </div>
+          )}
+
+          <div className={styles.track__title_text}>
+            <a className={styles.track__title_link} href="http://">
+              {track.name}
+            </a>
+          </div>
+          <div className={styles.track__author}>
+            <a className={styles.track__author_link} href="http://">
+              {track.author}
+            </a>
+          </div>
+          <div className={styles.track__album}>
+            <a className={styles.track__album_link} href="http://">
+              {track.album}
+            </a>
+          </div>
+          <div className={styles.track__time}>
+            <svg onClick={() => console.log(dispatch(addTrack(track)))}
+             className={styles.track__time_svg}>
+              <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+            </svg>
+            
+            <span className={styles.track__time_text}>
+              {track.duration_in_seconds}
+            </span>
+          </div>
+        </li>
       ))}
-    </div>
+    </ul>
   );
 }
 

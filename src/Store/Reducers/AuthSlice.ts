@@ -1,4 +1,4 @@
-/* import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 
 
@@ -24,4 +24,3 @@ export default authSlice.reducer;
 
 export const selectCurrentUser:any = (state: { auth: { user: any; }; }) => state.auth.user;
 export const selectCurrentToken = (state: { auth: { token: any; }; }) => state.auth.token;
- */

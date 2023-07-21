@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-interface Track {
+export interface Track {
   id: number;
   name: string;
   author: string;
@@ -28,4 +28,3 @@ export const trackApi = createApi({
 });
 
 export const { useGetAllTracksQuery, useGetTrackByIdQuery } = trackApi;
-

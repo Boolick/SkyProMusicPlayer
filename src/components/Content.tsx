@@ -1,4 +1,4 @@
-import React from "react";
+gitimport React from "react";
 
 import Playlist from "./Playlist";
 import { Track } from "./Request/Request";
@@ -20,7 +20,7 @@ const Content: React.FC<ContentProps> = ({ tracks }) => {
           </svg>
         </div>
       </div>
-      <Playlist tracks={tracks} />
+      <Playlist />
     </>
   );
 };

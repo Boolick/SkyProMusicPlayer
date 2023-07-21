@@ -1,3 +1,5 @@
+import { useDispatch, useSelector } from "react-redux";
+
 import styles from "./Login.module.css";
 
 export const LoginPage = ({ type }: { type: "login" | " registration" }) => {
@@ -5,7 +7,6 @@ export const LoginPage = ({ type }: { type: "login" | " registration" }) => {
 
   return (
     <div className={styles.login__content}>
-      
       <form className={styles.login__box}>
         <img src="img/logo.jpg" alt="logo" />
 

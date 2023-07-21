@@ -6,6 +6,7 @@ import Bar from "../components/Bar";
 import { Track } from "../components/Request/Request";
 import Content from "../components/Content";
 import Search from "../components/Search/Search";
+import FavoriteTracks from "../components/TrackFavorite";
 
 interface MyPlaylistProps {
   tracks: Track[];
@@ -18,9 +19,9 @@ const MyPlaylist: React.FC<MyPlaylistProps> = ({ tracks }) => {
       <div className="main__centerblock centerblock">
         <Search />
         <h2 className="centerblock__h2">Мой плейлист</h2>
-        <Content tracks={tracks} />
+        <FavoriteTracks/>
       </div>
-      <Bar loading={false} />
+      <Bar />
     </>
   );
 };
