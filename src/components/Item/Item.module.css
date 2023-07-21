@@ -79,13 +79,16 @@
 
 }
 
-.track__time_svg {
+.track__heart {
     width: 14px;
     height: 12px;
     margin-right: 17px;
     fill: transparent;
     stroke: #B1B1B1;
-
+    cursor: pointer;
+}
+.track__heart_favorite{
+fill: var(--color-img);
 }
 
 .track__time_text {

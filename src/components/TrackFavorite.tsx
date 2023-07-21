@@ -1,12 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import styles from "./Item/Item.module.css";
 import { RootState } from "../Store/store";
+import { removeTrack } from "../Store/Reducers/favoriteSlice";
 
 function FavoriteTracks() {
   const favoriteTracks = useSelector(
     (state: RootState) => state.favorite.tracks
   );
+
+  const dispatch = useDispatch();
 
   return (
     <ul className={styles.playlist}>
@@ -34,7 +37,10 @@ function FavoriteTracks() {
             </a>
           </div>
           <div className={styles.track__time}>
-            <svg className={styles.track__time_svg}>
+            <svg
+              onClick={() => dispatch(removeTrack(track.id))}
+              className={styles.track__heart}
+            >
               <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
             </svg>
             <span className={styles.track__time_text}>
