@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { RootState } from "../Store/store";
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 
+import { RootState } from "../Store/store";
 import { useGetAllTracksQuery } from "../components/trackApi";
 import styles from "./Item/Item.module.css";
 import { addTrack, removeTrack } from "../Store/Reducers/favoriteSlice";

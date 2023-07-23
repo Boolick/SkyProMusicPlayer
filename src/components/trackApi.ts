@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { ReactNode } from "react";
 
 export interface Track {
   id: number;
@@ -12,19 +13,50 @@ export interface Track {
   track_file: string;
 }
 
+interface Selection {
+  id: number;
+  items: Track[];
+}
+
 export const trackApi = createApi({
   reducerPath: "trackApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://painassasin.online/catalog/track",
+    baseUrl: "https://painassasin.online/catalog",
   }),
   endpoints: (builder) => ({
     getAllTracks: builder.query<Track[], void>({
-      query: () => `/all`,
+      query: () => `track/all`,
     }),
-    getTrackById: builder.query<Track, string>({
-      query: (id) => `/${id}`,
+    getTrackById: builder.query<Track, number>({
+      query: (id) => `track/${id}`,
+    }),
+    getSelections: builder.query<Selection[], void>({
+      query: () => "/selection/",
+    }),
+    getSelectionById: builder.query<Selection, number>({
+      query: (id) => `/selection/${id}/`,
+    }),
+    deleteTrackFromSelection: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `/track/${id}/delete/`,
+        method: "DELETE",
+      }),
+    }),
+    addTrackToSelection: builder.mutation<void, { id: number; track: Track }>({
+      query: ({ id, track }) => ({
+        url: `/${id}/update/`,
+        method: "POST",
+        body: track,
+      }),
     }),
   }),
 });
 
-export const { useGetAllTracksQuery, useGetTrackByIdQuery } = trackApi;
+export const {
+  useGetAllTracksQuery,
+  useGetTrackByIdQuery,
+  useGetSelectionsQuery,
+  useGetSelectionByIdQuery,
+  useDeleteTrackFromSelectionMutation,
+  useAddTrackToSelectionMutation,
+} = trackApi;

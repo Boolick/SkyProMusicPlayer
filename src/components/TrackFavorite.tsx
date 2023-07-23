@@ -41,7 +41,7 @@ function FavoriteTracks() {
               onClick={() => dispatch(removeTrack(track.id))}
               className={styles.track__heart}
             >
-              <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+              <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
             </svg>
             <span className={styles.track__time_text}>
               {track.duration_in_seconds}
