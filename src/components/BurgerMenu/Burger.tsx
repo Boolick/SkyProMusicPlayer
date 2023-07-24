@@ -15,12 +15,12 @@ function Burger() {
         {theme === "light" ? (
           <use
             className="logo__image"
-            xlinkHref="img/icon/sprite.svg#light_logo"
+            xlinkHref="/img/icon/sprite.svg#light_logo"
           ></use>
         ) : (
           <use
             className="logo__image"
-            xlinkHref="img/icon/sprite.svg#dark_logo"
+            xlinkHref="/img/icon/sprite.svg#dark_logo"
           ></use>
         )}
       </svg>
@@ -43,12 +43,12 @@ function Burger() {
             {theme === "light" ? (
               <use
                 className="logo__image"
-                xlinkHref="img/icon/sprite.svg#light_logo"
+                xlinkHref="/img/icon/sprite.svg#light_logo"
               ></use>
             ) : (
               <use
                 className="logo__image"
-                xlinkHref="img/icon/sprite.svg#dark_logo"
+                xlinkHref="/img/icon/sprite.svg#dark_logo"
               ></use>
             )}
           </svg>

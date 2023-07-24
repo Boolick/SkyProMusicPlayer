@@ -1,11 +1,17 @@
+import { useGetSelectionByIdQuery } from "../components/trackApi"; // импортируйте хук из вашего API
 import React from "react";
 
 import styles from "../components/Item/Item.module.css";
 import Burger from "../components/BurgerMenu/Burger";
 import Bar from "../components/Bar";
-
-import { useGetSelectionByIdQuery } from "../components/trackApi"; // импортируйте хук из вашего API
 import Search from "../components/Search/Search";
+import { ThemeContext } from "../Context/ThemeContext";
+
+const selections: { id: number; title: string; items: any[] }[] = [
+  { id: 0, title: "Плейлист дня", items: [] },
+  { id: 1, title: "100 танцевальных хитов", items: [] },
+  { id: 2, title: "Инди-заряд", items: [] },
+];
 
 interface SelectionsPageProps {
   selectionId: number;
@@ -17,13 +23,16 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
     isLoading,
     isError,
   } = useGetSelectionByIdQuery(selectionId);
+  const { theme } = React.useContext(ThemeContext);
 
   return (
     <>
-      <Burger />
+      <>
+        <Burger />
+      </>
       <div className="main__centerblock centerblock">
         <Search />
-        <h2 className="centerblock__h2">Треки из подборки #{selectionId}</h2>
+        <h2 className="centerblock__h2">{selections[selectionId - 1].title}</h2>
         <main>
           {selection && (
             <ul className={styles.playlist}>
@@ -31,7 +40,7 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
                 <li key={track.id} className={styles.playlist__item}>
                   <div className={styles.track__title_image}>
                     <svg className={styles.track__title_svg}>
-                      <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+                      <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
                     </svg>
                   </div>
                   <div className={styles.track__title_text}>
@@ -51,7 +60,7 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
                   </div>
                   <div className={styles.track__time}>
                     <svg className={styles.track__heart}>
-                      <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+                      <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
                     </svg>
 
                     <span className={styles.track__time_text}>

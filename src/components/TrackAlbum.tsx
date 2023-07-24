@@ -38,7 +38,7 @@ function TrackAlbum() {
           ) : (
             <div className={styles.track__title_image}>
               <svg className={styles.track__title_svg}>
-                <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+                <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
               </svg>
             </div>
           )}
@@ -71,7 +71,7 @@ function TrackAlbum() {
                 ),
               })}
             >
-              <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+              <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
             </svg>
 
             <span className={styles.track__time_text}>

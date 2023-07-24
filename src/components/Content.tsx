@@ -16,7 +16,7 @@ const Content: React.FC<ContentProps> = ({ tracks }) => {
         <div className="playlist-title__col col03">АЛЬБОМ</div>
         <div className="playlist-title__col col04">
           <svg className="playlist-title__svg">
-            <use xlinkHref="img/icon/sprite.svg#icon-watch"></use>
+            <use xlinkHref="/img/icon/sprite.svg#icon-watch"></use>
           </svg>
         </div>
       </div>

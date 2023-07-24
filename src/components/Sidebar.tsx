@@ -13,12 +13,6 @@ function Sidebar() {
   const { data: selections, isLoading, error } = useGetSelectionsQuery();
   const { data: selection } = useGetSelectionByIdQuery(selectionId);
 
-  const images = [
-    "img/playlist01.png",
-    "img/playlist02.png",
-    "img/playlist03.png",
-  ];
-
   if (error) return <div>Error:{error.toString()}</div>;
 
   return (
@@ -28,12 +22,12 @@ function Sidebar() {
           {theme === "light" ? (
             <use
               className="sidebar__avatar"
-              xlinkHref="img/icon/sprite.svg#icon_avatar_light"
+              xlinkHref="/img/icon/sprite.svg#icon_avatar_light"
             ></use>
           ) : (
             <use
               className="sidebar__avatar"
-              xlinkHref="img/icon/sprite.svg#icon_avatar_dark"
+              xlinkHref="/img/icon/sprite.svg#icon_avatar_dark"
             ></use>
           )}
         </svg>
@@ -59,7 +53,7 @@ function Sidebar() {
                   ) : (
                     <img
                       className="sidebar__img"
-                      src={images[selection.id % images.length]}
+                      src={`/img/playlist0${selection.id}.png`}
                       alt={`Подборка #${selection.id}`}
                     />
                   )}

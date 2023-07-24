@@ -13,7 +13,7 @@ function PlayButton() {
       <svg className={styles.player__btn_play_svg} /* alt="play" */>
         <use
           className={styles.btn_icon}
-          xlinkHref="img/icon/sprite.svg#icon-play"
+          xlinkHref="/img/icon/sprite.svg#icon-play"
         ></use>
       </svg>
     </button>
