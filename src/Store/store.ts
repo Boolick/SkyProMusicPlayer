@@ -9,7 +9,7 @@ export const store = configureStore({
   reducer: {
     // Добавление редьюсеров trackApi и player в хранилище
     [trackApi.reducerPath]: trackApi.reducer,
-    player: playerReducer.reducer,
+    player: playerReducer,
     favorite: favoriteReducer,
   },
   // Добавление middleware trackApi в хранилище

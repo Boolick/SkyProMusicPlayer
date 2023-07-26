@@ -1,31 +1,40 @@
-import React, { useRef, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { RootState } from "../../Store/store";
 import PlayButton from "./Buttons/PlayButton";
 import PauseButton from "./Buttons/PauseButton";
-import playerSlice from "../../Store/Reducers/playerSlice";
+import { updateProgress } from "../../Store/Reducers/playerSlice";
 
-const Player: React.FC = () => {
+const Player = () => {
   const dispatch = useDispatch();
-  const { isPlaying } = useSelector((state: RootState) => state.player);
+  const currentTrack = useSelector(
+    (state: RootState) => state.player.currentTrack
+  );
+  const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
 
-  const audioRef = useRef<HTMLAudioElement>(null);
-
+  // Обновление элемента audio при изменении выбранного трека или состояния воспроизведения
   useEffect(() => {
-    const audioElement = audioRef.current;
-    if (audioElement) {
-      if (isPlaying) {
-        audioElement.play();
-      } else {
-        audioElement.pause();
+    const audioPlayer = document.getElementById(
+      "audio-player"
+    ) as HTMLAudioElement;
+    if (currentTrack) {
+      if (audioPlayer.src !== currentTrack.track_file) {
+        audioPlayer.src = currentTrack.track_file;
       }
+
+      if (isPlaying) {
+        audioPlayer.play();
+      } else {
+        audioPlayer.pause();
+      }
+
       // Обработчик обновления времени
       const handleTimeUpdate = () => {
         dispatch(
-          playerSlice.actions.updateProgress({
-            currentTime: audioElement.currentTime,
-            duration: audioElement.duration,
+          updateProgress({
+            currentTime: audioPlayer.currentTime,
+            duration: audioPlayer.duration,
           })
         );
       };
@@ -33,31 +42,26 @@ const Player: React.FC = () => {
       // Обработчик события загрузки
       const handleLoadedData = () => {
         dispatch(
-          playerSlice.actions.updateProgress({
+          updateProgress({
             currentTime: 0,
-            duration: audioElement.duration,
+            duration: audioPlayer.duration,
           })
         );
       };
 
       // Добавление слушателя событий
-      audioElement.addEventListener("timeupdate", handleTimeUpdate);
-      audioElement.addEventListener("loadedmetadata", handleLoadedData);
+      audioPlayer.addEventListener("timeupdate", handleTimeUpdate);
+      audioPlayer.addEventListener("loadedmetadata", handleLoadedData);
 
       // Удаление слушателя событий
       return () => {
-        audioElement.removeEventListener("timeupdate", handleTimeUpdate);
-        audioElement.removeEventListener("loadedmetadata", handleLoadedData);
+        audioPlayer.removeEventListener("timeupdate", handleTimeUpdate);
+        audioPlayer.removeEventListener("loadedmetadata", handleLoadedData);
       };
     }
-  }, [isPlaying, dispatch]);
+  }, [currentTrack, isPlaying, dispatch]);
 
-  return (
-    <div>
-      <audio ref={audioRef} src="/Bobby_Marleni_-_Dropin.mp3" />
-      {!isPlaying ? <PlayButton /> : <PauseButton />}
-    </div>
-  );
+  return <div>{isPlaying ? <PauseButton /> : <PlayButton />}</div>;
 };
 
 export default Player;

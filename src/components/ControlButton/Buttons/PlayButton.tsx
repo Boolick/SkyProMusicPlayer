@@ -1,13 +1,13 @@
 import { useDispatch } from "react-redux";
 
 import styles from "./Button.module.css";
-import playerSlice from "../../../Store/Reducers/playerSlice";
+import { playTrack, resumeTrack } from "../../../Store/Reducers/playerSlice";
 
 function PlayButton() {
   const dispatch = useDispatch();
   return (
     <button
-      onClick={() => dispatch(playerSlice.actions.play())}
+      onClick={() => dispatch(resumeTrack())}
       className={styles.player__btn_play}
     >
       <svg className={styles.player__btn_play_svg} /* alt="play" */>

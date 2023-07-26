@@ -531,7 +531,7 @@ body {
 .track-play__image {
   width: 51px;
   height: 51px;
-  background-color: var(--color-background);
+  background-color: var(--color-img);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -549,7 +549,7 @@ body {
 
 .track-play__author {
   grid-area: author;
-  min-width: 49px;
+  min-width: 150px;
 }
 
 .track-play__author-link {

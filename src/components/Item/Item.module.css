@@ -53,6 +53,7 @@
     width: 51px;
     height: 51px;
     padding: 16px;
+    cursor: pointer;
     background-color: var(--color-img);
     display: flex;
     align-items: center;

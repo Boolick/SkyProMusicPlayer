@@ -6,12 +6,13 @@ import { useGetSelectionByIdQuery, useGetSelectionsQuery } from "./trackApi";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ThemeContext } from "../Context/ThemeContext";
 import Skeleton from "react-loading-skeleton";
+import { useTrackPlayer } from "./PlayTrack";
 
 function Sidebar() {
   const { theme } = React.useContext(ThemeContext);
   const [selectionId, setSelectionId] = useState(1); // состояние для хранения id текущей выбранной подборки
   const { data: selections, isLoading, error } = useGetSelectionsQuery();
-  const { data: selection } = useGetSelectionByIdQuery(selectionId);
+  const {handleTogglePlay} = useTrackPlayer();
 
   if (error) return <div>Error:{error.toString()}</div>;
 
@@ -38,7 +39,7 @@ function Sidebar() {
           {selections?.map((selection) => (
             <li key={selection.id} className="sidebar__item">
               <div onClick={() => setSelectionId(selection.id)}>
-                <NavLink
+                <NavLink  
                   className="sidebar__link"
                   to={`/selections-page/${selection.id}`}
                 >

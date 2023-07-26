@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
+import { useSelector } from "react-redux";
+import { RootState } from "../Store/store";
 
 function TrackPlay() {
+
+  // Определяем текущий трек
+  const currentTrack = useSelector(
+    (state: RootState) => state.player.currentTrack
+  );
+  
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -35,7 +43,7 @@ function TrackPlay() {
           />
         ) : (
           <div className="track-play__author">
-            <a className="track-play__author-link" href="http://"></a>
+            <a className="track-play__author-link" href="http://">{currentTrack?.author}</a>
           </div>
         )}
         {isLoading ? (
@@ -47,7 +55,7 @@ function TrackPlay() {
           />
         ) : (
           <div className="track-play__album">
-            <a className="track-play__album-link" href="http://"></a>
+            <a className="track-play__album-link" href="http://">{currentTrack?.album}</a>
           </div>
         )}
       </div>
