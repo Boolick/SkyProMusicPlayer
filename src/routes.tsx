@@ -1,12 +1,13 @@
 import { Routes, Route, useParams } from "react-router-dom";
 
 import Main from "./screens/Main";
-import MyPlaylist from "./screens/MyPlaylist";
-import LoginPage from "./screens/LoginPage/LoginPage";
+import { LoginPage } from "./screens/LoginPage/LoginPage";
 import NotFound from "./screens/NotFoundPage/NotFound";
 import { Track } from "./components/Request/Request";
 import PrivateRoute from "./components/PrivateRoute";
 import SelectionsPage from "./screens/SelectionsPage";
+import MyPlaylist from "./screens/Myplaylist";
+import SignupPage from "./screens/LoginPage/AuthPage";
 
 interface AppRoutesProps {
   tracks: Track[];
@@ -15,11 +16,19 @@ interface AppRoutesProps {
   element: React.ReactNode;
 }
 
-const AppRoutes: React.FC<AppRoutesProps> = ({ tracks }) => {
+const AppRoutes: React.FC<AppRoutesProps> = ({ tracks, isAuthenticated }) => {
   return (
     <>
       <Routes>
-        <Route element={<PrivateRoute redirectPath={"/login-page"} />}>
+        <Route
+          element={
+            <PrivateRoute
+              isAuthenticatedProp={isAuthenticated}
+              redirectPath={"/login-page"}
+            />
+          }
+        >
+          <Route path="/auth-page" element={<SignupPage />}></Route>
           <Route index element={<Main tracks={tracks} />}></Route>
           <Route
             path="/my-playlist"
@@ -44,5 +53,4 @@ function SelectionsPageWrapper() {
   const { id } = useParams();
   return <SelectionsPage selectionId={Number(id)} />;
 }
-
 export default AppRoutes;

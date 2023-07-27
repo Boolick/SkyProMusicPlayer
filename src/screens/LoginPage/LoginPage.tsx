@@ -1,29 +1,59 @@
-import { useDispatch, useSelector } from "react-redux";
+import { NavLink, Navigate } from "react-router-dom";
+import { useState } from "react";
 
+import { useLoginMutation } from "../../Store/Reducers/apiSlice"; // Импорт мутации useLoginMutation из файла api.ts
 import styles from "./Login.module.css";
 
 export const LoginPage = ({ type }: { type: "login" | " registration" }) => {
-  const currentAuthTitle = type === "login" ? "Войти" : "Зарегистрироваться";
+  const [login, { isLoading, isSuccess, isError }] = useLoginMutation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    login({ email, password });
+  };
+
+  if (isError) {
+    prompt("Пользователь с таким email или паролем не найден");
+    return <Navigate to="/auth-page" />;
+  }
+  if (isSuccess) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <div className={styles.login__content}>
-      <form className={styles.login__box}>
+      <form className={styles.login__box} onSubmit={handleLogin}>
         <img src="img/logo.jpg" alt="logo" />
 
-        <input className={styles.input} type="text" placeholder="Логин" />
-        <input className={styles.input} type="password" placeholder="Пароль" />
+        <input
+          className={styles.input}
+          type="email"
+          placeholder="Логин"
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          className={styles.input}
+          type="password"
+          placeholder="Пароль"
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
         <div className={styles.buttons}>
           <button className={styles.in_button} type="submit">
-            {currentAuthTitle}
+            Войти
           </button>
-          <button className={styles.reg_button} type="submit">
+          <button className={styles.reg_button}>
             Зарегистрироваться
+            <NavLink to="/auth-page" />
           </button>
         </div>
       </form>
     </div>
   );
 };
-
-export default LoginPage;

@@ -6,7 +6,7 @@ import Bar from "../components/Bar";
 import { Track } from "../components/Request/Request";
 
 import Search from "../components/Search/Search";
-import FavoriteTracks from "../components/TrackFavorite";
+import FavoriteTracks from "../components/FavoriteTracks";
 
 interface MyPlaylistProps {
   tracks: Track[];

@@ -48,6 +48,27 @@ export const trackApi = createApi({
         body: track,
       }),
     }),
+    getFavoriteTrackById: builder.query<Track, number>({
+      query: (id) => `track/${id}`,
+    }),
+    deleteFavoriteTrackById: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `track/${id}/favorite/`,
+        method: "DELETE",
+      }),
+    }),
+    addFavoriteTrackById: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `track/${id}/favorite/`,
+        method: "POST",
+      }),
+    }),
+    addMultipleFavoriteTracksByIds: builder.mutation<void, number[]>({
+      query: (ids) => ({
+        url: `track/favorite/?id=${ids.join(",")}`,
+        method: "POST",
+      }),
+    }),
   }),
 });
 
@@ -58,4 +79,9 @@ export const {
   useGetSelectionByIdQuery,
   useDeleteTrackFromSelectionMutation,
   useAddTrackToSelectionMutation,
+
+  useGetFavoriteTrackByIdQuery,
+  useAddFavoriteTrackByIdMutation,
+  useAddMultipleFavoriteTracksByIdsMutation,
+  useDeleteFavoriteTrackByIdMutation,
 } = trackApi;

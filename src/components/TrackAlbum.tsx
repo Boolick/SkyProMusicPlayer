@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 
 import { RootState } from "../Store/store";
-import { Track, useGetAllTracksQuery } from "../components/trackApi";
+import { Track, useGetAllTracksQuery, useAddFavoriteTrackByIdMutation, useDeleteFavoriteTrackByIdMutation } from "../components/trackApi";
 import styles from "./Item/Item.module.css";
 import { addTrack, removeTrack } from "../Store/Reducers/favoriteSlice";
 import { useTrackPlayer } from "./PlayTrack";
@@ -13,6 +13,7 @@ export const TrackAlbum = () => {
   const dispatch = useDispatch();
   const { handleTogglePlay, handleSelectTrack } = useTrackPlayer();
   const { data, isLoading, error } = useGetAllTracksQuery();
+  const [addFavoriteTrack] = useAddFavoriteTrackByIdMutation();
 
   // Обновление элемента audio при изменении выбранного трека или состояния воспроизведения
   const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
@@ -22,6 +23,9 @@ export const TrackAlbum = () => {
     (state: RootState) => state.favorite.tracks
   );
 
+  const handleAdd = (id: number) => {
+    addFavoriteTrack(id);
+  };
   // Выбираем первый трек при загрузке страницы
   useEffect(() => {
     if (data && data.length > 0) {
@@ -83,7 +87,7 @@ export const TrackAlbum = () => {
               <svg
                 onClick={() =>
                   favoriteTracks.some((t) => t.id === track.id)
-                    ? dispatch(removeTrack(track.id))
+                    ? handleAdd(track.id)
                     : dispatch(addTrack(track))
                 }
                 className={cn(styles.track__heart, {
