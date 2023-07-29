@@ -20,6 +20,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({ tracks, isAuthenticated }) => {
   return (
     <>
       <Routes>
+        <Route path="/auth-page" element={<SignupPage />}></Route>
         <Route
           element={
             <PrivateRoute
@@ -28,7 +29,6 @@ const AppRoutes: React.FC<AppRoutesProps> = ({ tracks, isAuthenticated }) => {
             />
           }
         >
-          <Route path="/auth-page" element={<SignupPage />}></Route>
           <Route index element={<Main tracks={tracks} />}></Route>
           <Route
             path="/my-playlist"
@@ -49,6 +49,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({ tracks, isAuthenticated }) => {
   );
 };
 
+// функция оболочка для SelectionPage, чтобы не вводить параметр selectionId напрямую в routes
 function SelectionsPageWrapper() {
   const { id } = useParams();
   return <SelectionsPage selectionId={Number(id)} />;

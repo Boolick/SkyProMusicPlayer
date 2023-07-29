@@ -1,24 +1,30 @@
 import { NavLink, Navigate } from "react-router-dom";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 
 import { useLoginMutation } from "../../Store/Reducers/apiSlice"; // Импорт мутации useLoginMutation из файла api.ts
 import styles from "./Login.module.css";
+import { setCredentials } from "../../Store/Reducers/AuthSlice";
 
 export const LoginPage = ({ type }: { type: "login" | " registration" }) => {
   const [login, { isLoading, isSuccess, isError }] = useLoginMutation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     login({ email, password });
+    dispatch(setCredentials({ email, password }));
   };
 
   if (isError) {
     prompt("Пользователь с таким email или паролем не найден");
     return <Navigate to="/auth-page" />;
   }
+
   if (isSuccess) {
+    console.log(isSuccess);
     return <Navigate to="/" />;
   }
 

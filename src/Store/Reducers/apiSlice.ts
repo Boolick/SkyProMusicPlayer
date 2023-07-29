@@ -1,14 +1,34 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface LoginResponse {
-  token: string;
+  id: number;
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+}
+
+interface SignupResponse {
+  id: number;
+  username: string;
+  surname: string;
+  email: string;
+}
+interface TokenResponse {
+  access: any;
+  token: any;
+  isSuccess: boolean;
+  isUninitialized: boolean;
 }
 
 export const api = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: "https://painassasin.online/" }),
   endpoints: (builder) => ({
-    signup: builder.mutation<void, { username: string; surname:string; email: string; password: string }>({
+    signup: builder.mutation<
+      SignupResponse,
+      { username: string; surname: string; email: string; password: string }
+    >({
       query: (credentials) => ({
         url: `user/signup/`,
         method: "POST",
@@ -24,16 +44,14 @@ export const api = createApi({
         }),
       }
     ),
-    token: builder.mutation<LoginResponse, { email: string; password: string }>(
-      {
-        query: (credentials) => ({
-          url: `user/token/`,
-          method: "POST",
-          body: credentials,
-        }),
-      }
-    ),
-    refreshToken: builder.mutation<LoginResponse, void>({
+    token: builder.mutation<TokenResponse, {  email: string; password: string }>({
+      query: (credentials) => ({
+        url: `user/token/`,
+        method: "POST",
+        body: credentials,
+      }),
+    }),
+    refreshToken: builder.mutation<TokenResponse, void>({
       query: () => ({
         url: `user/token/refresh/`,
         method: "POST",
@@ -42,4 +60,9 @@ export const api = createApi({
   }),
 });
 
-export const { useLoginMutation, useTokenMutation, useSignupMutation } = api;
+export const {
+  useLoginMutation,
+  useTokenMutation,
+  useSignupMutation,
+  useRefreshTokenMutation,
+} = api;

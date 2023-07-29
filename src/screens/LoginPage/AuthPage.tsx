@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { useSignupMutation } from "../../Store/Reducers/apiSlice"; // Импорт мутации useSignupMutation из файла api.ts
 import styles from "./SignupPage.module.css";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../Store/Reducers/AuthSlice";
 
 export const SignupPage = () => {
   const [signup, { isLoading }] = useSignupMutation();
@@ -10,12 +12,12 @@ export const SignupPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
+  const dispatch = useDispatch();
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     signup({ username, surname, email, password })
-      .unwrap()
-      .then(() => setIsRegistered(true));
+   
   };
 
   if (isRegistered) {

@@ -2,10 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface AuthState {
   token: string | null;
+  email: string;
+  password:string;
 }
 
 const initialState: AuthState = {
   token: null,
+  email: "",
+  password: "",
+  
 };
 
 const authSlice = createSlice({
@@ -14,11 +19,16 @@ const authSlice = createSlice({
   reducers: {
     setToken(state, action) {
       state.token = action.payload;
+      
+    },
+    setCredentials(state, action) {
+      state.email = action.payload.email;
+      state.password = action.payload.password;
     },
   },
 });
 
-export const { setToken } = authSlice.actions;
+export const { setToken,setCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
 
