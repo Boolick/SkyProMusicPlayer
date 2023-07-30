@@ -5,19 +5,19 @@ import styles from "./SignupPage.module.css";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../Store/Reducers/AuthSlice";
 
-export const SignupPage = () => {
+export const SignupPage: React.FC = (): JSX.Element => {
   const [signup, { isLoading }] = useSignupMutation();
   const [username, setUsername] = useState("");
   const [surname, setSurname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [isRegistered, setIsRegistered] = useState(false);
-  const dispatch = useDispatch();
-
-  const handleSignup = (e: React.FormEvent) => {
-    e.preventDefault();
-    signup({ username, surname, email, password })
    
+
+  const handleSignup = async (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    signup({ username, surname, email, password, repeatPassword });
   };
 
   if (isRegistered) {
@@ -62,6 +62,14 @@ export const SignupPage = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <input
+            className={styles.modal__input}
+            type="password"
+            placeholder="Пароль"
+            name="password"
+            value={password}
+            onChange={(e) => setRepeatPassword(e.target.value)}
+          />
 
           <div className={styles.buttons}>
             <button className={styles.modal__btn_signup_ent} type="submit">
@@ -73,4 +81,5 @@ export const SignupPage = () => {
     </div>
   );
 };
+
 export default SignupPage;

@@ -2,15 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface AuthState {
   token: string | null;
+  refresh: string | null;
   email: string;
-  password:string;
+  password: string;
 }
 
 const initialState: AuthState = {
-  token: null,
+  token: "",
+  refresh: "",
   email: "",
   password: "",
-  
 };
 
 const authSlice = createSlice({
@@ -18,8 +19,9 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setToken(state, action) {
+      console.log("setToken called with payload:", action.payload);
       state.token = action.payload;
-      
+      //state.refresh = action.payload;
     },
     setCredentials(state, action) {
       state.email = action.payload.email;
@@ -28,7 +30,7 @@ const authSlice = createSlice({
   },
 });
 
-export const { setToken,setCredentials } = authSlice.actions;
+export const { setToken, setCredentials } = authSlice.actions;
 
 export default authSlice.reducer;
 

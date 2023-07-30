@@ -1,16 +1,31 @@
 import { NavLink, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { useLoginMutation } from "../../Store/Reducers/apiSlice"; // Импорт мутации useLoginMutation из файла api.ts
+import {
+  useLoginMutation,
+  useTokenMutation,
+} from "../../Store/Reducers/apiSlice";
 import styles from "./Login.module.css";
-import { setCredentials } from "../../Store/Reducers/AuthSlice";
+import { setCredentials, setToken } from "../../Store/Reducers/AuthSlice";
+import Skeleton from "react-loading-skeleton";
+import PrivateRoute from "../../components/PrivateRoute";
 
-export const LoginPage = ({ type }: { type: "login" | " registration" }) => {
+export const LoginPage: React.FC = (): JSX.Element => {
   const [login, { isLoading, isSuccess, isError }] = useLoginMutation();
+  const [token, { status }] = useTokenMutation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [access, setAccess] = useState("");
+  const [refresh, setRefresh] = useState("");
   const dispatch = useDispatch();
+
+  if (isLoading) {
+    return <Skeleton />;
+  }
+  if (isError) {
+    return <Navigate to="/auth-page" />;
+  }
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,14 +33,20 @@ export const LoginPage = ({ type }: { type: "login" | " registration" }) => {
     dispatch(setCredentials({ email, password }));
   };
 
-  if (isError) {
-    prompt("Пользователь с таким email или паролем не найден");
-    return <Navigate to="/auth-page" />;
-  }
+  const handleToken = async () => {
+    const response = await token({ email, password });
+    console.log(response);
+    if ("data" in response) {
+      const token = response.data.access;
+      //const refresh = response.data.refresh;
+      dispatch(setToken(token));
+      //dispatch(setToken(refresh));
+    }
+  };
 
   if (isSuccess) {
     console.log(isSuccess);
-    return <Navigate to="/" />;
+    return <Navigate to={"/"} />;
   }
 
   return (
@@ -51,7 +72,11 @@ export const LoginPage = ({ type }: { type: "login" | " registration" }) => {
         />
 
         <div className={styles.buttons}>
-          <button className={styles.in_button} type="submit">
+          <button
+            onClick={handleToken}
+            className={styles.in_button}
+            type="submit"
+          >
             Войти
           </button>
           <button className={styles.reg_button}>

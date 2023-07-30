@@ -1,11 +1,8 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 interface LoginResponse {
-  id: number;
   username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
+  password: string;
 }
 
 interface SignupResponse {
@@ -13,12 +10,12 @@ interface SignupResponse {
   username: string;
   surname: string;
   email: string;
+  password: string;
+  repeatPassword: string;
 }
 interface TokenResponse {
-  access: any;
-  token: any;
-  isSuccess: boolean;
-  isUninitialized: boolean;
+  access: string;
+  refresh: string;
 }
 
 export const api = createApi({
@@ -27,7 +24,13 @@ export const api = createApi({
   endpoints: (builder) => ({
     signup: builder.mutation<
       SignupResponse,
-      { username: string; surname: string; email: string; password: string }
+      {
+        username: string;
+        surname: string;
+        email: string;
+        password: string;
+        repeatPassword: string;
+      }
     >({
       query: (credentials) => ({
         url: `user/signup/`,
@@ -44,13 +47,15 @@ export const api = createApi({
         }),
       }
     ),
-    token: builder.mutation<TokenResponse, {  email: string; password: string }>({
-      query: (credentials) => ({
-        url: `user/token/`,
-        method: "POST",
-        body: credentials,
-      }),
-    }),
+    token: builder.mutation<TokenResponse, { email: string; password: string }>(
+      {
+        query: (credentials) => ({
+          url: `user/token/`,
+          method: "POST",
+          body: credentials,
+        }),
+      }
+    ),
     refreshToken: builder.mutation<TokenResponse, void>({
       query: () => ({
         url: `user/token/refresh/`,

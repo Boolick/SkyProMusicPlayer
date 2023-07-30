@@ -35,10 +35,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({ tracks, isAuthenticated }) => {
             element={<MyPlaylist tracks={tracks} />}
           ></Route>
         </Route>
-        <Route
-          path="/login-page"
-          element={<LoginPage type={"login"} />}
-        ></Route>
+        <Route path="/login-page" element={<LoginPage />}></Route>
         <Route
           path="/selections-page/:id"
           element={<SelectionsPageWrapper />}
