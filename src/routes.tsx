@@ -31,16 +31,17 @@ const AppRoutes: React.FC<AppRoutesProps> = ({ tracks, isAuthenticated }) => {
         >
           <Route index element={<Main tracks={tracks} />}></Route>
           <Route
+            path="/selections-page/:id"
+            element={<SelectionsPageWrapper />}
+          ></Route>
+
+          <Route
             path="/my-playlist"
             element={<MyPlaylist tracks={tracks} />}
           ></Route>
         </Route>
-        <Route path="/login-page" element={<LoginPage />}></Route>
-        <Route
-          path="/selections-page/:id"
-          element={<SelectionsPageWrapper />}
-        ></Route>
         <Route path="*" element={<NotFound />}></Route>
+        <Route path="/login-page" element={<LoginPage />}></Route>
       </Routes>
     </>
   );

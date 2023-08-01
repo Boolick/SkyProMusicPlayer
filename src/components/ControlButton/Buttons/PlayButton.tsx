@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 
 import styles from "./Button.module.css";
-import { playTrack, resumeTrack } from "../../../Store/Reducers/playerSlice";
+import { playTrack, resumeTrack } from "../../../Store/Actions/playerSlice";
 
 function PlayButton() {
   const dispatch = useDispatch();

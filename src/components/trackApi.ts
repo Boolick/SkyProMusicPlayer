@@ -48,15 +48,24 @@ export const trackApi = createApi({
         body: track,
       }),
     }),
+
     getFavoriteTrackById: builder.query<Track, number>({
       query: (id) => `track/${id}`,
     }),
-    deleteFavoriteTrackById: builder.mutation<void, number>({
-      query: (id) => ({
+
+    deleteFavoriteTrackById: builder.mutation<
+      void,
+      { id: number; token: string | null }
+    > ({
+      query: ({ id, token }) => ({
         url: `track/${id}/favorite/`,
         method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
+
     addFavoriteTrackById: builder.mutation<void, number>({
       query: (id) => ({
         url: `track/${id}/favorite/`,

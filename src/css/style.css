@@ -466,11 +466,13 @@ body {
   padding: 5px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
 }
 
 .player__btn-prev {
   margin-right: 23px;
+
 }
 
 .player__btn-prev-svg {
@@ -482,7 +484,7 @@ body {
 
 .player__btn-next {
   margin-right: 28px;
-  fill: #a53939;
+  stroke: var(--color-img);
 }
 
 .player__btn-next-svg {

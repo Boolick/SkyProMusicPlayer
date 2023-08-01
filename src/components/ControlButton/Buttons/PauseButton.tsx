@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
 
 import styles from "./Button.module.css";
-import { pauseTrack } from "../../../Store/Reducers/playerSlice";
+import { pauseTrack } from "../../../Store/Actions/playerSlice";
 
 function PauseButton() {
   const dispatch = useDispatch();

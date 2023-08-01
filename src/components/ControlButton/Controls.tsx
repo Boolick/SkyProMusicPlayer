@@ -8,6 +8,7 @@ import { useTrackPlayer } from "../PlayTrack";
 function Controls() {
   const { handleSelectTrack, handleTogglePlay } = useTrackPlayer();
   const { data: tracks } = useGetAllTracksQuery();
+
   const currentTrack = useSelector(
     (state: RootState) => state.player.currentTrack
   );

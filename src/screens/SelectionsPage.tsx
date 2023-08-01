@@ -1,5 +1,6 @@
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 import { useGetSelectionByIdQuery } from "../components/trackApi"; //   хук из   API
 import styles from "../components/Item/Item.module.css";
@@ -8,7 +9,6 @@ import Bar from "../components/Bar";
 import Search from "../components/Search/Search";
 import { useTrackPlayer } from "../components/PlayTrack";
 import { RootState } from "../Store/store";
-import { useEffect } from "react";
 
 const selections: { id: number; title: string; items: any[] }[] = [
   { id: 0, title: "Плейлист дня", items: [] },
@@ -26,7 +26,8 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
     isLoading,
     error,
   } = useGetSelectionByIdQuery(selectionId);
-  const { handleSelectTrack, handleTogglePlay } = useTrackPlayer();
+
+  const { handleSelectTrack } = useTrackPlayer();
   const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
 
   // Выбираем первый трек при загрузке страницы
@@ -117,6 +118,3 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
 }
 
 export default SelectionsPage;
-function handleTogglePlay() {
-  throw new Error("Function not implemented.");
-}

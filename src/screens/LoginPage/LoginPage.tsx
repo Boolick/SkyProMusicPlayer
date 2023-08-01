@@ -1,6 +1,7 @@
 import { NavLink, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
+import Skeleton from "react-loading-skeleton";
 
 import {
   useLoginMutation,
@@ -8,8 +9,6 @@ import {
 } from "../../Store/Reducers/apiSlice";
 import styles from "./Login.module.css";
 import { setCredentials, setToken } from "../../Store/Reducers/AuthSlice";
-import Skeleton from "react-loading-skeleton";
-import PrivateRoute from "../../components/PrivateRoute";
 
 export const LoginPage: React.FC = (): JSX.Element => {
   const [login, { isLoading, isSuccess, isError }] = useLoginMutation();
@@ -21,7 +20,13 @@ export const LoginPage: React.FC = (): JSX.Element => {
   const dispatch = useDispatch();
 
   if (isLoading) {
-    return <Skeleton />;
+    return (
+      <Skeleton
+        className={styles.login__content}
+        baseColor="var(--color-img)"
+        highlightColor="var(--color-background)"
+      />
+    );
   }
   if (isError) {
     return <Navigate to="/auth-page" />;

@@ -5,7 +5,7 @@ import {
   playTrack,
   pauseTrack,
   resumeTrack,
-} from "../Store/Reducers/playerSlice";
+} from "../Store/Actions/playerSlice";
 import { RootState } from "../Store/store";
 import { Track } from "./trackApi";
 

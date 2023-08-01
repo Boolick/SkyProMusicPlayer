@@ -1,17 +1,21 @@
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
+import { useEffect } from "react";
 
 import { RootState } from "../Store/store";
-import { Track, useGetAllTracksQuery, useAddFavoriteTrackByIdMutation, useDeleteFavoriteTrackByIdMutation } from "../components/trackApi";
+import {
+  Track,
+  useGetAllTracksQuery,
+  useAddFavoriteTrackByIdMutation,
+} from "../components/trackApi";
 import styles from "./Item/Item.module.css";
 import { addTrack, removeTrack } from "../Store/Reducers/favoriteSlice";
 import { useTrackPlayer } from "./PlayTrack";
-import { useEffect } from "react";
 
 export const TrackAlbum = () => {
   const dispatch = useDispatch();
-  const { handleTogglePlay, handleSelectTrack } = useTrackPlayer();
+  const { handleSelectTrack } = useTrackPlayer();
   const { data, isLoading, error } = useGetAllTracksQuery();
   const [addFavoriteTrack] = useAddFavoriteTrackByIdMutation();
 
@@ -26,6 +30,7 @@ export const TrackAlbum = () => {
   const handleAdd = (id: number) => {
     addFavoriteTrack(id);
   };
+
   // Выбираем первый трек при загрузке страницы
   useEffect(() => {
     if (data && data.length > 0) {

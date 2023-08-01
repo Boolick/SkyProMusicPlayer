@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
 import PlayButton from "./Buttons/PlayButton";
 import PauseButton from "./Buttons/PauseButton";
-import { updateProgress } from "../../Store/Reducers/playerSlice";
+import { updateProgress } from "../../Store/Actions/playerSlice";
 
 const Player = () => {
   const dispatch = useDispatch();
