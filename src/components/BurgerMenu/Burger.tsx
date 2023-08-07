@@ -24,7 +24,11 @@ function Burger() {
           ></use>
         )}
       </svg>
-      <button onClick={() => setIsOpened(true)} className={styles.button}>
+      <button
+        data-testid="nav-btn"
+        onClick={() => setIsOpened(true)}
+        className={styles.button}
+      >
         <span className={styles.burger__line}></span>
         <span className={styles.burger__line}></span>
         <span className={styles.burger__line}></span>

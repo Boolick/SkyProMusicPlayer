@@ -7,7 +7,11 @@ const ThemeToggleButton: React.FC = () => {
   const { theme, toggleTheme } = React.useContext(ThemeContext);
 
   return (
-    <svg className={styles.theme_button} onClick={toggleTheme}>
+    <svg
+      data-testid="toggle-theme"
+      className={styles.theme_button}
+      onClick={toggleTheme}
+    >
       {theme === "light" ? (
         <use
           className={styles.them_icon}

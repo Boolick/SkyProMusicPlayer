@@ -22,6 +22,7 @@ export const LoginPage: React.FC = (): JSX.Element => {
   if (isLoading) {
     return (
       <Skeleton
+        data-testid="skeleton"
         className={styles.login__content}
         baseColor="var(--color-img)"
         highlightColor="var(--color-background)"
@@ -55,11 +56,16 @@ export const LoginPage: React.FC = (): JSX.Element => {
   }
 
   return (
-    <div className={styles.login__content}>
-      <form className={styles.login__box} onSubmit={handleLogin}>
-        <img src="img/logo.jpg" alt="logo" />
+    <div data-testid="LoginPage" className={styles.login__content}>
+      <form
+        data-testid="login-form"
+        className={styles.login__box}
+        onSubmit={handleLogin}
+      >
+        <img data-testid="logo-img" src="img/logo.jpg" alt="logo" />
 
         <input
+          data-testid="login-input"
           className={styles.input}
           type="email"
           placeholder="Логин"

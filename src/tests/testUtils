@@ -1,0 +1,102 @@
+import React, { ReactNode, useState } from "react";
+import { render, RenderOptions, RenderResult } from "@testing-library/react";
+import { configureStore, EnhancedStore } from "@reduxjs/toolkit";
+import { Provider } from "react-redux";
+import { setupListeners } from "@reduxjs/toolkit/query";
+
+import { themes , ThemeContext} from "../Context/ThemeContext";
+
+interface Api {
+  reducerPath: string;
+  reducer: any;
+  middleware: any;
+  util: {
+    resetApiState: () => void;
+  };
+}
+
+interface WrapperProps {
+  children: ReactNode;
+}
+
+const AllProviders = ({ children }: { children: ReactNode }) => {
+  const [currentTheme, setCurrentTheme] = useState(themes.light);
+
+  const toggleTheme = () => {
+    if (currentTheme === themes.dark) {
+      setCurrentTheme(themes.light);
+      return;
+    }
+
+    setCurrentTheme(themes.dark);
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme: currentTheme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+/* Wrapper that provides store to child components */
+export function withStoreProvider(
+  store: EnhancedStore
+): (props: WrapperProps) => JSX.Element {
+  return function Wrapper({ children }: WrapperProps) {
+    return <Provider store={store}>{children}</Provider>;
+  };
+}
+
+/**
+ * Function for mocking api
+ * @link https://github.com/reduxjs/redux-toolkit/blob/64a30d83384d77bcbc59231fa32aa2f1acd67020/packages/toolkit/src/query/tests/helpers.tsx#L170
+ */
+
+export const setupApiStore = (
+  api: Api,
+  extraReducers?: any,
+  withoutListeners?: boolean
+) => {
+  const getStore = () =>
+    configureStore({
+      reducer: { [api.reducerPath]: api.reducer, ...extraReducers },
+      middleware: (gdm) =>
+        gdm({ serializableCheck: false, immutableCheck: false }).concat(
+          api.middleware
+        ),
+    });
+
+  const initialStore = getStore();
+  const refObj = {
+    api,
+    store: initialStore,
+    wrapper: withStoreProvider(initialStore),
+  };
+
+  let cleanupListeners;
+
+  beforeEach(() => {
+    const store = getStore();
+    refObj.store = store;
+    refObj.wrapper = withStoreProvider(store);
+
+    if (!withoutListeners) {
+      cleanupListeners = setupListeners(store.dispatch);
+    }
+  });
+
+  afterEach(() => {
+    if (!withoutListeners) {
+      cleanupListeners();
+    }
+
+    refObj.store.dispatch(api.util.resetApiState());
+  });
+
+  return refObj;
+};
+
+export const customRender = (
+  ui: React.ReactElement,
+  options?: Omit<RenderOptions, "queries">
+): RenderResult => render(ui, { wrapper: AllProviders, ...options });

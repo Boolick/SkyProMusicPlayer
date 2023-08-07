@@ -1,4 +1,3 @@
-import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { useDispatch } from "react-redux";
 import PlayButton from "./PlayButton";
@@ -24,6 +23,4 @@ describe("PlayButton", () => {
 
     expect(dispatchMock).toHaveBeenCalledWith(resumeTrack());
   });
- 
 });
-git 

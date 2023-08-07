@@ -11,7 +11,7 @@ function PauseButton() {
       className={styles.player__btn_pause}
     >
       <svg className={styles.player__btn_pause_svg} /* alt="play" */>
-        <use xlinkHref="img/icon/sprite.svg#icon-pause"></use>
+        <use xlinkHref="/img/icon/sprite.svg#icon-pause"></use>
       </svg>
     </button>
   );
