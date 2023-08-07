@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Main from "./screens/Main";
-import MyPlaylist from "./screens/MyPlaylist";
+import MyPlaylist from "./screens/Myplaylist";
 import Login from "./screens/Login";
 import NotFound from "./screens/NotFound";
 import { Track } from "./components/Request/Request";
@@ -10,10 +10,13 @@ interface AppRoutesProps {
   tracks: Track[];
 }
 
-const AppRoutes: React.FC<AppRoutesProps> = ({ tracks }) => {
+const AppRoutes = ({ tracks }: AppRoutesProps) => {
   return (
     <Routes>
-      <Route path="/LoadingPage" element={<LoadingPage tracks={tracks} />}></Route>
+      <Route
+        path="/LoadingPage"
+        element={<LoadingPage tracks={tracks} />}
+      ></Route>
       <Route path="/" element={<Main tracks={tracks} />}></Route>
       <Route
         path="/Myplaylist"

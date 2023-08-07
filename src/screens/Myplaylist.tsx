@@ -1,8 +1,8 @@
 import React from "react";
-import Item from "../components/Item/Item";
+
 import Playlist from "../components/Playlist";
 import Bar from "../components/Bar";
-import TracksList, { Track } from "../components/Request/Request";
+import { Track } from "../components/Request/Request";
 
 interface MyPlaylistProps {
   tracks: Track[];
@@ -15,7 +15,7 @@ const MyPlaylist: React.FC<MyPlaylistProps> = ({ tracks }) => {
 
       <Playlist tracks={tracks} />
 
-      <Bar />
+      <Bar loading={false} />
     </>
   );
 };

@@ -3,10 +3,10 @@ import styles from "./BurgerMenu.module.css";
 import cn from "classnames";
 import NavBar from "../NavBar";
 
-function Burger() {
-  const [isOpened, setIsOpened] = useState<boolean>(false);
-  const activeClassName = "underline";
+const [isOpened, setIsOpened] = useState<boolean>(false);
+const activeClassName = "underline";
 
+function Burger() {
   return (
     <nav className={styles.main__nav}>
       <div className="nav__logo logo">
@@ -25,7 +25,7 @@ function Burger() {
           <div className="nav__logo logo">
             <img className="logo__image" src="img/logo.png" alt="logo" />
           </div>
-          <NavBar/>
+          <NavBar />
         </div>
       </div>
     </nav>
