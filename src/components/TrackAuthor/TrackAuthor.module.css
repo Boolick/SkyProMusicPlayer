@@ -1,0 +1,40 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 28px;
+    width: 152px;
+    height: 232px;
+    max-height: 200px;
+    overflow: auto;
+}
+
+.list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.list::-webkit-scrollbar-track {
+    background: #888;
+}
+
+.list::-webkit-scrollbar-thumb {
+    background: #f1f1f1;
+    ;
+}
+
+.list::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.track__title_link {
+
+    color: #FFFFFF;
+}
+
+.track__title_link:hover {
+    border-color: #D9B6FF;
+    color: #D9B6FF;
+    cursor: pointer;
+    transition-duration: 0.3s;
+}

@@ -1,19 +1,20 @@
-import { useState } from "react";
-import "./App.css";
+import { useState, useEffect } from "react";
+import "./css/style.css";
+import AppRoutes from "./routes";
+import { Track } from "./components/Request/Request";
 
-function App() {
-  const [count, setCount] = useState(0);
+interface AppProps {
+  tracks: Track[];
+}
 
+const App = ({ tracks }: AppProps) => {
   return (
-    <div className="App">
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+    <div className="wrapper">
+      <div className="container">
+        <AppRoutes tracks={tracks} />
       </div>
     </div>
   );
-}
+};
 
 export default App;
