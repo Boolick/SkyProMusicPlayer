@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 import cn from "classnames";
 
 function NavBar() {
-  const activeClassName = "underline";
+  const activeClassName = "link_active";
 
   return (
     <ul className="menu__list">
@@ -20,7 +20,7 @@ function NavBar() {
       </li>
       <li className="menu__item">
         <NavLink
-          to="/MyPaylist"
+          to="/my-playlist"
           className={({ isActive }) =>
             cn("menu__link", {
               [activeClassName]: isActive,
@@ -32,7 +32,7 @@ function NavBar() {
       </li>
       <li className="menu__item">
         <NavLink
-          to="/LoginPage"
+          to="/login-page"
           className={({ isActive }) =>
             cn("menu__link", {
               [activeClassName]: isActive,

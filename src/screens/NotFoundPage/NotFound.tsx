@@ -4,7 +4,7 @@ import styles from "./NotFound.module.css";
 import Burger from "../../components/BurgerMenu/Burger";
 import Search from "../../components/Search/Search";
 import Bar from "../../components/Bar";
-import { NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function NotFound() {
   return (
@@ -27,9 +27,9 @@ function NotFound() {
           </p>
 
           <div className="menu__item">
-            <NavLink to="/" className={styles.button}>
+            <Link to="/" className={styles.button}>
               <button className={styles.button}>Вернуться на главную</button>
-            </NavLink>
+            </Link>
           </div>
         </div>
       </div>

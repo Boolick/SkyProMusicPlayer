@@ -69,6 +69,15 @@ body {
   cursor: pointer;
 }
 
+.link_active {
+
+  color: #AD61FF;
+  cursor: pointer;
+  text-decoration: none;
+  font-family: "StratosSkyeng", sans-serif;
+  cursor: pointer;
+}
+
 ._btn-text:active {
   border-color: #AD61FF;
   color: #AD61FF;

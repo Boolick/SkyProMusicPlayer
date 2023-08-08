@@ -8,9 +8,11 @@ a {
     justify-content: center;
     align-items: center;
     height: 100vh;
+
 }
 
 .search {
+    padding-top: 24px;
     padding-left: 200px;
 }
 
@@ -56,8 +58,6 @@ a {
     font-feature-settings: 'pnum'on, 'lnum'on;
     color: #4E4E4E;
 }
-
-
 
 
 .button {
