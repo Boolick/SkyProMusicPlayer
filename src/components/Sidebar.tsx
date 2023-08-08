@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 
 import "react-loading-skeleton/dist/skeleton.css";
+import { ThemeContext } from "../Context/ThemeContext";
 
 function Sidebar() {
+  const { theme } = React.useContext(ThemeContext);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -15,9 +17,21 @@ function Sidebar() {
   return (
     <div className="main__sidebar sidebar">
       <div className="sidebar__personal">
-        <p className="sidebar__personal-name">Sergey.Ivanov</p>
-        <div className="sidebar__avatar"></div>
+        <svg className="sidebar__avatar">
+          {theme === "light" ? (
+            <use
+              className="sidebar__avatar"
+              xlinkHref="img/icon/sprite.svg#icon_avatar_light"
+            ></use>
+          ) : (
+            <use
+              className="sidebar__avatar"
+              xlinkHref="img/icon/sprite.svg#icon_avatar_dark"
+            ></use>
+          )}
+        </svg>
       </div>
+
       <div className="sidebar__block">
         <div className="sidebar__list">
           <div className="sidebar__item">
@@ -25,8 +39,8 @@ function Sidebar() {
               <Skeleton
                 width={250}
                 height={150}
-                baseColor="#313131"
-                highlightColor="#181818"
+                baseColor="var(--color-img)"
+                highlightColor="var(--color-background)"
               />
             ) : (
               <a className="sidebar__link" href="#">
@@ -43,8 +57,8 @@ function Sidebar() {
               <Skeleton
                 width={250}
                 height={150}
-                baseColor="#313131"
-                highlightColor="#181818"
+                baseColor="var(--color-img)"
+                highlightColor="var(--color-background)"
               />
             ) : (
               <a className="sidebar__link" href="#">
@@ -61,8 +75,8 @@ function Sidebar() {
               <Skeleton
                 width={250}
                 height={150}
-                baseColor="#313131"
-                highlightColor="#181818"
+                baseColor="var(--color-img)"
+                highlightColor="var(--color-background)"
               />
             ) : (
               <a className="sidebar__link" href="#">

@@ -1,5 +1,7 @@
 .progressLine {
-    background-color: #313131;
+    background-color: var(--color-img);
+    transition: background-color 0.6s ease;
+    
 
 }
 

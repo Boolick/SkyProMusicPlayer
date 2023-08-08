@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import styles from "./Filter.module.css";
 import cn from "classnames";
+
+import styles from "./Filter.module.css";
 import Checkboxes from "./FilterButtons/Checkboxes";
 import { Track } from "../Request/Request";
 import TrackAuthor from "../TrackAuthor/TrackAuthor";
@@ -65,7 +66,9 @@ const Filter: React.FC<FilterProps> = ({ tracks }) => {
       <div className={styles.filter_container}>
         <div
           onClick={() => handleFilterClick("genres-popup")}
-          className="filter__button button-genre _btn-text"
+          className={cn(styles.filter__button, {
+            [styles.filter__button_active]: activePopup === "genres-popup",
+          })}
         >
           жанру
         </div>

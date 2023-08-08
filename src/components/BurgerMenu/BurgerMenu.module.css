@@ -1,18 +1,31 @@
 .main__nav {
 
     position: fixed;
-    background-color: #0f1010;
-    ;
+    background-color: var(--color-background);
     top: 0;
-    /*  left: -100; */
     width: 200px;
-    /*  height: 100vh; */
     padding: 30px;
     overflow-y: auto;
     overflow-x: hidden;
-    transition-duration: 0.3s;
+    transition: background-color 0.3s ease;
+    height: 100vh;
+
 
 }
+
+.main__nav_activ {
+    position: fixed;
+    background-color: var(--color-img);
+    top: 0;
+    width: 200px;
+    padding: 30px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    transition: background-color 0.3s ease;
+    height: 100vh;
+
+}
+
 
 .cover {
     position: fixed;
@@ -21,7 +34,6 @@
     left: 0;
     right: 0;
     background-color: transparent;
-    /* z-index: 10; */
     display: none;
 
 }
@@ -44,5 +56,5 @@
     display: inline-block;
     width: 100%;
     height: 1px;
-    background-color: #D3D3D3;
+    background-color: var(--color-text);
 }

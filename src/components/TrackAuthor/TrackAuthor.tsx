@@ -22,4 +22,3 @@ const TrackAuthor: React.FC = () => {
 };
 
 export default TrackAuthor;
-

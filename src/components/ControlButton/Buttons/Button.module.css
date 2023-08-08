@@ -11,6 +11,7 @@ button,
     height: 20px;
     flex-shrink: 0;
     border: none;
+    background-color: transparent;
 }
 
 .player__btn_play_svg, .player__btn_pause_svg {
@@ -18,17 +19,17 @@ button,
     height: 20px;
     fill: #D9D9D9;
 
-
 }
 
-._btn-text:hover {
+.player__btn_play:hover, .player__btn_pause:hover {
     border-color: #D9B6FF;
     color: #D9B6FF;
     cursor: pointer;
+
+
 }
 
-._btn_icon:hover svg {
-    fill: transparent;
+.player__btn_play:hover svg, .player__btn_pause:hover svg {
     stroke: #ACACAC;
     cursor: pointer;
 }

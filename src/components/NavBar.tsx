@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import cn from "classnames";
 
+import ThemeToggleButton from "./ChooseTheme/ChooseTheme";
+
 function NavBar() {
   const activeClassName = "link_active";
 
@@ -42,6 +44,8 @@ function NavBar() {
           Войти
         </NavLink>
       </li>
+
+      <ThemeToggleButton />
     </ul>
   );
 }

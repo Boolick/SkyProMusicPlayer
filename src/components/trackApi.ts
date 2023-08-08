@@ -15,13 +15,17 @@ interface Track {
 export const trackApi = createApi({
   reducerPath: "trackApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://painassasin.online/catalog/track/all",
+    baseUrl: "https://painassasin.online/catalog/track",
   }),
   endpoints: (builder) => ({
-    getTracksById: builder.query<Track[], string>({
-      query: (id) => `${id}`,
+    getAllTracks: builder.query<Track[], void>({
+      query: () => `/all`,
+    }),
+    getTrackById: builder.query<Track, string>({
+      query: (id) => `/${id}`,
     }),
   }),
 });
 
-export const { useGetTracksByIdQuery } = trackApi;
+export const { useGetAllTracksQuery, useGetTrackByIdQuery } = trackApi;
+

@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
-
-interface BarProps {
-  loading: boolean;
-}
 
 function TrackPlay() {
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 5000);
+    }, 4000);
   }, []);
 
   return (
@@ -21,8 +17,8 @@ function TrackPlay() {
             <Skeleton
               width={51}
               height={51}
-              baseColor="#313131"
-              highlightColor="#181818"
+              baseColor="var(--color-img)"
+              highlightColor="var(--color-background)"
             />
           ) : (
             <svg className="track-play__svg" /*  alt="music" */>
@@ -34,8 +30,8 @@ function TrackPlay() {
           <Skeleton
             width={59}
             height={15}
-            baseColor="#313131"
-            highlightColor="#181818"
+            baseColor="var(--color-img)"
+            highlightColor="var(--color-background)"
           />
         ) : (
           <div className="track-play__author">
@@ -46,8 +42,8 @@ function TrackPlay() {
           <Skeleton
             width={59}
             height={15}
-            baseColor="#313131"
-            highlightColor="#181818"
+            baseColor="var(--color-img)"
+            highlightColor="var(--color-background)"
           />
         ) : (
           <div className="track-play__album">

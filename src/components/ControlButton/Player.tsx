@@ -10,7 +10,7 @@ const Player: React.FC = () => {
   const dispatch = useDispatch();
   const { isPlaying } = useSelector((state: RootState) => state.player);
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     const audioElement = audioRef.current;

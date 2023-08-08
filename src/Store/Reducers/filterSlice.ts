@@ -21,7 +21,6 @@ export const filterSlice = createSlice({
   name: "filters",
   initialState,
   reducers: {
-    
     setCategoryId: (state, action) => {
       state.categoryId = action.payload;
     },
