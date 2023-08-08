@@ -1,9 +1,10 @@
 import { Routes, Route } from "react-router-dom";
 
 import Main from "./screens/Main";
-import MyPlaylist from "./screens/MyPlaylist";
+import MyPlaylist from "./screens/Myplaylist";
 import LoginPage from "./screens/LoginPage/LoginPage";
 import NotFound from "./screens/NotFoundPage/NotFound";
+
 import { Track } from "./components/Request/Request";
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -14,7 +15,7 @@ interface AppRoutesProps {
   element: React.ReactNode;
 }
 
-const AppRoutes: React.FC<AppRoutesProps> = ({ tracks }) => {
+const AppRoutes = ({ tracks }: AppRoutesProps) => {
   return (
     <Routes>
       <Route element={<PrivateRoute redirectPath={"/login-page"} />}>
