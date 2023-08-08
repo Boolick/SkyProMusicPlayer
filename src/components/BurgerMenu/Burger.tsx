@@ -4,9 +4,10 @@ import cn from "classnames";
 import styles from "./BurgerMenu.module.css";
 import NavBar from "../NavBar";
 
-function Burger() {
-  const [isOpened, setIsOpened] = useState<boolean>(false);
+const [isOpened, setIsOpened] = useState<boolean>(false);
+const activeClassName = "underline";
 
+function Burger() {
   return (
     <nav className={styles.main__nav}>
       <div className="nav__logo logo">
