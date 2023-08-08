@@ -8,7 +8,6 @@ interface AppProps {
 }
 
 const App = ({ tracks }: AppProps) => {
-
   return (
     <div className="wrapper">
       <div className="container">

@@ -1,3 +1,4 @@
+import React from "react";
 import Burger from "../components/BurgerMenu/Burger";
 import Playlist from "../components/Playlist";
 import Search from "../components/Search/Search";

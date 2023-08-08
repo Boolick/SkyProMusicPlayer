@@ -18,14 +18,13 @@ const AppRoutes = ({ tracks }: AppRoutesProps) => {
   return (
     <Routes>
       <Route index element={<Main tracks={tracks} />}></Route>
-      <Route path="/MyPaylist" element={<MyPlaylist tracks={tracks} />}></Route>
-      <Route path="/LoginPage" element={<LoginPage type={"login"} />}></Route>
-
-      <Route path="/" element={<Main tracks={tracks} />}></Route>
       <Route
-        path="/Myplaylist"
+        path="/My-playlist"
         element={<MyPlaylist tracks={tracks} />}
       ></Route>
+      <Route path="/login-page" element={<LoginPage type={"login"} />}></Route>
+
+      <Route path="/" element={<Main tracks={tracks} />}></Route>
 
       <Route path="*" element={<NotFound />}></Route>
     </Routes>
