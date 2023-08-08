@@ -3,9 +3,11 @@ import AppRoutes from "./routes";
 import { Track } from "./components/Request/Request";
 import Main from "./screens/Main";
 
-const tracks: Track[] = [];
+interface AppProps {
+  tracks: Track[];
+}
 
-const App: React.FC = () => {
+const App = ({ tracks }: AppProps) => {
   return (
     <div className="wrapper">
       <div className="container">
