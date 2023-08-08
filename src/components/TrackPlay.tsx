@@ -1,7 +1,15 @@
 import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
+import { useSelector } from "react-redux";
+import { RootState } from "../Store/store";
 
 function TrackPlay() {
+
+  // Определяем текущий трек
+  const currentTrack = useSelector(
+    (state: RootState) => state.player.currentTrack
+  );
+  
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -22,7 +30,7 @@ function TrackPlay() {
             />
           ) : (
             <svg className="track-play__svg" /*  alt="music" */>
-              <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+              <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
             </svg>
           )}
         </div>
@@ -35,7 +43,7 @@ function TrackPlay() {
           />
         ) : (
           <div className="track-play__author">
-            <a className="track-play__author-link" href="http://"></a>
+            <a className="track-play__author-link" href="http://">{currentTrack?.author}</a>
           </div>
         )}
         {isLoading ? (
@@ -47,7 +55,7 @@ function TrackPlay() {
           />
         ) : (
           <div className="track-play__album">
-            <a className="track-play__album-link" href="http://"></a>
+            <a className="track-play__album-link" href="http://">{currentTrack?.album}</a>
           </div>
         )}
       </div>
@@ -55,12 +63,12 @@ function TrackPlay() {
       <div className="track-play__like-dis">
         <div className="track-play__like _btn-icon">
           <svg className="track-play__like-svg" /* alt="like" */>
-            <use xlinkHref="img/icon/sprite.svg#icon-like"></use>
+            <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
           </svg>
         </div>
         <div className="track-play__dislike _btn-icon">
           <svg className="track-play__dislike-svg" /* alt="dislike" */>
-            <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
+            <use xlinkHref="/img/icon/sprite.svg#icon-dislike"></use>
           </svg>
         </div>
       </div>

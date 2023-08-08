@@ -2,8 +2,42 @@
     width: 60px;
 }
 
+
+
+.playlist {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.playlist__item {
+    display: grid;
+    grid-auto-flow: column;
+    align-items: center;
+    row-gap: 25px;
+}
+
+.track__title_text {
+    width: 352px;
+    height: 19px;
+
+}
+
+.track__author {
+    width: 300px;
+}
+
+.track__author_link {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--color-text);
+
+}
+
 .track__album {
-    width: 200px;
+    width: 230px;
 }
 
 .track__album_link {
@@ -19,6 +53,7 @@
     width: 51px;
     height: 51px;
     padding: 16px;
+    cursor: pointer;
     background-color: var(--color-img);
     display: flex;
     align-items: center;
@@ -26,33 +61,35 @@
     margin-right: 17px;
     transition: background-color 0.8s ease-in-out;
 }
+
 .track__title_svg {
     width: 18px;
     height: 17px;
     fill: transparent;
     stroke: #7272724e;
-  }
-.track__title_text {
-    width: 320px;
-    height: 19px;
-
 }
+
+
+
 .track__title_link {
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
     color: var(--color-text);
-  
-  }
 
-.track__time_svg {
+}
+
+.track__heart {
     width: 14px;
     height: 12px;
     margin-right: 17px;
     fill: transparent;
     stroke: #B1B1B1;
-
+    cursor: pointer;
+}
+.track__heart_favorite{
+fill: var(--color-img);
 }
 
 .track__time_text {

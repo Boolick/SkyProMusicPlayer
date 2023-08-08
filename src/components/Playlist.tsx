@@ -1,15 +1,17 @@
 import React from "react";
+import TrackTime from "./TrackTime";
+import TrackAlbum from "./TrackAlbum";
 
-import TrackList, { Track } from "./Request/Request";
+/* import TrackList, { Track } from "./Request/Request"; */
 
-interface PlaylistProps {
+/* interface PlaylistProps {
   tracks: Track[];
-}
+} */
 
-const Playlist: React.FC<PlaylistProps> = () => {
+const Playlist: React.FC /* <PlaylistProps> */ = () => {
   return (
     <div className="content__playlist playlist">
-      <TrackList  />
+      <TrackAlbum></TrackAlbum>
     </div>
   );
 };

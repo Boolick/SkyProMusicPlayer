@@ -55,6 +55,7 @@ body {
   height: 100%;
   font-family: "StratosSkyeng", sans-serif;
   color: var(--color-text);
+  background-color: var(--color-background);
 
 }
 
@@ -184,8 +185,14 @@ body {
 }
 
 .menu__item {
-  padding: 5px 0;
+  padding: 5px 5px;
   margin-bottom: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.menu__item:hover {
+  background-color: #696969;
 }
 
 .menu__link {
@@ -459,11 +466,13 @@ body {
   padding: 5px;
   display: flex;
   align-items: center;
+  cursor: pointer;
 
 }
 
 .player__btn-prev {
   margin-right: 23px;
+
 }
 
 .player__btn-prev-svg {
@@ -475,7 +484,7 @@ body {
 
 .player__btn-next {
   margin-right: 28px;
-  fill: #a53939;
+  stroke: var(--color-img);
 }
 
 .player__btn-next-svg {
@@ -524,7 +533,7 @@ body {
 .track-play__image {
   width: 51px;
   height: 51px;
-  background-color: var(--color-background);
+  background-color: var(--color-img);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -542,7 +551,7 @@ body {
 
 .track-play__author {
   grid-area: author;
-  min-width: 49px;
+  min-width: 150px;
 }
 
 .track-play__author-link {

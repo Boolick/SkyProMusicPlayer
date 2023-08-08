@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+/* import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface FilterState {
@@ -31,3 +31,4 @@ export const filterSlice = createSlice({
 export const { setCategoryId } = filterSlice.actions;
 
 export default filterSlice.reducer;
+ */

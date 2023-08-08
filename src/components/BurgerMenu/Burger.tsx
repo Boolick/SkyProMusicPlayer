@@ -5,22 +5,22 @@ import styles from "./BurgerMenu.module.css";
 import NavBar from "../NavBar";
 import { ThemeContext } from "../../Context/ThemeContext";
 
-const [isOpened, setIsOpened] = useState<boolean>(false);
-const { theme } = useContext(ThemeContext);
-
 function Burger() {
+  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const { theme } = useContext(ThemeContext);
+
   return (
     <nav className={styles.main__nav}>
       <svg className="nav__logo logo">
         {theme === "light" ? (
           <use
             className="logo__image"
-            xlinkHref="img/icon/sprite.svg#light_logo"
+            xlinkHref="/img/icon/sprite.svg#light_logo"
           ></use>
         ) : (
           <use
             className="logo__image"
-            xlinkHref="img/icon/sprite.svg#dark_logo"
+            xlinkHref="/img/icon/sprite.svg#dark_logo"
           ></use>
         )}
       </svg>
@@ -43,12 +43,12 @@ function Burger() {
             {theme === "light" ? (
               <use
                 className="logo__image"
-                xlinkHref="img/icon/sprite.svg#light_logo"
+                xlinkHref="/img/icon/sprite.svg#light_logo"
               ></use>
             ) : (
               <use
                 className="logo__image"
-                xlinkHref="img/icon/sprite.svg#dark_logo"
+                xlinkHref="/img/icon/sprite.svg#dark_logo"
               ></use>
             )}
           </svg>
