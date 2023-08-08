@@ -5,11 +5,10 @@ import styles from "./BurgerMenu.module.css";
 import NavBar from "../NavBar";
 import { ThemeContext } from "../../Context/ThemeContext";
 
+const [isOpened, setIsOpened] = useState<boolean>(false);
+const { theme } = useContext(ThemeContext);
 
 function Burger() {
-  const [isOpened, setIsOpened] = useState<boolean>(false);
-  const { theme } = useContext(ThemeContext);
-
   return (
     <nav className={styles.main__nav}>
       <svg className="nav__logo logo">
@@ -35,7 +34,11 @@ function Burger() {
         onClick={() => setIsOpened(false)}
         className={cn(styles.cover, { [styles.coverShow]: isOpened })}
       >
-        <div className={cn(styles.main__nav_activ, { [styles.main__nav]: isOpened })}>
+        <div
+          className={cn(styles.main__nav_activ, {
+            [styles.main__nav]: isOpened,
+          })}
+        >
           <svg className="nav__logo logo">
             {theme === "light" ? (
               <use

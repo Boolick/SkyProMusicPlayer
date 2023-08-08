@@ -20,7 +20,7 @@ const MyPlaylist: React.FC<MyPlaylistProps> = ({ tracks }) => {
         <h2 className="centerblock__h2">Мой плейлист</h2>
         <Content tracks={tracks} />
       </div>
-      <Bar loading={false} />
+      <Bar />
     </>
   );
 };

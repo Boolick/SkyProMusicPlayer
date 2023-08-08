@@ -24,7 +24,7 @@ const AppRoutes: React.FC<AppRoutesProps> = ({ tracks }) => {
           element={<MyPlaylist tracks={tracks} />}
         ></Route>
       </Route>
-  
+
       <Route path="/login-page" element={<LoginPage type={"login"} />}></Route>
       <Route path="*" element={<NotFound />}></Route>
     </Routes>
