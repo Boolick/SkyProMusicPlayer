@@ -1,0 +1,47 @@
+button,
+._btn {
+    cursor: pointer;
+    background-color: transparent;
+}
+
+.player__btn_play, .player__btn_pause {
+    margin-right: 22px;
+    margin-left: 10px;
+    width: 22px;
+    height: 20px;
+    flex-shrink: 0;
+    border: none;
+}
+
+.player__btn_play_svg, .player__btn_pause_svg {
+    width: 22px;
+    height: 20px;
+    fill: #D9D9D9;
+
+
+}
+
+._btn-text:hover {
+    border-color: #D9B6FF;
+    color: #D9B6FF;
+    cursor: pointer;
+}
+
+._btn_icon:hover svg {
+    fill: transparent;
+    stroke: #ACACAC;
+    cursor: pointer;
+}
+
+._btn_icon:active svg {
+    fill: transparent;
+    stroke: #FFFFFF;
+    cursor: pointer;
+}
+
+._btn_icon:active .track-play__like-svg,
+._btn_icon:active .track-play__dislike-svg {
+    fill: #696969;
+    stroke: #FFFFFF;
+    cursor: pointer;
+}

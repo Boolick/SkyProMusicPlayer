@@ -1,0 +1,11 @@
+.progressLine {
+    background-color: #313131;
+
+}
+
+.playerProgress {
+
+    height: 5px;
+    background-color: rgb(164, 64, 223);
+    transition: width 0.3s ease-in-out;
+}

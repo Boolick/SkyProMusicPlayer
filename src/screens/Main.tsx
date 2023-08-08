@@ -25,7 +25,7 @@ const Main: React.FC<MainProps> = ({ tracks }) => {
       <Burger />
       <Centerblock tracks={tracks} />
       <Sidebar />
-      <Bar loading={false} />;
+      <Bar />;
     </div>
   );
 };

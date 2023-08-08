@@ -18,7 +18,7 @@ const Item = ({ tracks }: ItemProps) => {
     }, 5000);
     return () => clearTimeout(timeoutLoading);
   });
-
+   
   return (
     <div>
       {tracks.map((track) => (
