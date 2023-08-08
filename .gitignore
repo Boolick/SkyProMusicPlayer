@@ -13,6 +13,8 @@ dist-ssr
 *.local
 
 src/index.html
+src/tests/LoginPage.test.tsx
+src/tests/selections.tsx
 
 # Editor directories and files
 .vscode/*

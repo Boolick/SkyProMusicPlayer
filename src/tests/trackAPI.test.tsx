@@ -59,6 +59,6 @@ test("renders tracks", async () => {
       <TestComponent />
     </Provider>
   );
-  const items = await screen.findAllByRole("listitem");
+  const items = await screen.findAllByRole("list");
   expect(items).toHaveLength(2);
 });
