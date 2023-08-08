@@ -1,6 +1,7 @@
 import { useState } from "react";
-import styles from "./BurgerMenu.module.css";
 import cn from "classnames";
+
+import styles from "./BurgerMenu.module.css";
 import NavBar from "../NavBar";
 
 const [isOpened, setIsOpened] = useState<boolean>(false);

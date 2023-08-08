@@ -1,5 +1,4 @@
-import React from "react";
-import Search from "./Search";
+import Search from "./Search/Search";
 import Filter from "./Filter/Filter";
 import Content from "./Content";
 import { Track } from "./Request/Request";

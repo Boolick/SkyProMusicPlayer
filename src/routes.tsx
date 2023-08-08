@@ -1,28 +1,31 @@
 import { Routes, Route } from "react-router-dom";
+
 import Main from "./screens/Main";
 import MyPlaylist from "./screens/Myplaylist";
-import Login from "./screens/Login";
-import NotFound from "./screens/NotFound";
+import LoginPage from "./screens/LoginPage/LoginPage";
+import NotFound from "./screens/NotFoundPage/NotFound";
+
 import { Track } from "./components/Request/Request";
-import LoadingPage from "./screens/LoadingPage";
 
 interface AppRoutesProps {
   tracks: Track[];
+  isAuthenticated: boolean;
+  path: string;
+  element: React.ReactNode;
 }
 
 const AppRoutes = ({ tracks }: AppRoutesProps) => {
   return (
     <Routes>
+      <Route index element={<Main tracks={tracks} />}></Route>
       <Route
-        path="/LoadingPage"
-        element={<LoadingPage tracks={tracks} />}
-      ></Route>
-      <Route path="/" element={<Main tracks={tracks} />}></Route>
-      <Route
-        path="/Myplaylist"
+        path="/My-playlist"
         element={<MyPlaylist tracks={tracks} />}
       ></Route>
-      <Route path="/Login" element={<Login />}></Route>
+      <Route path="/login-page" element={<LoginPage type={"login"} />}></Route>
+
+      <Route path="/" element={<Main tracks={tracks} />}></Route>
+
       <Route path="*" element={<NotFound />}></Route>
     </Routes>
   );
