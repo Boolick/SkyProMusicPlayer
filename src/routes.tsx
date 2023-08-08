@@ -18,7 +18,7 @@ interface AppRoutesProps {
   element: React.ReactNode;
 }
 
-const AppRoutes: React.FC<AppRoutesProps> = ({ tracks, isAuthenticated }) => {
+const AppRoutes = ({ tracks, isAuthenticated }: AppRoutesProps) => {
   return (
     <>
       <Routes>

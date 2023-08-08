@@ -10,7 +10,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <Provider store={store}>
       <ThemeProvider>
-        <App />
+        <App tracks={[]}  />
       </ThemeProvider>
     </Provider>
   </BrowserRouter>
