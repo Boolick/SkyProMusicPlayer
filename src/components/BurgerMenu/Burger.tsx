@@ -5,13 +5,10 @@ import styles from "./BurgerMenu.module.css";
 import NavBar from "../NavBar";
 import { ThemeContext } from "../../Context/ThemeContext";
 
-<<<<<<< HEAD
-=======
-const [isOpened, setIsOpened] = useState<boolean>(false);
-const { theme } = useContext(ThemeContext);
-
->>>>>>> 7ca293a4f9a8c328561ded3ef2c33673d6ffead1
 function Burger() {
+  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const { theme } = useContext(ThemeContext);
+
   return (
     <nav className={styles.main__nav}>
       <svg className="nav__logo logo">
