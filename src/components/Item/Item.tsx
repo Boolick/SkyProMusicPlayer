@@ -9,15 +9,15 @@ interface ItemProps {
   tracks: Track[];
 }
 
-const Item: React.FC<ItemProps> = ({ tracks }) => {
+const Item = ({ tracks }: ItemProps) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeoutLoading = setTimeout(() => {
       setLoading(false);
     }, 5000);
+    return () => clearTimeout(timeoutLoading);
   });
-  console.log(tracks);
 
   return (
     <div>
