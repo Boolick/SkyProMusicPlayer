@@ -10,7 +10,7 @@ import {
 import styles from "./Login.module.css";
 import { setCredentials, setToken } from "../../Store/Reducers/AuthSlice";
 
-export const LoginPage: React.FC = (): JSX.Element => {
+function LoginPage(): JSX.Element {
   const [login, { isLoading, isSuccess, isError }] = useLoginMutation();
   const [token, { status }] = useTokenMutation();
   const [email, setEmail] = useState("");
@@ -22,6 +22,7 @@ export const LoginPage: React.FC = (): JSX.Element => {
   if (isLoading) {
     return (
       <Skeleton
+        data-testid="skeleton"
         className={styles.login__content}
         baseColor="var(--color-img)"
         highlightColor="var(--color-background)"
@@ -55,11 +56,16 @@ export const LoginPage: React.FC = (): JSX.Element => {
   }
 
   return (
-    <div className={styles.login__content}>
-      <form className={styles.login__box} onSubmit={handleLogin}>
-        <img src="img/logo.jpg" alt="logo" />
+    <div data-testid="LoginPage" className={styles.login__content}>
+      <form
+        data-testid="login-form"
+        className={styles.login__box}
+        onSubmit={handleLogin}
+      >
+        <img data-testid="logo-img" src="img/logo.jpg" alt="logo" />
 
         <input
+          data-testid="login-input"
           className={styles.input}
           type="email"
           placeholder="Логин"
@@ -68,6 +74,7 @@ export const LoginPage: React.FC = (): JSX.Element => {
           onChange={(e) => setEmail(e.target.value)}
         />
         <input
+          data-testid="password-input"
           className={styles.input}
           type="password"
           placeholder="Пароль"
@@ -78,6 +85,7 @@ export const LoginPage: React.FC = (): JSX.Element => {
 
         <div className={styles.buttons}>
           <button
+            data-testid="submit-button"
             onClick={handleToken}
             className={styles.in_button}
             type="submit"
@@ -92,4 +100,6 @@ export const LoginPage: React.FC = (): JSX.Element => {
       </form>
     </div>
   );
-};
+}
+
+export default LoginPage;

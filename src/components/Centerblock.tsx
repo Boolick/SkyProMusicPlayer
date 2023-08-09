@@ -13,7 +13,7 @@ const Centerblock = ({ tracks }: CenterblockProps) => {
       <Search />
       <h2 className="centerblock__h2">Треки</h2>
       <Filter tracks={tracks} />
-      <Content tracks={tracks} />
+      <Content />
     </div>
   );
 };

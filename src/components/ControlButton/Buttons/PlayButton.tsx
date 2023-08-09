@@ -7,6 +7,7 @@ function PlayButton() {
   const dispatch = useDispatch();
   return (
     <button
+      data-testid="play-button"
       onClick={() => dispatch(resumeTrack())}
       className={styles.player__btn_play}
     >

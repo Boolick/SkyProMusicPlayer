@@ -11,13 +11,14 @@ function Search() {
     <div className={styles.centerblock__search}>
       <svg className={styles.search__svg}>
         {theme === "light" ? (
-          <use xlinkHref="/img/icon/sprite.svg#icon-search-black"></use>
+          <use xlinkHref="img/icon/sprite.svg#icon-search-black"></use>
         ) : (
-          <use xlinkHref="/img/icon/sprite.svg#icon-search"></use>
+          <use xlinkHref="img/icon/sprite.svg#icon-search"></use>
         )}
       </svg>
 
       <input
+        data-testid={"input-search"}
         className={styles.search__text}
         type="search"
         placeholder="Поиск"

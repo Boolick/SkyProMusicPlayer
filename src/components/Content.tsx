@@ -1,13 +1,8 @@
 import React from "react";
 
 import Playlist from "./Playlist";
-import { Track } from "./Request/Request";
 
-interface ContentProps {
-  tracks: Track[];
-}
-
-const Content: React.FC<ContentProps> = ({ tracks }) => {
+const Content = () => {
   return (
     <>
       <div className="content__title playlist-title">

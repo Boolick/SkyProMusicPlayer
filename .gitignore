@@ -14,6 +14,8 @@ dist-ssr
 <<<<<<< HEAD
 
 src/index.html
+src/tests/LoginPage.test.tsx
+src/tests/selections.tsx
 
 =======
 index.html

@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import cn from "classnames";
+
 import styles from "../Filter.module.css";
 
-type Props = {
+interface CheckboxProps {
   className?: string;
   labels: string[];
-};
+}
 
-const Checkboxes: React.FC<Props> = ({ className, labels }) => {
+function Checkboxes({ className, labels }: CheckboxProps) {
   const [checkedIndex, setCheckedIndex] = useState<number>();
 
   return (
@@ -15,6 +16,7 @@ const Checkboxes: React.FC<Props> = ({ className, labels }) => {
       {labels.map((label, index) => (
         <label key={index} className={cn(styles.label)}>
           <input
+            data-testid="chekbox"
             type="radio"
             className={cn(styles.input)}
             checked={checkedIndex === index}
@@ -27,6 +29,6 @@ const Checkboxes: React.FC<Props> = ({ className, labels }) => {
       ))}
     </div>
   );
-};
+}
 
 export default Checkboxes;

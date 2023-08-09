@@ -56,7 +56,7 @@ export const trackApi = createApi({
     deleteFavoriteTrackById: builder.mutation<
       void,
       { id: number; token: string | null }
-    > ({
+    >({
       query: ({ id, token }) => ({
         url: `track/${id}/favorite/`,
         method: "DELETE",

@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import {
   useSignupMutation,
   useTokenMutation,
-} from "../../Store/Reducers/apiSlice"; // Импорт мутации useSignupMutation из файла api.ts
+} from "../../Store/Reducers/apiSlice"; // Импорт мутации useSignupMutation из файла apiSlice.ts
 import styles from "./SignupPage.module.css";
 import { setCredentials, setToken } from "../../Store/Reducers/AuthSlice";
 
@@ -18,13 +18,13 @@ export const SignupPage: React.FC = (): JSX.Element => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
-  const [isRegistered, setIsRegistered] = useState(false);
   const dispatch = useDispatch();
 
   const handleSignup = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
-    signup({ username, surname, email, password, repeatPassword });
+    await signup({ username, surname, email, password, repeatPassword });
     dispatch(setCredentials({ username, email, password }));
+    handleToken();
   };
 
   const handleToken = async () => {
@@ -39,15 +39,10 @@ export const SignupPage: React.FC = (): JSX.Element => {
   };
 
   if (isLoading) {
-    return (
-      <Skeleton
-        className={styles.modal__form_login}
-        baseColor="var(--color-img)"
-        highlightColor="var(--color-background)"
-      />
-    );
+    return <Skeleton />;
   }
   if (isSuccess) {
+    console.log(isSuccess);
     return <Navigate to={"/"} />;
   }
 
@@ -99,11 +94,7 @@ export const SignupPage: React.FC = (): JSX.Element => {
           />
 
           <div className={styles.buttons}>
-            <button
-              onClick={handleToken}
-              className={styles.modal__btn_signup_ent}
-              type="submit"
-            >
+            <button className={styles.modal__btn_signup_ent} type="submit">
               Зарегистрироваться
             </button>
           </div>
