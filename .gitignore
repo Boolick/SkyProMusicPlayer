@@ -11,11 +11,15 @@ node_modules
 dist
 dist-ssr
 *.local
+<<<<<<< HEAD
 
 src/index.html
 src/tests/LoginPage.test.tsx
 src/tests/selections.tsx
 
+=======
+index.html
+>>>>>>> 7026118c5425e3116df3b43eb929ef7004d8f302
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

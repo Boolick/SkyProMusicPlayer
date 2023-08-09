@@ -4,10 +4,12 @@ import { useSelector } from "react-redux";
 import styles from "./ProgressBar.module.css";
 import { RootState } from "../../../Store/store";
 
-const ProgressBar: React.FC<{
+interface ProgressBar {
   currentTime: number;
   duration: number;
-}> = () => {
+}
+
+const ProgressBar = () => {
   const { currentTime, duration } = useSelector(
     (state: RootState) => state.player
   );

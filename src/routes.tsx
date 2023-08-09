@@ -3,6 +3,7 @@ import { Routes, Route, useParams } from "react-router-dom";
 import Main from "./screens/Main";
 import LoginPage from "./screens/LoginPage/LoginPage";
 import NotFound from "./screens/NotFoundPage/NotFound";
+
 import { Track } from "./components/Request/Request";
 import PrivateRoute from "./components/PrivateRoute";
 import SelectionsPage from "./screens/SelectionsPage";
@@ -16,7 +17,7 @@ interface AppRoutesProps {
   element: React.ReactNode;
 }
 
-const AppRoutes: React.FC<AppRoutesProps> = ({ tracks, isAuthenticated }) => {
+const AppRoutes = ({ tracks, isAuthenticated }: AppRoutesProps) => {
   return (
     <>
       <Routes>
