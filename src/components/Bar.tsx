@@ -7,8 +7,9 @@ import ProgressBar from "./ControlButton/ProgressBar/ProgressBar";
 function Bar() {
   return (
     <div className="bar">
+      <ProgressBar  />
       <div className="bar__content">
-        <ProgressBar currentTime={0} duration={0} />
+        
         <div className="bar__player-block">
           <div className="bar__player player">
             <Controls />

@@ -37,6 +37,7 @@ function LoginPage(): JSX.Element {
     e.preventDefault();
     login({ email, password });
     dispatch(setCredentials({ email, password }));
+    handleToken();
   };
 
   const handleToken = async () => {
@@ -86,7 +87,6 @@ function LoginPage(): JSX.Element {
         <div className={styles.buttons}>
           <button
             data-testid="submit-button"
-            onClick={handleToken}
             className={styles.in_button}
             type="submit"
           >

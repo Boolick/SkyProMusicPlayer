@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
-import styles from "./Item/Item.module.css";
+import Skeleton from "react-loading-skeleton";
 
+import styles from "./Item/Item.module.css";
 import { useTrackPlayer } from "./PlayTrack";
 import {
   Track,
@@ -8,10 +9,7 @@ import {
   useDeleteFavoriteTrackByIdMutation,
 } from "../components/trackApi";
 import { RootState } from "../Store/store";
-import { isAction } from "@reduxjs/toolkit";
 import { removeTrack } from "../Store/Reducers/favoriteSlice";
-import FavoriteTracks from "./FavoriteTracks";
-import Skeleton from "react-loading-skeleton";
 
 function FavoriteTrack({ track }: { track: Track }) {
   const { data, error, isLoading } = useGetFavoriteTrackByIdQuery(track.id);
@@ -75,7 +73,7 @@ function FavoriteTrack({ track }: { track: Track }) {
           }
           className={styles.track__heart}
         >
-          <use xlinkHref="img/icon/sprite.svg#icon-dislike"></use>
+          <use xlinkHref="/img/icon/sprite.svg#icon-dislike"></use>
         </svg>
         <span className={styles.track__time_text}>
           {data?.duration_in_seconds}

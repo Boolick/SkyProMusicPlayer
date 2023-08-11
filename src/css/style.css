@@ -470,52 +470,6 @@ body {
 
 }
 
-.player__btn-prev {
-  margin-right: 23px;
-
-}
-
-.player__btn-prev-svg {
-  width: 15px;
-  height: 14px;
-}
-
-
-
-.player__btn-next {
-  margin-right: 28px;
-  stroke: var(--color-img);
-}
-
-.player__btn-next-svg {
-  width: 15px;
-  height: 14px;
-  fill: inherit;
-  stroke: #D9D9D9;
-}
-
-.player__btn-repeat {
-  margin-right: 24px;
-}
-
-.player__btn-repeat-svg {
-  width: 18px;
-  height: 12px;
-  fill: transparent;
-  stroke: #696969;
-}
-
-.player__btn-shuffle {
-  display: flex;
-  align-items: center;
-}
-
-.player__btn-shuffle-svg {
-  width: 19px;
-  height: 12px;
-  fill: transparent;
-  stroke: #696969;
-}
 
 .player__track-play {
   display: flex;

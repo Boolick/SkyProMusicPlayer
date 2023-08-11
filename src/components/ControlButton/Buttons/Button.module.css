@@ -40,9 +40,68 @@ button,
     cursor: pointer;
 }
 
+.active {
+
+    stroke: #a31a1a;
+}
+
 ._btn_icon:active .track-play__like-svg,
 ._btn_icon:active .track-play__dislike-svg {
     fill: #696969;
     stroke: #FFFFFF;
     cursor: pointer;
+}
+
+.player__btn_prev, .player__btn-play, .player__btn_next,
+.player__btn_repeat, .player__btn_shuffle, .player__btn-pause {
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+.player__btn_prev {
+    margin-right: 23px;
+}
+
+.player__btn_prev_svg {
+    width: 15px;
+    height: 14px;
+}
+
+.player__btn_next {
+    margin-right: 28px;
+    stroke: var(--color-img);
+}
+
+.player__btn_next_svg {
+    width: 15px;
+    height: 14px;
+    fill: inherit;
+    stroke: #D9D9D9;
+}
+
+.player__btn_repeat {
+    margin-right: 24px;
+}
+
+.player__btn_repeat_svg {
+    width: 18px;
+    height: 12px;
+    fill: transparent;
+    /* stroke: #696969; */
+}
+
+
+.player__btn_shuffle {
+    display: flex;
+    align-items: center;
+}
+
+.player__btn_shuffle_svg {
+    width: 19px;
+    height: 12px;
+    fill: transparent;
+    stroke: #696969;
 }

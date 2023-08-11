@@ -10,14 +10,14 @@ interface PrivateRouteProps {
   redirectPath: string;
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({
+const PrivateRoute = ({
   isAuthenticatedProp,
   redirectPath,
-}) => {
+}: PrivateRouteProps) => {
   const email = useSelector((state: RootState) => state.auth.email);
-  const password = useSelector((state: RootState) => state.auth.password); 
-  
-  const token =   useSelector((state: RootState) => state.auth.token);
+  const password = useSelector((state: RootState) => state.auth.password);
+
+  const token = useSelector((state: RootState) => state.auth.token);
   console.log(token);
   const isAuthenticated = !!token;
   console.log("Rendering PrivateRoute with isAuthenticated =", isAuthenticated);

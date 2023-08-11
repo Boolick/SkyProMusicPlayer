@@ -32,13 +32,15 @@ export function useTrackPlayer() {
     ) as HTMLAudioElement;
     if (audioPlayer) {
       if (currentTrack) {
+        // Добавляем обработчик события canplaythrough
+        audioPlayer.addEventListener("canplaythrough", () => {
+          // Вызываем метод play() на элементе audio
+          audioPlayer.play().catch((error) => {
+            console.log(error);
+          });
+        });
         if (audioPlayer.src !== currentTrack.track_file) {
           audioPlayer.src = currentTrack.track_file;
-        }
-        if (isPlaying) {
-          audioPlayer.play();
-        } else {
-          audioPlayer.pause();
         }
       }
     }
@@ -51,6 +53,7 @@ export function useTrackPlayer() {
    */
   function handleSelectTrack(track: Track) {
     dispatch(playTrack(track));
+    dispatch(resumeTrack());
   }
 
   /**
@@ -59,8 +62,6 @@ export function useTrackPlayer() {
   function handleTogglePlay() {
     if (isPlaying) {
       dispatch(pauseTrack());
-    } else {
-      dispatch(resumeTrack());
     }
   }
 

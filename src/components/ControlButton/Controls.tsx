@@ -1,12 +1,20 @@
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import cn from "classnames";
+import { useDispatch } from "react-redux";
 
+import styles from "./Buttons/Button.module.css";
 import { RootState } from "../../Store/store";
 import Player from "./Player";
 import { useGetAllTracksQuery } from "../../components/trackApi";
 import { useTrackPlayer } from "../PlayTrack";
+import { resumeTrack, toggleRepeat } from "../../Store/Actions/playerSlice";
 
 function Controls() {
-  const { handleSelectTrack, handleTogglePlay } = useTrackPlayer();
+  const dispatch = useDispatch();
+
+  const { handleSelectTrack } = useTrackPlayer();
+
   const { data: tracks } = useGetAllTracksQuery();
 
   const currentTrack = useSelector(
@@ -26,7 +34,6 @@ function Controls() {
 
     // Определяем индекс следующего трека
     let nextTrackIndex = currentTrackIndex + 1;
-    console.log(nextTrackIndex);
 
     // Если индекс выходит за пределы массива, то возвращаем его к началу
     if (nextTrackIndex >= tracks.length) {
@@ -38,7 +45,9 @@ function Controls() {
 
     // Выбираем следующий трек для воспроизведения
     handleSelectTrack(nextTrack);
-    if (!isPlaying) return handleTogglePlay();
+    dispatch(resumeTrack());
+
+    //if (!isPlaying) return handleTogglePlay();
   }
 
   // Функция для переключения на предыдущий трек
@@ -63,11 +72,7 @@ function Controls() {
 
     // Выбираем предыдущий трек для воспроизведения
     handleSelectTrack(prevTrack);
-  }
-
-  // Функция для повторения текущего трека
-  function handleRepeatTrack() {
-    // Здесь должна быть логика для повторения текущего трека
+    dispatch(resumeTrack());
   }
 
   // Функция для перемешивания списка воспроизведения
@@ -75,29 +80,69 @@ function Controls() {
     // Здесь должна быть логика для перемешивания списка воспроизведения
   }
 
+  // Функция для повторения текущего трека
+  const [isRepeat, setIsRepeat] = useState(true);
+  function handleRepeatTrack() {
+    if (!currentTrack) return;
+    setIsRepeat((prevIsRepeat) => !prevIsRepeat);
+    dispatch(toggleRepeat());
+  }
+
+  useEffect(() => {
+    const audioPlayer = document.getElementById(
+      "audio-player"
+    ) as HTMLAudioElement;
+    if (audioPlayer) {
+      const handleEnded = () => {
+        if (isRepeat) {
+          console.log(isRepeat);
+          audioPlayer.currentTime = 0;
+          audioPlayer.play();
+        } else {
+          handleNextTrack();
+        }
+      };
+      audioPlayer.addEventListener("ended", handleEnded);
+      return () => {
+        audioPlayer.removeEventListener("ended", handleEnded);
+      };
+    }
+  }, [isRepeat]);
+
   return (
     <div className="player__controls">
-      <div className="player__btn-prev" onClick={handlePrevTrack}>
-        <svg className="player__btn-prev-svg" /* alt="prev" */>
+      <div className={styles.player__btn_prev} onClick={handlePrevTrack}>
+        <svg className={styles.player__btn_prev_svg} /* alt="prev" */>
           <use xlinkHref="/img/icon/sprite.svg#icon-prev"></use>
         </svg>
       </div>
       <Player />
-      <div className="player__btn-next" onClick={handleNextTrack}>
-        <svg className="player__btn-next-svg" /* alt="next" */>
+      <div className={styles.player__btn_next} onClick={handleNextTrack}>
+        <svg className={styles.player__btn_next_svg} /* alt="next" */>
           <use xlinkHref="/img/icon/sprite.svg#icon-next"></use>
         </svg>
       </div>
-      <div className="player__btn-repeat _btn-icon" onClick={handleRepeatTrack}>
-        <svg className="player__btn-repeat-svg" /* alt="repeat" */>
+      <div
+        onClick={handleRepeatTrack}
+        className={cn(styles.player__btn_repeat, styles._btn_icon, {
+          [styles.active]: isRepeat,
+        })}
+      >
+        <svg
+          className={styles.player__btn_repeat_svg}
+
+          /* alt="repeat" */
+        >
           <use xlinkHref="/img/icon/sprite.svg#icon-repeat"></use>
         </svg>
       </div>
       <div
-        className="player__btn-shuffle _btn-icon"
+        className={cn(styles.player__btn_shuffle, styles._btn_icon, {
+          [styles._active]: !isRepeat,
+        })}
         onClick={handleShuffleTracks}
       >
-        <svg className="player__btn-shuffle-svg" /* alt="shuffle" */>
+        <svg className={styles.player__btn_shuffle_svg} /* alt="shuffle" */>
           <use xlinkHref="/img/icon/sprite.svg#icon-shuffle"></use>
         </svg>
       </div>
