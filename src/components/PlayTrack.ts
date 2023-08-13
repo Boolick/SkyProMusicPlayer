@@ -24,29 +24,6 @@ export function useTrackPlayer() {
   const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
 
   /**
-   * Обновляем элемент audio при изменении выбранной дорожки или состояние воспроизведения.
-   */
-  useEffect(() => {
-    const audioPlayer = document.getElementById(
-      "audio-player"
-    ) as HTMLAudioElement;
-    if (audioPlayer) {
-      if (currentTrack) {
-        // Добавляем обработчик события canplaythrough
-        audioPlayer.addEventListener("canplaythrough", () => {
-          // Вызываем метод play() на элементе audio
-          audioPlayer.play().catch((error) => {
-            console.log(error);
-          });
-        });
-        if (audioPlayer.src !== currentTrack.track_file) {
-          audioPlayer.src = currentTrack.track_file;
-        }
-      }
-    }
-  }, [currentTrack, isPlaying]);
-
-  /**
    * Обработчик события выбора трека.
    *
    * @param {Track} track - Выбранный трек.

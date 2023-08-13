@@ -14,7 +14,6 @@ function Sidebar() {
   const [selectionId, setSelectionId] = useState(1); // состояние для хранения id текущей выбранной подборки
   const { data: selections, isLoading, error } = useGetSelectionsQuery();
   const userName = useSelector((state: RootState) => state.auth.email);
-  console.log(userName);
 
   if (isLoading) {
     return <SkeletonTheme />;

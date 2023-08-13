@@ -1,17 +1,21 @@
 import Skeleton from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 import { RootState } from "../Store/store";
 import {
-  Track,
   useGetAllTracksQuery,
   useAddFavoriteTrackByIdMutation,
 } from "../components/trackApi";
 import styles from "./Item/Item.module.css";
 import { addTrack, removeTrack } from "../Store/Reducers/favoriteSlice";
 import { useTrackPlayer } from "./PlayTrack";
+import {
+  playTrack,
+  toggleIsPLaying,
+  updateTracks,
+} from "../Store/Actions/playerSlice";
 
 export const TrackAlbum = () => {
   const dispatch = useDispatch();
@@ -21,7 +25,6 @@ export const TrackAlbum = () => {
 
   // Обновление элемента audio при изменении выбранного трека или состояния воспроизведения
   const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
-  console.log(isPlaying);
 
   const favoriteTracks = useSelector(
     (state: RootState) => state.favorite.tracks
@@ -31,10 +34,21 @@ export const TrackAlbum = () => {
     addFavoriteTrack(id);
   };
 
+  const tracks = useSelector((state: RootState) => state.player.tracks);
+
   // Выбираем первый трек при загрузке страницы
   useEffect(() => {
+    if (tracks && tracks.length > 0) {
+      dispatch(playTrack(tracks[0]));
+      dispatch(toggleIsPLaying());
+    }
+  }, [tracks]);
+
+  // Обновляем список треков
+  useEffect(() => {
+    console.log("Updating tracks with data:", data);
     if (data && data.length > 0) {
-      handleSelectTrack(data[0]);
+      dispatch(updateTracks(data));
     }
   }, [data]);
 
@@ -52,13 +66,12 @@ export const TrackAlbum = () => {
     );
 
   if (error) return <div>Error:{error.toString()}</div>;
-  console.log(data);
 
   return (
     <>
       <audio id="audio-player" style={{ display: "none" }} />
       <ul className={styles.playlist}>
-        {data?.map((track) => (
+        {tracks?.map((track) => (
           <li key={track.id} className={styles.playlist__item}>
             {isLoading ? (
               <Skeleton />

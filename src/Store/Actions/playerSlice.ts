@@ -7,6 +7,7 @@ interface PlayerState {
   currentTime: number;
   duration: number;
   isRepeat: boolean;
+  tracks: Track[];
 }
 
 const initialState: PlayerState = {
@@ -15,6 +16,7 @@ const initialState: PlayerState = {
   currentTime: 0,
   duration: 0,
   isRepeat: false,
+  tracks: [],
 };
 
 const playerSlice = createSlice({
@@ -24,7 +26,7 @@ const playerSlice = createSlice({
     playTrack(state, action) {
       // Изменяем состояние воспроизведения только если текущий трек отличается от выбранного
       if (state.currentTrack?.id === action.payload.id) {
-        state.isPlaying = true;
+        state.isPlaying = false;
       }
       state.currentTrack = action.payload;
     },
@@ -38,13 +40,28 @@ const playerSlice = createSlice({
       state.currentTime = action.payload.currentTime;
       state.duration = action.payload.duration;
     },
-    toggleRepeat(state) {
+    toggleIsRepeat(state) {
       state.isRepeat = !state.isRepeat;
+    },
+    toggleIsPLaying(state) {
+      if (state.isPlaying === true) {
+        state.isPlaying = false;
+      }
+    },
+    updateTracks(state, action) {
+      state.tracks = action.payload;
     },
   },
 });
 
-export const { playTrack, pauseTrack, resumeTrack, updateProgress, toggleRepeat } =
-  playerSlice.actions;
+export const {
+  playTrack,
+  pauseTrack,
+  resumeTrack,
+  updateProgress,
+  toggleIsRepeat,
+  toggleIsPLaying,
+  updateTracks,
+} = playerSlice.actions;
 
 export default playerSlice.reducer;

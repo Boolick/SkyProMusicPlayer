@@ -6,23 +6,25 @@ import { useDispatch } from "react-redux";
 import styles from "./Buttons/Button.module.css";
 import { RootState } from "../../Store/store";
 import Player from "./Player";
-import { useGetAllTracksQuery } from "../../components/trackApi";
+import { Track, useGetAllTracksQuery } from "../../components/trackApi";
 import { useTrackPlayer } from "../PlayTrack";
-import { resumeTrack, toggleRepeat } from "../../Store/Actions/playerSlice";
+import {
+  resumeTrack,
+  toggleIsRepeat,
+  updateTracks,
+} from "../../Store/Actions/playerSlice";
 
 function Controls() {
   const dispatch = useDispatch();
 
   const { handleSelectTrack } = useTrackPlayer();
 
-  const { data: tracks } = useGetAllTracksQuery();
+   
 
   const currentTrack = useSelector(
     (state: RootState) => state.player.currentTrack
   );
-
-  const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
-
+  const tracks = useSelector((state: RootState) => state.player.tracks);
   // Функция для переключения на следующий трек
   function handleNextTrack() {
     if (!tracks) return;
@@ -46,8 +48,6 @@ function Controls() {
     // Выбираем следующий трек для воспроизведения
     handleSelectTrack(nextTrack);
     dispatch(resumeTrack());
-
-    //if (!isPlaying) return handleTogglePlay();
   }
 
   // Функция для переключения на предыдущий трек
@@ -76,16 +76,36 @@ function Controls() {
   }
 
   // Функция для перемешивания списка воспроизведения
+  function shuffleArray(array: any[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+  }
+
   function handleShuffleTracks() {
-    // Здесь должна быть логика для перемешивания списка воспроизведения
+    // Добавляем копию массива
+    if (!tracks) return;
+    const shuffledTracks = [...tracks];
+
+    // Перемешиваем скопированный массив
+    shuffleArray(shuffledTracks);
+
+    function updateTracksState(shuffledTracks: Track[]) {
+      dispatch(updateTracks(shuffledTracks));
+    }
+
+    // Обновляем state перемешанным массивом
+    updateTracksState(shuffledTracks);
   }
 
   // Функция для повторения текущего трека
-  const [isRepeat, setIsRepeat] = useState(true);
+  const [isRepeat, setIsRepeat] = useState(false);
   function handleRepeatTrack() {
+    console.log("Toggling repeat...");
     if (!currentTrack) return;
     setIsRepeat((prevIsRepeat) => !prevIsRepeat);
-    dispatch(toggleRepeat());
+    dispatch(toggleIsRepeat());
   }
 
   useEffect(() => {
@@ -94,6 +114,7 @@ function Controls() {
     ) as HTMLAudioElement;
     if (audioPlayer) {
       const handleEnded = () => {
+        console.log("Track ended. Repeat:", isRepeat);
         if (isRepeat) {
           console.log(isRepeat);
           audioPlayer.currentTime = 0;
@@ -138,7 +159,7 @@ function Controls() {
       </div>
       <div
         className={cn(styles.player__btn_shuffle, styles._btn_icon, {
-          [styles._active]: !isRepeat,
+          [styles._active]: isRepeat,
         })}
         onClick={handleShuffleTracks}
       >
