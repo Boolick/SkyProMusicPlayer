@@ -13,18 +13,18 @@ import {
   toggleIsRepeat,
   updateTracks,
 } from "../../Store/Actions/playerSlice";
+import { updateFavoriteTracks } from "../../Store/Reducers/favoriteSlice";
 
 function Controls() {
   const dispatch = useDispatch();
 
   const { handleSelectTrack } = useTrackPlayer();
 
-   
-
   const currentTrack = useSelector(
     (state: RootState) => state.player.currentTrack
   );
   const tracks = useSelector((state: RootState) => state.player.tracks);
+
   // Функция для переключения на следующий трек
   function handleNextTrack() {
     if (!tracks) return;
@@ -83,22 +83,6 @@ function Controls() {
     }
   }
 
-  function handleShuffleTracks() {
-    // Добавляем копию массива
-    if (!tracks) return;
-    const shuffledTracks = [...tracks];
-
-    // Перемешиваем скопированный массив
-    shuffleArray(shuffledTracks);
-
-    function updateTracksState(shuffledTracks: Track[]) {
-      dispatch(updateTracks(shuffledTracks));
-    }
-
-    // Обновляем state перемешанным массивом
-    updateTracksState(shuffledTracks);
-  }
-
   // Функция для повторения текущего трека
   const [isRepeat, setIsRepeat] = useState(false);
   function handleRepeatTrack() {
@@ -106,6 +90,26 @@ function Controls() {
     if (!currentTrack) return;
     setIsRepeat((prevIsRepeat) => !prevIsRepeat);
     dispatch(toggleIsRepeat());
+  }
+  // Получаем треки из состояния среза player
+  const playerTracks = useSelector((state: RootState) => state.player.tracks);
+  // Получаем избранные треки из состояния среза favorite
+  const favoriteTracks = useSelector(
+    (state: RootState) => state.favorite.tracks
+  );
+  function handleShuffleTracks() {
+    // Добавляем копии массивов
+    if (!playerTracks || !favoriteTracks) return;
+    const shuffledPlayerTracks = [...playerTracks];
+    const shuffledFavoriteTracks = [...favoriteTracks];
+
+    // Перемешиваем скопированные массивы
+    shuffleArray(shuffledPlayerTracks);
+    shuffleArray(shuffledFavoriteTracks);
+
+    // Обновляем state перемешанными массивами
+    dispatch(updateTracks(shuffledPlayerTracks));
+    dispatch(updateFavoriteTracks(shuffledFavoriteTracks));
   }
 
   useEffect(() => {

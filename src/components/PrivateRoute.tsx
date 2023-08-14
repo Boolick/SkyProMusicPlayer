@@ -3,7 +3,6 @@ import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../Store/store";
-//import handleToken from "./token";
 
 interface PrivateRouteProps {
   isAuthenticatedProp: boolean;
@@ -25,6 +24,3 @@ const PrivateRoute = ({
 };
 
 export default PrivateRoute;
-function setError(message: any) {
-  throw new Error("Function not implemented.");
-}

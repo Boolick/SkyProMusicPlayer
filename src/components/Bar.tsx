@@ -1,7 +1,7 @@
 import "react-loading-skeleton/dist/skeleton.css";
 import TrackPlay from "./TrackPlay";
 import Controls from "./ControlButton/Controls";
-import VolumeBlock from "./VolumeBlock";
+import VolumeBlock from "./Volume/VolumeBlock";
 import ProgressBar from "./ControlButton/ProgressBar/ProgressBar";
 
 function Bar() {

@@ -18,7 +18,7 @@ const Player = () => {
     const audioPlayer = document.getElementById(
       "audio-player"
     ) as HTMLAudioElement;
-    if (currentTrack) {
+    if (audioPlayer && currentTrack) {
       if (audioPlayer.src !== currentTrack.track_file) {
         audioPlayer.src = currentTrack.track_file;
       }

@@ -1,14 +1,21 @@
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import cn from "classnames";
 
-import { useGetSelectionByIdQuery } from "../components/trackApi"; //   хук из   API
+import {
+  useAddFavoriteTrackByIdMutation,
+  useGetSelectionByIdQuery,
+} from "../components/trackApi"; //   хук из   API
 import styles from "../components/Item/Item.module.css";
 import Burger from "../components/BurgerMenu/Burger";
 import Bar from "../components/Bar";
 import Search from "../components/Search/Search";
 import { useTrackPlayer } from "../components/PlayTrack";
 import { RootState } from "../Store/store";
+import { toggleIsPLaying, updateTracks } from "../Store/Actions/playerSlice";
+import { addTrack } from "../Store/Reducers/favoriteSlice";
 
 const selections: { id: number; title: string; items: any[] }[] = [
   { id: 0, title: "Плейлист дня", items: [] },
@@ -26,27 +33,47 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
     isLoading,
     error,
   } = useGetSelectionByIdQuery(selectionId);
-
+  const [addFavoriteTrack] = useAddFavoriteTrackByIdMutation();
   const { handleSelectTrack } = useTrackPlayer();
   const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
+  const dispatch = useDispatch();
+  const token = useSelector((state: RootState) => state.auth.token);
+  const favoriteTracks = useSelector(
+    (state: RootState) => state.favorite.tracks
+  );
+  const handleAdd = (id: number, token: string) => {
+    addFavoriteTrack({ id, token });
+  };
 
   // Выбираем первый трек при загрузке страницы
   useEffect(() => {
     if (selection) {
       if (selection && selection.items.length > 0) {
         handleSelectTrack(selection.items[0]);
+        dispatch(toggleIsPLaying());
       }
     }
   }, [selection]);
 
-  if (isLoading) return;
-  <Skeleton
-    count={29}
-    baseColor="var(--color-img)"
-    highlightColor="var(--color-background)"
-  ></Skeleton>;
+  useEffect(() => {
+    console.log("Updating tracks with selection:", selection);
+    if (selection && selection.items.length > 0) {
+      dispatch(updateTracks(selection.items));
+    }
+  }, [selection?.items]);
+
+  if (isLoading) {
+    <>
+      <Skeleton
+        count={29}
+        baseColor="var(--color-img)"
+        highlightColor="var(--color-background)"
+      ></Skeleton>
+    </>;
+  }
 
   if (error) return <div>Error:{error.toString()}</div>;
+  const tracks = useSelector((state: RootState) => state.player.tracks);
 
   return (
     <>
@@ -61,7 +88,7 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
             <>
               <audio id="audio-player" style={{ display: "none" }} />
               <ul className={styles.playlist}>
-                {selection.items.map((track) => (
+                {tracks.map((track) => (
                   <li key={track.id} className={styles.playlist__item}>
                     {isLoading ? (
                       <Skeleton
@@ -97,10 +124,20 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
                       </a>
                     </div>
                     <div className={styles.track__time}>
-                      <svg className={styles.track__heart}>
+                      <svg
+                        onClick={() =>
+                          favoriteTracks.some((t) => t.id === track.id)
+                            ? handleAdd(track.id, `${token}`)
+                            : dispatch(addTrack(track))
+                        }
+                        className={cn(styles.track__heart, {
+                          [styles.track__heart_favorite]: favoriteTracks.some(
+                            (t) => t.id === track.id
+                          ),
+                        })}
+                      >
                         <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
                       </svg>
-
                       <span className={styles.track__time_text}>
                         {track.duration_in_seconds}
                       </span>

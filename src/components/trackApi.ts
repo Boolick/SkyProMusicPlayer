@@ -66,16 +66,27 @@ export const trackApi = createApi({
       }),
     }),
 
-    addFavoriteTrackById: builder.mutation<void, number>({
-      query: (id) => ({
-        url: `track/${id}/favorite/`,
-        method: "POST",
-      }),
-    }),
-    addMultipleFavoriteTracksByIds: builder.mutation<void, number[]>({
-      query: (ids) => ({
+    addFavoriteTrackById: builder.mutation<void, { id: number; token: string }>(
+      {
+        query: ({ id, token }) => ({
+          url: `track/${id}/favorite/`,
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }),
+      }
+    ),
+    addMultipleFavoriteTracksByIds: builder.mutation<
+      void,
+      { ids: number[]; token: string }
+    >({
+      query: ({ ids, token }) => ({
         url: `track/favorite/?id=${ids.join(",")}`,
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }),
     }),
   }),

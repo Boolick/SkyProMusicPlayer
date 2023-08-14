@@ -21,7 +21,11 @@ const favoriteSlice = createSlice({
         (track: { id: Number }) => track.id !== action.payload
       );
     },
+    updateFavoriteTracks: (state, action: PayloadAction<Track[]>) => {
+      state.tracks = action.payload;
+    },
   },
 });
-export const { addTrack, removeTrack } = favoriteSlice.actions;
+export const { addTrack, removeTrack, updateFavoriteTracks } =
+  favoriteSlice.actions;
 export default favoriteSlice.reducer;

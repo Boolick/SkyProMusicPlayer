@@ -15,8 +15,8 @@ function LoginPage(): JSX.Element {
   const [token, { status }] = useTokenMutation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [access, setAccess] = useState("");
-  const [refresh, setRefresh] = useState("");
+  //const [access, setAccess] = useState("");
+  //const [refresh, setRefresh] = useState("");
   const dispatch = useDispatch();
 
   if (isLoading) {

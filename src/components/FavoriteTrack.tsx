@@ -10,21 +10,34 @@ import {
 } from "../components/trackApi";
 import { RootState } from "../Store/store";
 import { removeTrack } from "../Store/Reducers/favoriteSlice";
+import { useEffect } from "react";
+import { toggleIsPLaying, updateTracks } from "../Store/Actions/playerSlice";
 
 function FavoriteTrack({ track }: { track: Track }) {
   const { data, error, isLoading } = useGetFavoriteTrackByIdQuery(track.id);
   const dispatch = useDispatch();
   const { handleSelectTrack } = useTrackPlayer();
   const token = useSelector((state: RootState) => state.auth.token);
-  const favoriteTracks = useSelector(
-    (state: RootState) => state.favorite.tracks
-  );
+
   const [deleteFavoriteTrack] = useDeleteFavoriteTrackByIdMutation();
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: number, token: string) => {
     deleteFavoriteTrack({ id, token });
     dispatch(removeTrack(track.id));
   };
+
+  const favoriteTracks = useSelector(
+    (state: RootState) => state.favorite.tracks
+  );
+
+  useEffect(() => {
+    console.log("Updating tracks with data:", favoriteTracks);
+    if (favoriteTracks && favoriteTracks.length > 0) {
+      dispatch(updateTracks(favoriteTracks));
+      handleSelectTrack(favoriteTracks[0]);
+      dispatch(toggleIsPLaying());
+    }
+  }, [favoriteTracks]);
 
   if (isLoading) {
     return (
@@ -37,7 +50,6 @@ function FavoriteTrack({ track }: { track: Track }) {
       </div>
     );
   }
-
   return (
     <li className={styles.playlist__item}>
       <div
@@ -45,7 +57,7 @@ function FavoriteTrack({ track }: { track: Track }) {
         className={styles.track__title_image}
       >
         <svg className={styles.track__title_svg}>
-          <use xlinkHref="img/icon/sprite.svg#icon-note"></use>
+          <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
         </svg>
       </div>
 
@@ -68,8 +80,8 @@ function FavoriteTrack({ track }: { track: Track }) {
         <svg
           onClick={() =>
             favoriteTracks.some((t) => t.id === track.id)
-              ? handleDelete(track.id)
-              : console.log("Error")
+              ? handleDelete(track.id, `${token}`)
+              : console.log("error")
           }
           className={styles.track__heart}
         >

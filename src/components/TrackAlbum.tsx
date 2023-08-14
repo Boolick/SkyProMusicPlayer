@@ -22,7 +22,7 @@ export const TrackAlbum = () => {
   const { handleSelectTrack } = useTrackPlayer();
   const { data, isLoading, error } = useGetAllTracksQuery();
   const [addFavoriteTrack] = useAddFavoriteTrackByIdMutation();
-
+  const token = useSelector((state: RootState) => state.auth.token);
   // Обновление элемента audio при изменении выбранного трека или состояния воспроизведения
   const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
 
@@ -30,8 +30,8 @@ export const TrackAlbum = () => {
     (state: RootState) => state.favorite.tracks
   );
 
-  const handleAdd = (id: number) => {
-    addFavoriteTrack(id);
+  const handleAdd = (id: number, token: string) => {
+    addFavoriteTrack({ id, token });
   };
 
   const tracks = useSelector((state: RootState) => state.player.tracks);
@@ -105,7 +105,7 @@ export const TrackAlbum = () => {
               <svg
                 onClick={() =>
                   favoriteTracks.some((t) => t.id === track.id)
-                    ? handleAdd(track.id)
+                    ? handleAdd(track.id, `${token}`)
                     : dispatch(addTrack(track))
                 }
                 className={cn(styles.track__heart, {

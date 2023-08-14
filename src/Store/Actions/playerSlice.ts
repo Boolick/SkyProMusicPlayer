@@ -8,6 +8,7 @@ interface PlayerState {
   duration: number;
   isRepeat: boolean;
   tracks: Track[];
+  volume: number;
 }
 
 const initialState: PlayerState = {
@@ -17,6 +18,7 @@ const initialState: PlayerState = {
   duration: 0,
   isRepeat: false,
   tracks: [],
+  volume: 0.5,
 };
 
 const playerSlice = createSlice({
@@ -51,6 +53,9 @@ const playerSlice = createSlice({
     updateTracks(state, action) {
       state.tracks = action.payload;
     },
+    setVolume: (state, action) => {
+      state.volume = action.payload;
+    },
   },
 });
 
@@ -62,6 +67,7 @@ export const {
   toggleIsRepeat,
   toggleIsPLaying,
   updateTracks,
+  setVolume,
 } = playerSlice.actions;
 
 export default playerSlice.reducer;

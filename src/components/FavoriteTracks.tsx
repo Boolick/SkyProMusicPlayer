@@ -5,12 +5,8 @@ import { Track } from "../components/trackApi";
 import FavoriteTrack from "./FavoriteTrack";
 
 function FavoriteTracks() {
-  const dispatch = useDispatch();
   const favoriteTracks = useSelector(
     (state: RootState) => state.favorite.tracks
-  );
-  const currentTrack = useSelector(
-    (state: RootState) => state.player.currentTrack
   );
 
   return (
