@@ -14,8 +14,13 @@ import Bar from "../components/Bar";
 import Search from "../components/Search/Search";
 import { useTrackPlayer } from "../components/PlayTrack";
 import { RootState } from "../Store/store";
-import { toggleIsPLaying, updateTracks } from "../Store/Actions/playerSlice";
+import {
+  setVolume,
+  toggleIsPLaying,
+  updateTracks,
+} from "../Store/Actions/playerSlice";
 import { addTrack } from "../Store/Reducers/favoriteSlice";
+import { selectFilteredTracks } from "../Store/Selectors/searchSelector";
 
 const selections: { id: number; title: string; items: any[] }[] = [
   { id: 0, title: "Плейлист дня", items: [] },
@@ -35,12 +40,15 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
   } = useGetSelectionByIdQuery(selectionId);
   const [addFavoriteTrack] = useAddFavoriteTrackByIdMutation();
   const { handleSelectTrack } = useTrackPlayer();
-  const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
   const dispatch = useDispatch();
   const token = useSelector((state: RootState) => state.auth.token);
   const favoriteTracks = useSelector(
     (state: RootState) => state.favorite.tracks
   );
+
+  //Используем селектор треков по поиску
+  const filteredTracks = useSelector(selectFilteredTracks);
+
   const handleAdd = (id: number, token: string) => {
     addFavoriteTrack({ id, token });
   };
@@ -59,6 +67,7 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
     console.log("Updating tracks with selection:", selection);
     if (selection && selection.items.length > 0) {
       dispatch(updateTracks(selection.items));
+      dispatch(setVolume(0.5)); //  0.5 это половина звука
     }
   }, [selection?.items]);
 
@@ -88,7 +97,7 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
             <>
               <audio id="audio-player" style={{ display: "none" }} />
               <ul className={styles.playlist}>
-                {tracks.map((track) => (
+                {filteredTracks.map((track) => (
                   <li key={track.id} className={styles.playlist__item}>
                     {isLoading ? (
                       <Skeleton

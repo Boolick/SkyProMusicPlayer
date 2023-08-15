@@ -90,6 +90,7 @@ function Controls() {
     setIsRepeat((prevIsRepeat) => !prevIsRepeat);
     dispatch(toggleIsRepeat());
   }
+
   // Получаем треки из состояния среза player
   const playerTracks = useSelector((state: RootState) => state.player.tracks);
   // Получаем избранные треки из состояния среза favorite

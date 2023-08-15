@@ -12,6 +12,7 @@ import { RootState } from "../Store/store";
 import { removeTrack } from "../Store/Reducers/favoriteSlice";
 import { useEffect } from "react";
 import { toggleIsPLaying, updateTracks } from "../Store/Actions/playerSlice";
+import { selectFilteredTracks } from "../Store/Selectors/searchSelector";
 
 function FavoriteTrack({ track }: { track: Track }) {
   const { data, error, isLoading } = useGetFavoriteTrackByIdQuery(track.id);
@@ -29,6 +30,8 @@ function FavoriteTrack({ track }: { track: Track }) {
   const favoriteTracks = useSelector(
     (state: RootState) => state.favorite.tracks
   );
+  
+  const filteredTracks = useSelector(selectFilteredTracks);
 
   useEffect(() => {
     console.log("Updating tracks with data:", favoriteTracks);
