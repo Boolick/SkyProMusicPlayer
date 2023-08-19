@@ -41,7 +41,7 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
   const [addFavoriteTrack] = useAddFavoriteTrackByIdMutation();
   const { handleSelectTrack } = useTrackPlayer();
   const dispatch = useDispatch();
-  const token = useSelector((state: RootState) => state.auth.token);
+  const token = useSelector((state: RootState) => state.auth.access);
   const favoriteTracks = useSelector(
     (state: RootState) => state.favorite.tracks
   );
@@ -82,7 +82,6 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
   }
 
   if (error) return <div>Error:{error.toString()}</div>;
-  const tracks = useSelector((state: RootState) => state.player.tracks);
 
   return (
     <>
@@ -134,11 +133,7 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
                     </div>
                     <div className={styles.track__time}>
                       <svg
-                        onClick={() =>
-                          favoriteTracks.some((t) => t.id === track.id)
-                            ? handleAdd(track.id, `${token}`)
-                            : dispatch(addTrack(track))
-                        }
+                        onClick={() => handleAdd(track.id, `${token}`)}
                         className={cn(styles.track__heart, {
                           [styles.track__heart_favorite]: favoriteTracks.some(
                             (t) => t.id === track.id

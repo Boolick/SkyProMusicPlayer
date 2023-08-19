@@ -7,10 +7,11 @@ import { RootState } from "../Store/store";
 import {
   useGetAllTracksQuery,
   useAddFavoriteTrackByIdMutation,
+  useGetAllFavoriteTracksQuery,
 } from "../components/trackApi";
 import { selectFilteredTracks } from "../Store/Selectors/searchSelector";
 import styles from "./Item/Item.module.css";
-import { addTrack } from "../Store/Reducers/favoriteSlice";
+
 import { useTrackPlayer } from "./PlayTrack";
 import {
   playTrack,
@@ -22,19 +23,20 @@ import {
 export const TrackAlbum = () => {
   const dispatch = useDispatch();
   const { handleSelectTrack } = useTrackPlayer();
-  const { data, isLoading, error } = useGetAllTracksQuery();
+  const { data, isLoading, isError } = useGetAllTracksQuery();
   const [addFavoriteTrack] = useAddFavoriteTrackByIdMutation();
-  const token = useSelector((state: RootState) => state.auth.token);
+  const token = useSelector((state: RootState) => state.auth.access);
 
   //Используем селектор треков по поиску
   const filteredTracks = useSelector(selectFilteredTracks);
 
-  const favoriteTracks = useSelector(
-    (state: RootState) => state.favorite.tracks
-  );
+  const { data: favoriteTracks, refetch } = useGetAllFavoriteTracksQuery({
+    token,
+  });
 
   const handleAdd = (id: number, token: string) => {
     addFavoriteTrack({ id, token });
+    refetch();
   };
 
   const tracks = useSelector((state: RootState) => state.player.tracks);
@@ -69,7 +71,7 @@ export const TrackAlbum = () => {
       </div>
     );
 
-  if (error) return <div>Error:{error.toString()}</div>;
+  if (isError) return <div>Error:{isError.toString()}</div>;
 
   return (
     <>
@@ -78,7 +80,15 @@ export const TrackAlbum = () => {
         {filteredTracks.map((track) => (
           <li key={track.id} className={styles.playlist__item}>
             {isLoading ? (
-              <Skeleton />
+              <>
+                <Skeleton
+                  count={filteredTracks.length}
+                  height={50}
+                  width={500}
+                  baseColor="var(--color-img)"
+                  highlightColor="var(--color-background)"
+                ></Skeleton>
+              </>
             ) : (
               <div
                 onClick={() => handleSelectTrack(track)}
@@ -107,13 +117,9 @@ export const TrackAlbum = () => {
             </div>
             <div className={styles.track__time}>
               <svg
-                onClick={() =>
-                  favoriteTracks.some((t) => t.id === track.id)
-                    ? handleAdd(track.id, `${token}`)
-                    : dispatch(addTrack(track))
-                }
+                onClick={() => handleAdd(track.id, `${token}`)}
                 className={cn(styles.track__heart, {
-                  [styles.track__heart_favorite]: favoriteTracks.some(
+                  [styles.track__heart_favorite]: favoriteTracks?.some(
                     (t) => t.id === track.id
                   ),
                 })}

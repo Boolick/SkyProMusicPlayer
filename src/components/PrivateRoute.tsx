@@ -1,4 +1,3 @@
-import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -13,10 +12,9 @@ const PrivateRoute = ({
   isAuthenticatedProp,
   redirectPath,
 }: PrivateRouteProps) => {
-  const email = useSelector((state: RootState) => state.auth.email);
-  const password = useSelector((state: RootState) => state.auth.password);
+  
 
-  const token = useSelector((state: RootState) => state.auth.token);
+  const token = useSelector((state: RootState) => state.auth.access);
   console.log(token);
   const isAuthenticated = !!token;
   console.log("Rendering PrivateRoute with isAuthenticated =", isAuthenticated);

@@ -3,8 +3,11 @@ import { NavLink } from "react-router-dom";
 import cn from "classnames";
 
 import ThemeToggleButton from "./ChooseTheme/ChooseTheme";
+import { useSelector } from "react-redux";
+import { RootState } from "../Store/store";
 
 function NavBar() {
+  const token = useSelector((state: RootState) => state.auth.access);
   const activeClassName = "link_active";
 
   return (
@@ -42,7 +45,7 @@ function NavBar() {
             })
           }
         >
-          Войти
+          {token ? "Выйти" : "Войти"}
         </NavLink>
       </li>
 

@@ -36,10 +36,7 @@ const AppRoutes = ({ tracks, isAuthenticated }: AppRoutesProps) => {
             element={<SelectionsPageWrapper />}
           ></Route>
 
-          <Route
-            path="/my-playlist"
-            element={<MyPlaylist tracks={tracks} />}
-          ></Route>
+          <Route path="/my-playlist" element={<MyPlaylist />}></Route>
         </Route>
         <Route path="*" element={<NotFound />}></Route>
         <Route path="/login-page" element={<LoginPage />}></Route>

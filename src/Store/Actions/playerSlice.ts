@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Track } from "../../components/trackApi";
 
 interface PlayerState {
+  favorite: any;
   currentTrack: Track | null;
   isPlaying: boolean;
   currentTime: number;
@@ -19,6 +20,7 @@ const initialState: PlayerState = {
   isRepeat: false,
   tracks: [],
   volume: 0.5,
+  favorite: undefined
 };
 
 const playerSlice = createSlice({
@@ -27,6 +29,7 @@ const playerSlice = createSlice({
   reducers: {
     playTrack(state, action) {
       // Изменяем состояние воспроизведения только если текущий трек отличается от выбранного
+      if (!action.payload) return;
       if (state.currentTrack?.id === action.payload.id) {
         state.isPlaying = false;
       }

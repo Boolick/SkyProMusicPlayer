@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithReauth } from "./baseQueryWithReauth ";
 
-interface LoginResponse {
+export interface LoginResponse {
   username: string;
   password: string;
 }
@@ -14,13 +15,14 @@ interface SignupResponse {
   repeatPassword: string;
 }
 interface TokenResponse {
+  email(email: any): unknown;
   access: string;
   refresh: string;
 }
 
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://painassasin.online/" }),
+  baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
     signup: builder.mutation<
       SignupResponse,

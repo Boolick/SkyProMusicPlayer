@@ -10,6 +10,7 @@ const selectSearchTerm = (state: RootState) => state.search.searchTerm;
 
 export const selectFilteredTracks = createSelector(
   [selectTracks, selectSearchTerm, selectFavoriteTracks, selectSelections],
+
   (tracks: Track[], searchTerm) =>
     tracks.filter((track) =>
       track.name.toLowerCase().includes(searchTerm.toLowerCase())

@@ -5,8 +5,6 @@
 .filter_container {
     position: relative;
     width: auto;
-
-
 }
 
 .popup {
@@ -18,16 +16,11 @@
     top: 100%;
     background: var(--color-img);
     border-radius: 12px;
-
-
-
 }
 
 .popup__active {
     display: block;
     position: absolute;
-
-
 }
 
 .list {
@@ -69,12 +62,7 @@
 
 }
 
-
-
-
 /* buttons */
-
-
 
 .filter__button {
     font-style: normal;
@@ -87,8 +75,6 @@
     padding: 6px 20px;
     margin-bottom: 10px;
     transition: border 3s ease;
-
-
 }
 
 .filter__button:not(:last-child) {
