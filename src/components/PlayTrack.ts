@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -18,9 +17,7 @@ import { Track } from "./trackApi";
 
 export function useTrackPlayer() {
   const dispatch = useDispatch();
-  const currentTrack = useSelector(
-    (state: RootState) => state.player.currentTrack
-  );
+
   const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
 
   /**

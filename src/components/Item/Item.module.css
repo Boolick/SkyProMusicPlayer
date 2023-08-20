@@ -13,12 +13,17 @@
     grid-auto-flow: column;
     align-items: center;
     row-gap: 25px;
+    cursor: pointer;
+}
+
+.playlist__item.active {
+    color: #AD61FF;
+    transition: color 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .track__title_text {
     width: 352px;
     height: 19px;
-
 }
 
 .track__author {
@@ -34,6 +39,11 @@
 
 }
 
+.track__author_link.active {
+    color: #AD61FF;
+    transition: color 0.5s ease-in-out, color 0.5s ease-in-out;
+}
+
 .track__album {
     width: 230px;
 }
@@ -44,7 +54,12 @@
     font-size: 16px;
     line-height: 24px;
     color: #B1B1B1;
-    transition: color 0.3s ease, color 0.3s ease;
+    transition: color 0.1s ease-in-out, color 0.1s ease-in-out;
+}
+
+.track__album_link.active {
+    color: #AD61FF;
+    transition: color 0.6s ease-in-out, color 0.6s ease-in-out;
 }
 
 .track__title_image {
@@ -58,6 +73,11 @@
     justify-content: center;
     margin-right: 17px;
     transition: background-color 0.8s ease-in-out;
+}
+
+.track__title_image.active {
+    background-color: #AD61FF;
+    transition: color 0.5s ease-in-out, color 0.5s ease-in-out;
 }
 
 .track__title_svg {
@@ -86,8 +106,9 @@
     stroke: #B1B1B1;
     cursor: pointer;
 }
-.track__heart_favorite{
-fill: var(--color-img);
+
+.track__heart_favorite {
+    fill: var(--color-img);
 }
 
 .track__time_text {

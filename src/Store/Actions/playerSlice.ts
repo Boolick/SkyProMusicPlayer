@@ -20,7 +20,7 @@ const initialState: PlayerState = {
   isRepeat: false,
   tracks: [],
   volume: 0.5,
-  favorite: undefined
+  favorite: undefined,
 };
 
 const playerSlice = createSlice({

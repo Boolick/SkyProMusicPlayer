@@ -16,13 +16,12 @@ import { updateFavoriteTracks } from "../../Store/Reducers/favoriteSlice";
 
 function Controls() {
   const dispatch = useDispatch();
-
   const { handleSelectTrack } = useTrackPlayer();
 
+  const tracks = useSelector((state: RootState) => state.player.tracks);
   const currentTrack = useSelector(
     (state: RootState) => state.player.currentTrack
   );
-  const tracks = useSelector((state: RootState) => state.player.tracks);
 
   // Функция для переключения на следующий трек
   function handleNextTrack() {
@@ -46,7 +45,6 @@ function Controls() {
 
     // Выбираем следующий трек для воспроизведения
     handleSelectTrack(nextTrack);
-    dispatch(resumeTrack());
   }
 
   // Функция для переключения на предыдущий трек
@@ -94,22 +92,17 @@ function Controls() {
   // Получаем треки из состояния среза player
   const playerTracks = useSelector((state: RootState) => state.player.tracks);
   // Получаем избранные треки из состояния среза favorite
-  const favoriteTracks = useSelector(
-    (state: RootState) => state.favorite.tracks
-  );
+
   function handleShuffleTracks() {
     // Добавляем копии массивов
-    if (!playerTracks || !favoriteTracks) return;
+    if (!playerTracks) return;
     const shuffledPlayerTracks = [...playerTracks];
-    const shuffledFavoriteTracks = [...favoriteTracks];
 
     // Перемешиваем скопированные массивы
     shuffleArray(shuffledPlayerTracks);
-    shuffleArray(shuffledFavoriteTracks);
 
     // Обновляем state перемешанными массивами
     dispatch(updateTracks(shuffledPlayerTracks));
-    dispatch(updateFavoriteTracks(shuffledFavoriteTracks));
   }
 
   useEffect(() => {
@@ -132,7 +125,7 @@ function Controls() {
         audioPlayer.removeEventListener("ended", handleEnded);
       };
     }
-  }, [isRepeat]);
+  }, [isRepeat, tracks]);
 
   return (
     <div className="player__controls">

@@ -1,13 +1,21 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import cn from "classnames";
 
 import ThemeToggleButton from "./ChooseTheme/ChooseTheme";
 import { useSelector } from "react-redux";
 import { RootState } from "../Store/store";
+import { useDispatch } from "react-redux";
+
+
+// Функция для выхода из системы
+export function handleLogout() {
+  window.location.reload();
+}
 
 function NavBar() {
   const token = useSelector((state: RootState) => state.auth.access);
+
   const activeClassName = "link_active";
 
   return (
@@ -38,6 +46,7 @@ function NavBar() {
       </li>
       <li className="menu__item">
         <NavLink
+          onClick={handleLogout}
           to="/login-page"
           className={({ isActive }) =>
             cn("menu__link", {

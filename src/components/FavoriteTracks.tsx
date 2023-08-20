@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import Skeleton from "react-loading-skeleton";
 import { useEffect } from "react";
+import cn from "classnames";
 
 import styles from "./Item/Item.module.css";
 import { useTrackPlayer } from "./PlayTrack";
@@ -10,37 +10,31 @@ import {
   useGetAllFavoriteTracksQuery,
 } from "./trackApi";
 import { RootState } from "../Store/store";
-import {
-  playTrack,
-  setVolume,
-  toggleIsPLaying,
-  updateTracks,
-} from "../Store/Actions/playerSlice";
+import { selectFilteredTracks } from "../Store/Selectors/searchSelector";
+import { setVolume, updateTracks } from "../Store/Actions/playerSlice";
 
 function FavoriteTracks() {
   const token = useSelector((state: RootState) => state.auth.access);
-  const dispatch = useDispatch();
-  const { handleSelectTrack } = useTrackPlayer();
-  const [deleteFavoriteTrack] = useDeleteFavoriteTrackByIdMutation();
   const {
     data: favoriteTraks,
-    isLoading,
+    error,
     refetch,
   } = useGetAllFavoriteTracksQuery({
     token,
   });
+  const dispatch = useDispatch();
+  const { handleSelectTrack } = useTrackPlayer();
+  const [deleteFavoriteTrack] = useDeleteFavoriteTrackByIdMutation();
+  const currentTrack = useSelector(
+    (state: RootState) => state.player.currentTrack
+  );
+  //Используем селектор треков по поиску
+  const filteredTracks = useSelector(selectFilteredTracks);
 
   const handleDelete = (id: number, token: string) => {
     deleteFavoriteTrack({ id, token });
     refetch();
   };
-  // Выбираем первый трек при загрузке страницы
-  useEffect(() => {
-    if (favoriteTraks && favoriteTraks.length > 0) {
-      dispatch(playTrack(favoriteTraks[0]));
-      dispatch(toggleIsPLaying());
-    }
-  }, [favoriteTraks]);
 
   // Обновляем список треков и уровень громкости
   useEffect(() => {
@@ -51,29 +45,27 @@ function FavoriteTracks() {
     }
   }, [favoriteTraks]);
 
-  console.log(favoriteTraks);
+  if (error) return <div>Error:{error.toString()}</div>;
 
-  if (isLoading) {
-    return (
-      <div>
-        <Skeleton
-          className={styles.playlist__item}
-          baseColor="var(--color-img)"
-          highlightColor="var(--color-background)"
-        />
-      </div>
-    );
-  }
   return (
     <>
       <audio id="audio-player" style={{ display: "none" }} />
       <ul className={styles.playlist}>
         {favoriteTraks ? (
-          favoriteTraks.map((track: Track) => (
-            <li key={track.id} className={styles.playlist__item}>
+          filteredTracks?.map((track: Track) => (
+            <li
+              key={track.id}
+              onClick={() => handleSelectTrack(track)}
+              className={cn({
+                [styles.active]: track === currentTrack,
+                [styles.playlist__item]: true,
+              })}
+            >
               <div
-                onClick={() => handleSelectTrack(track)}
-                className={styles.track__title_image}
+                className={cn({
+                  [styles.active]: track === currentTrack,
+                  [styles.track__title_image]: true,
+                })}
               >
                 <svg className={styles.track__title_svg}>
                   <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
@@ -81,19 +73,34 @@ function FavoriteTracks() {
               </div>
 
               <div className={styles.track__title_text}>
-                <a className={styles.track__title_link} href="http://">
+                <div
+                  className={cn({
+                    [styles.active]: track === currentTrack,
+                    [styles.track__title_text]: true,
+                  })}
+                >
                   {track.name}
-                </a>
+                </div>
               </div>
               <div className={styles.track__author}>
-                <a className={styles.track__author_link} href="http://">
+                <div
+                  className={cn({
+                    [styles.active]: track === currentTrack,
+                    [styles.track__author_link]: true,
+                  })}
+                >
                   {track.author}
-                </a>
+                </div>
               </div>
               <div className={styles.track__album}>
-                <a className={styles.track__album_link} href="http://">
+                <div
+                  className={cn({
+                    [styles.active]: track === currentTrack,
+                    [styles.track__album_link]: true,
+                  })}
+                >
                   {track.album}
-                </a>
+                </div>
               </div>
               <div className={styles.track__time}>
                 <svg

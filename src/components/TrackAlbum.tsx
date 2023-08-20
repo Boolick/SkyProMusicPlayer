@@ -13,12 +13,7 @@ import { selectFilteredTracks } from "../Store/Selectors/searchSelector";
 import styles from "./Item/Item.module.css";
 
 import { useTrackPlayer } from "./PlayTrack";
-import {
-  playTrack,
-  setVolume,
-  toggleIsPLaying,
-  updateTracks,
-} from "../Store/Actions/playerSlice";
+import { setVolume, updateTracks } from "../Store/Actions/playerSlice";
 
 export const TrackAlbum = () => {
   const dispatch = useDispatch();
@@ -26,6 +21,9 @@ export const TrackAlbum = () => {
   const { data, isLoading, isError } = useGetAllTracksQuery();
   const [addFavoriteTrack] = useAddFavoriteTrackByIdMutation();
   const token = useSelector((state: RootState) => state.auth.access);
+  const currentTrack = useSelector(
+    (state: RootState) => state.player.currentTrack
+  );
 
   //Используем селектор треков по поиску
   const filteredTracks = useSelector(selectFilteredTracks);
@@ -41,14 +39,6 @@ export const TrackAlbum = () => {
 
   const tracks = useSelector((state: RootState) => state.player.tracks);
 
-  // Выбираем первый трек при загрузке страницы
-  useEffect(() => {
-    if (tracks && tracks.length > 0) {
-      dispatch(playTrack(tracks[0]));
-      dispatch(toggleIsPLaying());
-    }
-  }, [tracks]);
-
   // Обновляем список треков и уровень громкости
   useEffect(() => {
     console.log("Updating tracks with data:", data);
@@ -58,19 +48,6 @@ export const TrackAlbum = () => {
     }
   }, [data]);
 
-  if (isLoading)
-    return (
-      <div>
-        <div>
-          <Skeleton
-            count={29}
-            baseColor="var(--color-img)"
-            highlightColor="var(--color-background)"
-          ></Skeleton>
-        </div>
-      </div>
-    );
-
   if (isError) return <div>Error:{isError.toString()}</div>;
 
   return (
@@ -78,60 +55,86 @@ export const TrackAlbum = () => {
       <audio id="audio-player" style={{ display: "none" }} />
       <ul className={styles.playlist}>
         {filteredTracks.map((track) => (
-          <li key={track.id} className={styles.playlist__item}>
-            {isLoading ? (
-              <>
-                <Skeleton
-                  count={filteredTracks.length}
-                  height={50}
-                  width={500}
-                  baseColor="var(--color-img)"
-                  highlightColor="var(--color-background)"
-                ></Skeleton>
-              </>
-            ) : (
-              <div
-                onClick={() => handleSelectTrack(track)}
-                className={styles.track__title_image}
-              >
-                <svg className={styles.track__title_svg}>
-                  <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
-                </svg>
+          <>
+            <li
+              key={track.id}
+              onClick={() => handleSelectTrack(track)}
+              className={cn({
+                [styles.active]: track === currentTrack,
+                [styles.playlist__item]: true,
+              })}
+            >
+              {isLoading ? (
+                <>
+                  <Skeleton
+                    count={filteredTracks.length}
+                    height={50}
+                    width={1000}
+                    baseColor="var(--color-img)"
+                    highlightColor="var(--color-background)"
+                  ></Skeleton>
+                </>
+              ) : (
+                <div
+                  className={cn({
+                    [styles.active]: track === currentTrack,
+                    [styles.track__title_image]: true,
+                  })}
+                >
+                  <svg className={styles.track__title_svg}>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
+                  </svg>
+                </div>
+              )}
+
+              <div className={styles.track__title_text}>
+                <div
+                  className={cn({
+                    [styles.active]: track === currentTrack,
+                    [styles.track__title_text]: true,
+                  })}
+                >
+                  {track.name}
+                </div>
               </div>
-            )}
+              <div className={styles.track__author}>
+                <div
+                  className={cn({
+                    [styles.active]: track === currentTrack,
+                    [styles.track__author_link]: true,
+                  })}
+                >
+                  {track.author}
+                </div>
+              </div>
+              <div className={styles.track__album}>
+                <div
+                  className={cn({
+                    [styles.active]: track === currentTrack,
+                    [styles.track__album_link]: true,
+                  })}
+                >
+                  {track.album}
+                </div>
+              </div>
+              <div className={styles.track__time}>
+                <svg
+                  onClick={() => handleAdd(track.id, `${token}`)}
+                  className={cn(styles.track__heart, {
+                    [styles.track__heart_favorite]: favoriteTracks?.some(
+                      (t: { id: number }) => t.id === track.id
+                    ),
+                  })}
+                >
+                  <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
+                </svg>
 
-            <div className={styles.track__title_text}>
-              <a className={styles.track__title_link} href="http://">
-                {track.name}
-              </a>
-            </div>
-            <div className={styles.track__author}>
-              <a className={styles.track__author_link} href="http://">
-                {track.author}
-              </a>
-            </div>
-            <div className={styles.track__album}>
-              <a className={styles.track__album_link} href="http://">
-                {track.album}
-              </a>
-            </div>
-            <div className={styles.track__time}>
-              <svg
-                onClick={() => handleAdd(track.id, `${token}`)}
-                className={cn(styles.track__heart, {
-                  [styles.track__heart_favorite]: favoriteTracks?.some(
-                    (t) => t.id === track.id
-                  ),
-                })}
-              >
-                <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
-              </svg>
-
-              <span className={styles.track__time_text}>
-                {track.duration_in_seconds}
-              </span>
-            </div>
-          </li>
+                <span className={styles.track__time_text}>
+                  {track.duration_in_seconds}
+                </span>
+              </div>
+            </li>
+          </>
         ))}
       </ul>
     </>
