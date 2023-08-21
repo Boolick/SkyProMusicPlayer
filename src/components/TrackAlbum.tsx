@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { useEffect } from "react";
 
+
 import { RootState } from "../Store/store";
 import {
   useGetAllTracksQuery,
@@ -14,6 +15,7 @@ import styles from "./Item/Item.module.css";
 
 import { useTrackPlayer } from "./PlayTrack";
 import { setVolume, updateTracks } from "../Store/Actions/playerSlice";
+import { secondsToMinutesAndSeconds } from "./ControlButton/Player";
 
 export const TrackAlbum = () => {
   const dispatch = useDispatch();
@@ -26,8 +28,7 @@ export const TrackAlbum = () => {
   );
 
   //Используем селектор треков по поиску
-  const filteredTracks = useSelector(selectFilteredTracks);
-
+  const tracks = useSelector(selectFilteredTracks);
   const { data: favoriteTracks, refetch } = useGetAllFavoriteTracksQuery({
     token,
   });
@@ -37,11 +38,8 @@ export const TrackAlbum = () => {
     refetch();
   };
 
-  const tracks = useSelector((state: RootState) => state.player.tracks);
-
   // Обновляем список треков и уровень громкости
   useEffect(() => {
-    console.log("Updating tracks with data:", data);
     if (data && data.length > 0) {
       dispatch(updateTracks(data));
       dispatch(setVolume(0.5)); //  0.5 это половина звука
@@ -54,7 +52,7 @@ export const TrackAlbum = () => {
     <>
       <audio id="audio-player" style={{ display: "none" }} />
       <ul className={styles.playlist}>
-        {filteredTracks.map((track) => (
+        {tracks.map((track) => (
           <>
             <li
               key={track.id}
@@ -67,7 +65,7 @@ export const TrackAlbum = () => {
               {isLoading ? (
                 <>
                   <Skeleton
-                    count={filteredTracks.length}
+                    count={tracks.length}
                     height={50}
                     width={1000}
                     baseColor="var(--color-img)"
@@ -130,7 +128,7 @@ export const TrackAlbum = () => {
                 </svg>
 
                 <span className={styles.track__time_text}>
-                  {track.duration_in_seconds}
+                  {secondsToMinutesAndSeconds(track.duration_in_seconds)}
                 </span>
               </div>
             </li>

@@ -111,7 +111,12 @@
     fill: var(--color-img);
 }
 
+.track__time {
+    width: 65px;
+}
+
 .track__time_text {
+
     font-style: normal;
     font-weight: 400;
     font-size: 16px;

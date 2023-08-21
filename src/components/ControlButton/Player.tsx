@@ -6,12 +6,24 @@ import PlayButton from "./Buttons/PlayButton";
 import PauseButton from "./Buttons/PauseButton";
 import { updateProgress } from "../../Store/Actions/playerSlice";
 
+//Функция которая переводит секунды в минуты и секунды
+export const secondsToMinutesAndSeconds = (seconds: number) => {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+}
+
 const Player = () => {
   const dispatch = useDispatch();
   const currentTrack = useSelector(
     (state: RootState) => state.player.currentTrack
   );
   const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
+ 
+
+
+
+
 
   // Обновление элемента audio при изменении выбранного трека или состояния воспроизведения
   useEffect(() => {

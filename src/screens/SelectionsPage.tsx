@@ -17,6 +17,7 @@ import { useTrackPlayer } from "../components/PlayTrack";
 import { RootState } from "../Store/store";
 import { setVolume, updateTracks } from "../Store/Actions/playerSlice";
 import { selectFilteredTracks } from "../Store/Selectors/searchSelector";
+import { secondsToMinutesAndSeconds } from "../components/ControlButton/Player";
 
 const selections: { id: number; title: string; items: any[] }[] = [
   { id: 0, title: "Плейлист дня", items: [] },
@@ -147,7 +148,7 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
                         <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
                       </svg>
                       <span className={styles.track__time_text}>
-                        {track.duration_in_seconds}
+                        {secondsToMinutesAndSeconds(track.duration_in_seconds)}
                       </span>
                     </div>
                   </li>

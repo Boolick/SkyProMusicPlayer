@@ -12,7 +12,6 @@ import {
   toggleIsRepeat,
   updateTracks,
 } from "../../Store/Actions/playerSlice";
-import { updateFavoriteTracks } from "../../Store/Reducers/favoriteSlice";
 
 function Controls() {
   const dispatch = useDispatch();

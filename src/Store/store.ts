@@ -6,6 +6,7 @@ import playerReducer from "./Actions/playerSlice";
 import searchReducer from "./Actions/SearchSlice";
 import favoriteReducer from "./Reducers/favoriteSlice";
 import authReducer from "./Reducers/AuthSlice";
+import filterReducer from "./Reducers/filtersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     player: playerReducer,
     favorite: favoriteReducer,
     search: searchReducer,
+    filter: filterReducer,
   },
   // Добавление middleware trackApi в хранилище
 

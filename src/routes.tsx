@@ -20,6 +20,7 @@ const AppRoutes = ({ isAuthenticated }: AppRoutesProps) => {
     <>
       <Routes>
         <Route path="/auth-page" element={<SignupPage />}></Route>
+        <Route path="/login-page" element={<LoginPage />}></Route>
         <Route
           element={
             <PrivateRoute
@@ -37,7 +38,6 @@ const AppRoutes = ({ isAuthenticated }: AppRoutesProps) => {
           <Route path="/my-playlist" element={<MyPlaylist />}></Route>
         </Route>
         <Route path="*" element={<NotFound />}></Route>
-        <Route path="/login-page" element={<LoginPage />}></Route>
       </Routes>
     </>
   );

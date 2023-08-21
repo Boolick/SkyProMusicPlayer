@@ -12,6 +12,7 @@ import {
 import { RootState } from "../Store/store";
 import { selectFilteredTracks } from "../Store/Selectors/searchSelector";
 import { setVolume, updateTracks } from "../Store/Actions/playerSlice";
+import { secondsToMinutesAndSeconds } from "./ControlButton/Player";
 
 function FavoriteTracks() {
   const token = useSelector((state: RootState) => state.auth.access);
@@ -110,7 +111,7 @@ function FavoriteTracks() {
                   <use xlinkHref="/img/icon/sprite.svg#icon-dislike"></use>
                 </svg>
                 <span className={styles.track__time_text}>
-                  {track.duration_in_seconds}
+                  {secondsToMinutesAndSeconds(track.duration_in_seconds)}
                 </span>
               </div>
             </li>

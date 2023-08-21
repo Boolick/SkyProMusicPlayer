@@ -2,14 +2,22 @@ import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 import { RootState } from "../Store/store";
+import { Track } from "./trackApi";
+import { secondsToMinutesAndSeconds } from "./ControlButton/Player";
 
 function TrackPlay() {
-
   // Определяем текущий трек
   const currentTrack = useSelector(
     (state: RootState) => state.player.currentTrack
   );
-  
+
+  //Обновление времени
+  const currentTime = useSelector(
+    (state: RootState) => state.player.currentTime
+  );
+  const duration = useSelector((state: RootState) => state.player.duration);
+  const timeLeft = Math.round(duration - currentTime);
+
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     setTimeout(() => {
@@ -43,7 +51,9 @@ function TrackPlay() {
           />
         ) : (
           <div className="track-play__author">
-            <a className="track-play__author-link" href="http://">{currentTrack?.author}</a>
+            <a className="track-play__author-link" href="http://">
+              {currentTrack?.author}
+            </a>
           </div>
         )}
         {isLoading ? (
@@ -55,11 +65,15 @@ function TrackPlay() {
           />
         ) : (
           <div className="track-play__album">
-            <a className="track-play__album-link" href="http://">{currentTrack?.album}</a>
+            <a className="track-play__album-link" href="http://">
+              {currentTrack?.album}
+            </a>
           </div>
         )}
       </div>
-
+      <div><p>Time:{" "}
+        {isNaN(timeLeft) ? "Loading..." : secondsToMinutesAndSeconds(timeLeft)}</p>
+      </div>
       <div className="track-play__like-dis">
         <div className="track-play__like _btn-icon">
           <svg className="track-play__like-svg" /* alt="like" */>

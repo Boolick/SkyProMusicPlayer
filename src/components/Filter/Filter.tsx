@@ -3,7 +3,6 @@ import cn from "classnames";
 
 import styles from "./Filter.module.css";
 import Checkboxes from "./FilterButtons/Checkboxes";
-
 import TrackAuthor from "../TrackAuthor/TrackAuthor";
 import Genres from "../Genres/Genres";
 
@@ -57,7 +56,7 @@ const Filter: React.FC = () => {
             [styles.popup__active]: activePopup === "years-popup",
           })}
         >
-          <Checkboxes labels={["Более новые", "Более старые"]} />
+          <Checkboxes labels={["Более новые", "Более старые"]} className={""} />
         </div>
       </div>
       <div className={styles.filter_container}>
