@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -18,31 +17,8 @@ import { Track } from "./trackApi";
 
 export function useTrackPlayer() {
   const dispatch = useDispatch();
-  const currentTrack = useSelector(
-    (state: RootState) => state.player.currentTrack
-  );
-  const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
 
-  /**
-   * Обновляем элемент audio при изменении выбранной дорожки или состояние воспроизведения.
-   */
-  useEffect(() => {
-    const audioPlayer = document.getElementById(
-      "audio-player"
-    ) as HTMLAudioElement;
-    if (audioPlayer) {
-      if (currentTrack) {
-        if (audioPlayer.src !== currentTrack.track_file) {
-          audioPlayer.src = currentTrack.track_file;
-        }
-        if (isPlaying) {
-          audioPlayer.play();
-        } else {
-          audioPlayer.pause();
-        }
-      }
-    }
-  }, [currentTrack, isPlaying]);
+  const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
 
   /**
    * Обработчик события выбора трека.
@@ -51,6 +27,7 @@ export function useTrackPlayer() {
    */
   function handleSelectTrack(track: Track) {
     dispatch(playTrack(track));
+    dispatch(resumeTrack());
   }
 
   /**
@@ -59,8 +36,6 @@ export function useTrackPlayer() {
   function handleTogglePlay() {
     if (isPlaying) {
       dispatch(pauseTrack());
-    } else {
-      dispatch(resumeTrack());
     }
   }
 

@@ -1,58 +1,96 @@
-import { NavLink, Navigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import Skeleton from "react-loading-skeleton";
-
 import {
   useLoginMutation,
   useTokenMutation,
 } from "../../Store/Reducers/apiSlice";
 import styles from "./Login.module.css";
-import { setCredentials, setToken } from "../../Store/Reducers/AuthSlice";
+import {
+  setCredentials,
+  setAccess,
+  setRefresh,
+} from "../../Store/Reducers/AuthSlice";
 
-function LoginPage(): JSX.Element {
+export const LoginPage: React.FC = (): JSX.Element => {
   const [login, { isLoading, isSuccess, isError }] = useLoginMutation();
-  const [token, { status }] = useTokenMutation();
+  const [token] = useTokenMutation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [access, setAccess] = useState("");
-  const [refresh, setRefresh] = useState("");
+  const [emailDirty, setEmailDirty] = useState(false);
+  const [passwordDirty, setPasswordDirty] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [loginPlaceholder, setLoginPlaceholder] = useState("Логин");
+  const [passPlaceholder, setPassPlaceholder] = useState("Пароль");
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  if (isLoading) {
-    return (
-      <Skeleton
-        data-testid="skeleton"
-        className={styles.login__content}
-        baseColor="var(--color-img)"
-        highlightColor="var(--color-background)"
-      />
-    );
-  }
-  if (isError) {
-    return <Navigate to="/auth-page" />;
-  }
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    login({ email, password });
-    dispatch(setCredentials({ email, password }));
+  const emailHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+    const emailRegex =
+      /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const validateEmail = (email: string) => emailRegex.test(email);
+    if (!validateEmail(e.target.value)) {
+      setEmailError("Некорректное имя");
+    } else {
+      setEmailError("");
+    }
   };
-
-  const handleToken = async () => {
-    const response = await token({ email, password });
-    console.log(response);
-    if ("data" in response) {
-      const token = response.data.access;
-      //const refresh = response.data.refresh;
-      dispatch(setToken(token));
-      //dispatch(setToken(refresh));
+  const passwordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    const validatePassword = (password: string) => passwordRegex.test(password);
+    if (!validatePassword(e.target.value)) {
+      setPasswordError("Неверный пароль");
+    } else {
+      setPasswordError("");
     }
   };
 
+  const blurHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    switch (e.target.name) {
+      case "email":
+        setEmailDirty(true);
+        setLoginPlaceholder("Это поле не может быть пустым");
+        break;
+      case "password":
+        setPasswordDirty(true);
+        setPassPlaceholder("Это поле не может быть пустым");
+        break;
+    }
+  };
+
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!emailError && !passwordError) {
+      login({ email, password });
+      dispatch(setCredentials({ email, password }));
+      handleToken(email, password);
+    }
+  };
+
+  const handleToken = async (email: string, password: string) => {
+    const response = await token({ email, password });
+    console.log(response);
+    if ("data" in response) {
+      const access = response.data.access;
+      const refresh = response.data.refresh;
+      dispatch(setAccess(access));
+      dispatch(setRefresh(refresh));
+    }
+  };
+
+  if (isError) {
+    setTimeout(() => {
+      setEmailError("Неверный пароль или логин");
+      navigate("/auth-page");
+    }, 4000);
+  }
+
   if (isSuccess) {
     console.log(isSuccess);
-    return <Navigate to={"/"} />;
+    navigate("/");
   }
 
   return (
@@ -62,44 +100,65 @@ function LoginPage(): JSX.Element {
         className={styles.login__box}
         onSubmit={handleLogin}
       >
-        <img data-testid="logo-img" src="img/logo.jpg" alt="logo" />
-
-        <input
-          data-testid="login-input"
-          className={styles.input}
-          type="email"
-          placeholder="Логин"
-          name="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <input
-          data-testid="password-input"
-          className={styles.input}
-          type="password"
-          placeholder="Пароль"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-
+        <label>
+          <img data-testid="logo-img" src="/img/logo.jpg" alt="logo" />
+          {isError && (
+            <p style={{ color: "red" }}>
+              Пользователя не существует <br /> пройдите регистрацию
+            </p>
+          )}
+        </label>
+        <label>
+          <input
+            data-testid="login-input"
+            className={styles.input}
+            type="email"
+            placeholder={loginPlaceholder}
+            name="email"
+            value={email}
+            onBlur={blurHandler}
+            onChange={(e) => {
+              setEmail(e.target.value);
+              emailHandler(e);
+            }}
+          />
+          {emailError && <p style={{ color: "red" }}>{emailError}</p>}
+        </label>
+        <label>
+          <input
+            data-testid="password-input"
+            className={styles.input}
+            type="password"
+            placeholder={passPlaceholder}
+            name="password"
+            value={password}
+            onBlur={blurHandler}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              passwordHandler(e);
+            }}
+          />
+          {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
+        </label>
         <div className={styles.buttons}>
           <button
             data-testid="submit-button"
-            onClick={handleToken}
             className={styles.in_button}
             type="submit"
           >
             Войти
           </button>
-          <button className={styles.reg_button}>
+          <button
+            onClick={() => navigate("/auth-page")}
+            className={styles.reg_button}
+            type="button"
+          >
             Зарегистрироваться
-            <NavLink to="/auth-page" />
           </button>
         </div>
       </form>
     </div>
   );
-}
+};
 
 export default LoginPage;

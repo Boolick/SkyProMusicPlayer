@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 import Burger from "../components/BurgerMenu/Burger";
 import Centerblock from "../components/Centerblock";
 import Sidebar from "../components/Sidebar";
 import Bar from "../components/Bar";
-import { Track } from "../components/Request/Request";
 import "react-loading-skeleton/dist/skeleton.css";
- 
+import { selectFilteredAndSearchedTracks } from "../Store/Selectors/indexSelector";
 
-interface MainProps {
-  tracks: Track[];
-}
-
-const Main: React.FC<MainProps> = ({ tracks }) => {
+const Main = () => {
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-
+  const tracks = useSelector(selectFilteredAndSearchedTracks);
   useEffect(() => {
     setLoading(false);
     setIsLoading(false);
@@ -23,11 +19,9 @@ const Main: React.FC<MainProps> = ({ tracks }) => {
 
   return (
     <div className="main">
-      
       <Burger />
-      <Centerblock tracks={tracks} />
+      <Centerblock />
       <Sidebar />
-      <Bar />;
     </div>
   );
 };

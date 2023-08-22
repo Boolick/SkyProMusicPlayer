@@ -8,7 +8,7 @@ import {
   useTokenMutation,
 } from "../../Store/Reducers/apiSlice"; // Импорт мутации useSignupMutation из файла apiSlice.ts
 import styles from "./SignupPage.module.css";
-import { setCredentials, setToken } from "../../Store/Reducers/AuthSlice";
+import { setCredentials, setAccess } from "../../Store/Reducers/AuthSlice";
 
 export const SignupPage: React.FC = (): JSX.Element => {
   const [signup, { isLoading }] = useSignupMutation();
@@ -33,7 +33,7 @@ export const SignupPage: React.FC = (): JSX.Element => {
     if ("data" in response) {
       const token = response.data.access;
       //const refresh = response.data.refresh;
-      dispatch(setToken(token));
+      dispatch(setAccess(token));
       //dispatch(setToken(refresh));
     }
   };

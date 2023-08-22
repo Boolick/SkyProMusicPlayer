@@ -9,8 +9,9 @@ import { store } from "./Store/store";
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <BrowserRouter>
     <Provider store={store}>
+      <audio id="audio-player" style={{ display: "none" }} />
       <ThemeProvider>
-        <App tracks={[]}  />
+        <App />
       </ThemeProvider>
     </Provider>
   </BrowserRouter>

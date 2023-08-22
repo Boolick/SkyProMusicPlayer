@@ -1,11 +1,20 @@
 import { useContext, useState } from "react";
-
+import { setSearchTerm } from "../../Store/Reducers/SearchSlice";
 import styles from "./Search.module.css";
+
 import { ThemeContext } from "../../Context/ThemeContext";
+import { useDispatch } from "react-redux";
 
 function Search() {
   const [id, setId] = useState("");
+  const dispatch = useDispatch();
   const { theme } = useContext(ThemeContext);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setId(value);
+    dispatch(setSearchTerm(value));
+  };
 
   return (
     <div className={styles.centerblock__search}>
@@ -24,7 +33,7 @@ function Search() {
         placeholder="Поиск"
         name="search"
         value={id}
-        onChange={(e) => setId(e.target.value)}
+        onChange={handleSearchChange}
       />
     </div>
   );

@@ -73,7 +73,7 @@ body {
 
 .modal__form_login {
   width: 366px;
-  height: 500px;
+  height: 525px;
   background-color: #FFFFFF;
   border-radius: 12px;
   display: -webkit-box;
@@ -114,7 +114,7 @@ body {
   border-bottom: 1px solid #D0CECE;
   padding: 8px 1px;
   margin-right: 3px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 
 .modal__input::-webkit-input-placeholder {

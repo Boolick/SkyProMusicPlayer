@@ -1,26 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { Track } from "../Request/Request";
+
 import styles from "./Genres.module.css";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../Store/store";
+import {
+  setSelectedGenre,
+  setResetFilters,
+} from "../../Store/Reducers/filtersSlice";
 
 const Genres: React.FC = () => {
-  const [tracks, setTracks] = useState<Track[]>([]);
+  const dispatch = useDispatch();
+  const tracks = useSelector((state: RootState) => state.player.tracks);
 
   // создаем  массив с уникальными жанрами
   const genresTracks = tracks.map((track) => track.genre);
   const newTracks = [...new Set(genresTracks)];
 
-  useEffect(() => {
-    fetch("https://painassasin.online/catalog/track/all/")
-      .then((response) => response.json())
-      .then((data) => setTracks(data));
-  }, []);
+  const handleGenreClick = (genre: string) => {
+    dispatch(setResetFilters());
+    dispatch(setSelectedGenre(genre));
+  };
 
   return (
     <div className={styles.list}>
       {newTracks.map((track) => (
-        <a key={track} className={styles.track__genre_link} href="http://">
+        <div
+          key={track}
+          className={styles.track__genre_link}
+          onClick={() => handleGenreClick(track)}
+        >
           <span className={styles.track__genre_span}>{track}</span>
-        </a>
+        </div>
       ))}
     </div>
   );

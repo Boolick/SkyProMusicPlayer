@@ -3,14 +3,10 @@ import cn from "classnames";
 
 import styles from "./Filter.module.css";
 import Checkboxes from "./FilterButtons/Checkboxes";
-import { Track } from "../Request/Request";
 import TrackAuthor from "../TrackAuthor/TrackAuthor";
 import Genres from "../Genres/Genres";
 
-interface FilterProps {
-  tracks: Track[];
-}
-const Filter: React.FC<FilterProps> = ({ tracks }) => {
+const Filter: React.FC = () => {
   // Хук состояния для отслеживания текущего открытого всплывающего окна
   const [activePopup, setActivePopup] = useState<string | null>(null);
 
@@ -60,7 +56,7 @@ const Filter: React.FC<FilterProps> = ({ tracks }) => {
             [styles.popup__active]: activePopup === "years-popup",
           })}
         >
-          <Checkboxes labels={["Более новые", "Более старые"]} />
+          <Checkboxes labels={["Более новые", "Более старые"]} className={""} />
         </div>
       </div>
       <div className={styles.filter_container}>

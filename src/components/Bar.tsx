@@ -1,17 +1,18 @@
 import "react-loading-skeleton/dist/skeleton.css";
 import TrackPlay from "./TrackPlay";
 import Controls from "./ControlButton/Controls";
-import VolumeBlock from "./VolumeBlock";
+import VolumeBlock from "./Volume/VolumeBlock";
 import ProgressBar from "./ControlButton/ProgressBar/ProgressBar";
+import { Track } from "./trackApi";
 
-function Bar() {
+function Bar(tracks: { tracks: Track[] }) {
   return (
     <div className="bar">
+      <ProgressBar />
       <div className="bar__content">
-        <ProgressBar currentTime={0} duration={0} />
         <div className="bar__player-block">
           <div className="bar__player player">
-            <Controls />
+            <Controls tracks={tracks.tracks} />
             <TrackPlay />
           </div>
           <VolumeBlock />

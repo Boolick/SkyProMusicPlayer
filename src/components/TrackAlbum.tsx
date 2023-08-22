@@ -5,112 +5,142 @@ import { useEffect } from "react";
 
 import { RootState } from "../Store/store";
 import {
-  Track,
   useGetAllTracksQuery,
   useAddFavoriteTrackByIdMutation,
+  useGetAllFavoriteTracksQuery,
 } from "../components/trackApi";
+import { selectFilteredAndSearchedTracks } from "../Store/Selectors/indexSelector";
 import styles from "./Item/Item.module.css";
-import { addTrack, removeTrack } from "../Store/Reducers/favoriteSlice";
+
 import { useTrackPlayer } from "./PlayTrack";
+import { setVolume, updateTracks } from "../Store/Actions/playerSlice";
+import { secondsToMinutesAndSeconds } from "./ControlButton/Player";
+import { setResetFilters } from "../Store/Reducers/filtersSlice";
+import { setResetSearchTerm } from "../Store/Reducers/SearchSlice";
+import Bar from "./Bar";
 
 export const TrackAlbum = () => {
   const dispatch = useDispatch();
   const { handleSelectTrack } = useTrackPlayer();
-  const { data, isLoading, error } = useGetAllTracksQuery();
+  const { data, isLoading, isError } = useGetAllTracksQuery();
   const [addFavoriteTrack] = useAddFavoriteTrackByIdMutation();
-
-  // Обновление элемента audio при изменении выбранного трека или состояния воспроизведения
-  const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
-  console.log(isPlaying);
-
-  const favoriteTracks = useSelector(
-    (state: RootState) => state.favorite.tracks
+  const token = useSelector((state: RootState) => state.auth.access);
+  const currentTrack = useSelector(
+    (state: RootState) => state.player.currentTrack
   );
 
-  const handleAdd = (id: number) => {
-    addFavoriteTrack(id);
+  //Используем селектор треков по поиску
+  const tracks = useSelector(selectFilteredAndSearchedTracks);
+
+  const { data: favoriteTracks, refetch } = useGetAllFavoriteTracksQuery({
+    token,
+  });
+
+  const handleAdd = (id: number, token: string) => {
+    addFavoriteTrack({ id, token });
+    refetch();
   };
 
-  // Выбираем первый трек при загрузке страницы
+  // Обновляем список треков и уровень громкости
   useEffect(() => {
     if (data && data.length > 0) {
-      handleSelectTrack(data[0]);
+      dispatch(setResetSearchTerm());
+      dispatch(setResetFilters());
+      dispatch(updateTracks(data));
+      dispatch(setVolume(0.5)); //  0.5 это половина звука
     }
   }, [data]);
 
-  if (isLoading)
-    return (
-      <div>
-        <div>
-          <Skeleton
-            count={29}
-            baseColor="var(--color-img)"
-            highlightColor="var(--color-background)"
-          ></Skeleton>
-        </div>
-      </div>
-    );
-
-  if (error) return <div>Error:{error.toString()}</div>;
-  console.log(data);
+  if (isError) return <div>Error:{isError.toString()}</div>;
 
   return (
     <>
       <audio id="audio-player" style={{ display: "none" }} />
       <ul className={styles.playlist}>
-        {data?.map((track) => (
-          <li key={track.id} className={styles.playlist__item}>
-            {isLoading ? (
-              <Skeleton />
-            ) : (
-              <div
-                onClick={() => handleSelectTrack(track)}
-                className={styles.track__title_image}
-              >
-                <svg className={styles.track__title_svg}>
-                  <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
-                </svg>
+        {tracks?.map((track) => (
+          <>
+            <li
+              key={track.id}
+              onClick={() => handleSelectTrack(track)}
+              className={cn({
+                [styles.active]: track === currentTrack,
+                [styles.playlist__item]: true,
+              })}
+            >
+              {isLoading ? (
+                <>
+                  <Skeleton
+                    count={tracks.length}
+                    height={50}
+                    width={1000}
+                    baseColor="var(--color-img)"
+                    highlightColor="var(--color-background)"
+                  ></Skeleton>
+                </>
+              ) : (
+                <div
+                  className={cn({
+                    [styles.active]: track === currentTrack,
+                    [styles.track__title_image]: true,
+                  })}
+                >
+                  <svg className={styles.track__title_svg}>
+                    <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
+                  </svg>
+                </div>
+              )}
+
+              <div className={styles.track__title_text}>
+                <div
+                  className={cn({
+                    [styles.active]: track === currentTrack,
+                    [styles.track__title_text]: true,
+                  })}
+                >
+                  {track.name}
+                </div>
               </div>
-            )}
+              <div className={styles.track__author}>
+                <div
+                  className={cn({
+                    [styles.active]: track === currentTrack,
+                    [styles.track__author_link]: true,
+                  })}
+                >
+                  {track.author}
+                </div>
+              </div>
+              <div className={styles.track__album}>
+                <div
+                  className={cn({
+                    [styles.active]: track === currentTrack,
+                    [styles.track__album_link]: true,
+                  })}
+                >
+                  {track.album}
+                </div>
+              </div>
+              <div className={styles.track__time}>
+                <svg
+                  onClick={() => handleAdd(track.id, `${token}`)}
+                  className={cn(styles.track__heart, {
+                    [styles.track__heart_favorite]: favoriteTracks?.some(
+                      (t: { id: number }) => t.id === track.id
+                    ),
+                  })}
+                >
+                  <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
+                </svg>
 
-            <div className={styles.track__title_text}>
-              <a className={styles.track__title_link} href="http://">
-                {track.name}
-              </a>
-            </div>
-            <div className={styles.track__author}>
-              <a className={styles.track__author_link} href="http://">
-                {track.author}
-              </a>
-            </div>
-            <div className={styles.track__album}>
-              <a className={styles.track__album_link} href="http://">
-                {track.album}
-              </a>
-            </div>
-            <div className={styles.track__time}>
-              <svg
-                onClick={() =>
-                  favoriteTracks.some((t) => t.id === track.id)
-                    ? handleAdd(track.id)
-                    : dispatch(addTrack(track))
-                }
-                className={cn(styles.track__heart, {
-                  [styles.track__heart_favorite]: favoriteTracks.some(
-                    (t) => t.id === track.id
-                  ),
-                })}
-              >
-                <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
-              </svg>
-
-              <span className={styles.track__time_text}>
-                {track.duration_in_seconds}
-              </span>
-            </div>
-          </li>
+                <span className={styles.track__time_text}>
+                  {secondsToMinutesAndSeconds(track.duration_in_seconds)}
+                </span>
+              </div>
+            </li>
+          </>
         ))}
       </ul>
+      {tracks && <Bar tracks={tracks} />}
     </>
   );
 };

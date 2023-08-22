@@ -3,8 +3,10 @@ import { AnyAction, configureStore } from "@reduxjs/toolkit";
 import { api } from "./Reducers/apiSlice";
 import { trackApi } from "../components/trackApi";
 import playerReducer from "./Actions/playerSlice";
+import searchReducer from "./Reducers/SearchSlice";
 import favoriteReducer from "./Reducers/favoriteSlice";
 import authReducer from "./Reducers/AuthSlice";
+import filterReducer from "./Reducers/filtersSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +16,8 @@ export const store = configureStore({
     [trackApi.reducerPath]: trackApi.reducer,
     player: playerReducer,
     favorite: favoriteReducer,
+    search: searchReducer,
+    filter: filterReducer,
   },
   // Добавление middleware trackApi в хранилище
 

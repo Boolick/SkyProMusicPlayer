@@ -1,14 +1,24 @@
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import cn from "classnames";
 
-import { useGetSelectionByIdQuery } from "../components/trackApi"; //   хук из   API
+import {
+  useAddFavoriteTrackByIdMutation,
+  useGetAllFavoriteTracksQuery,
+  useGetSelectionByIdQuery,
+} from "../components/trackApi"; //   хук из   API
 import styles from "../components/Item/Item.module.css";
 import Burger from "../components/BurgerMenu/Burger";
 import Bar from "../components/Bar";
 import Search from "../components/Search/Search";
 import { useTrackPlayer } from "../components/PlayTrack";
 import { RootState } from "../Store/store";
+import { setVolume, updateTracks } from "../Store/Actions/playerSlice";
+import { foundTracks } from "../Store/Selectors/searchSelector";
+import { secondsToMinutesAndSeconds } from "../components/ControlButton/Player";
+import { setResetSearchTerm } from "../Store/Reducers/SearchSlice";
 
 const selections: { id: number; title: string; items: any[] }[] = [
   { id: 0, title: "Плейлист дня", items: [] },
@@ -26,30 +36,39 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
     isLoading,
     error,
   } = useGetSelectionByIdQuery(selectionId);
-
+  const [addFavoriteTrack] = useAddFavoriteTrackByIdMutation();
   const { handleSelectTrack } = useTrackPlayer();
-  const isPlaying = useSelector((state: RootState) => state.player.isPlaying);
+  const dispatch = useDispatch();
+  const token = useSelector((state: RootState) => state.auth.access);
 
-  // Выбираем первый трек при загрузке страницы
+  //Используем селектор треков по поиску
+  const filteredTracks = useSelector(foundTracks);
+
+  const { data: favoriteTracks, refetch } = useGetAllFavoriteTracksQuery({
+    token,
+  });
+  const currentTrack = useSelector(
+    (state: RootState) => state.player.currentTrack
+  );
+  const handleAdd = (id: number, token: string) => {
+    addFavoriteTrack({ id, token });
+    refetch();
+  };
+
   useEffect(() => {
-    if (selection) {
-      if (selection && selection.items.length > 0) {
-        handleSelectTrack(selection.items[0]);
-      }
+    console.log("Updating tracks with selection:", selection);
+    if (selection && selection.items.length > 0) {
+      dispatch(setResetSearchTerm());
+      dispatch(updateTracks(selection.items));
+      dispatch(setVolume(0.5)); //  0.5 это половина звука
     }
-  }, [selection]);
-
-  if (isLoading) return;
-  <Skeleton
-    count={29}
-    baseColor="var(--color-img)"
-    highlightColor="var(--color-background)"
-  ></Skeleton>;
+  }, [selection?.items]);
 
   if (error) return <div>Error:{error.toString()}</div>;
 
   return (
     <>
+      <audio id="audio-player" style={{ display: "none" }} />
       <>
         <Burger />
       </>
@@ -59,10 +78,16 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
         <main>
           {selection && (
             <>
-              <audio id="audio-player" style={{ display: "none" }} />
               <ul className={styles.playlist}>
-                {selection.items.map((track) => (
-                  <li key={track.id} className={styles.playlist__item}>
+                {filteredTracks.map((track) => (
+                  <li
+                    key={track.id}
+                    onClick={() => handleSelectTrack(track)}
+                    className={cn({
+                      [styles.active]: track === currentTrack,
+                      [styles.playlist__item]: true,
+                    })}
+                  >
                     {isLoading ? (
                       <Skeleton
                         count={1}
@@ -73,8 +98,10 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
                       />
                     ) : (
                       <div
-                        onClick={() => handleSelectTrack(track)}
-                        className={styles.track__title_image}
+                        className={cn({
+                          [styles.active]: track === currentTrack,
+                          [styles.track__title_image]: true,
+                        })}
                       >
                         <svg className={styles.track__title_svg}>
                           <use xlinkHref="/img/icon/sprite.svg#icon-note"></use>
@@ -82,27 +109,48 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
                       </div>
                     )}
                     <div className={styles.track__title_text}>
-                      <a className={styles.track__title_link} href="http://">
+                      <div
+                        className={cn({
+                          [styles.active]: track === currentTrack,
+                          [styles.track__title_text]: true,
+                        })}
+                      >
                         {track.name}
-                      </a>
+                      </div>
                     </div>
                     <div className={styles.track__author}>
-                      <a className={styles.track__author_link} href="http://">
+                      <div
+                        className={cn({
+                          [styles.active]: track === currentTrack,
+                          [styles.track__author_link]: true,
+                        })}
+                      >
                         {track.author}
-                      </a>
+                      </div>
                     </div>
                     <div className={styles.track__album}>
-                      <a className={styles.track__album_link} href="http://">
+                      <div
+                        className={cn({
+                          [styles.active]: track === currentTrack,
+                          [styles.track__album_link]: true,
+                        })}
+                      >
                         {track.album}
-                      </a>
+                      </div>
                     </div>
                     <div className={styles.track__time}>
-                      <svg className={styles.track__heart}>
+                      <svg
+                        onClick={() => handleAdd(track.id, `${token}`)}
+                        className={cn(styles.track__heart, {
+                          [styles.track__heart_favorite]: favoriteTracks?.some(
+                            (t) => t.id === track.id
+                          ),
+                        })}
+                      >
                         <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
                       </svg>
-
                       <span className={styles.track__time_text}>
-                        {track.duration_in_seconds}
+                        {secondsToMinutesAndSeconds(track.duration_in_seconds)}
                       </span>
                     </div>
                   </li>
@@ -112,7 +160,7 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
           )}
         </main>
       </div>
-      <Bar />
+      <Bar tracks={filteredTracks} />
     </>
   );
 }

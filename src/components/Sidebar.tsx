@@ -6,7 +6,7 @@ import { useGetSelectionsQuery } from "./trackApi";
 import "react-loading-skeleton/dist/skeleton.css";
 import { ThemeContext } from "../Context/ThemeContext";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
-import { useTrackPlayer } from "./PlayTrack";
+import { handleLogout } from "./NavBar";
 import { RootState } from "../Store/store";
 
 function Sidebar() {
@@ -14,7 +14,6 @@ function Sidebar() {
   const [selectionId, setSelectionId] = useState(1); // состояние для хранения id текущей выбранной подборки
   const { data: selections, isLoading, error } = useGetSelectionsQuery();
   const userName = useSelector((state: RootState) => state.auth.email);
-  console.log(userName);
 
   if (isLoading) {
     return <SkeletonTheme />;
@@ -26,7 +25,7 @@ function Sidebar() {
     <div className="main__sidebar sidebar">
       <div className="sidebar__personal">
         <p className="sidebar__personal-name">{userName}</p>
-        <svg className="sidebar__avatar">
+        <svg onClick={handleLogout} className="sidebar__avatar">
           {theme === "light" ? (
             <use
               className="sidebar__avatar"
