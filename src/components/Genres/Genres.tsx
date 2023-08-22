@@ -3,7 +3,10 @@ import React, { useEffect, useState } from "react";
 import styles from "./Genres.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../Store/store";
-import { setSelectedGenre } from "../../Store/Reducers/filtersSlice";
+import {
+  setSelectedGenre,
+  setResetFilters,
+} from "../../Store/Reducers/filtersSlice";
 
 const Genres: React.FC = () => {
   const dispatch = useDispatch();
@@ -14,6 +17,7 @@ const Genres: React.FC = () => {
   const newTracks = [...new Set(genresTracks)];
 
   const handleGenreClick = (genre: string) => {
+    dispatch(setResetFilters());
     dispatch(setSelectedGenre(genre));
   };
 

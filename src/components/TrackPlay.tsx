@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import { useSelector } from "react-redux";
 import { RootState } from "../Store/store";
-import { Track } from "./trackApi";
+import {
+  Track,
+  useAddFavoriteTrackByIdMutation,
+  useDeleteFavoriteTrackByIdMutation,
+  useGetAllFavoriteTracksQuery,
+} from "./trackApi";
 import { secondsToMinutesAndSeconds } from "./ControlButton/Player";
 
 function TrackPlay() {
@@ -10,13 +15,32 @@ function TrackPlay() {
   const currentTrack = useSelector(
     (state: RootState) => state.player.currentTrack
   );
-
+  const token = useSelector((state: RootState) => state.auth.access);
+  const {
+    data: favoriteTraks,
+    error,
+    refetch,
+  } = useGetAllFavoriteTracksQuery({
+    token,
+  });
+  const [addFavoriteTrack] = useAddFavoriteTrackByIdMutation();
+  const [deleteFavoriteTrack] = useDeleteFavoriteTrackByIdMutation();
   //Обновление времени
   const currentTime = useSelector(
     (state: RootState) => state.player.currentTime
   );
   const duration = useSelector((state: RootState) => state.player.duration);
   const timeLeft = Math.round(duration - currentTime);
+
+  const handleAdd = (id: number, token: string) => {
+    addFavoriteTrack({ id, token });
+    refetch();
+  };
+
+  const handleDelete = (id: number, token: string) => {
+    deleteFavoriteTrack({ id, token });
+    refetch();
+  };
 
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -71,17 +95,36 @@ function TrackPlay() {
           </div>
         )}
       </div>
-      <div><p>Time:{" "}
-        {isNaN(timeLeft) ? "Loading..." : secondsToMinutesAndSeconds(timeLeft)}</p>
+      <div className="track-play__album">
+        <p>
+          Time:{" "}
+          {isNaN(timeLeft)
+            ? "Loading..."
+            : secondsToMinutesAndSeconds(timeLeft)}
+        </p>
       </div>
       <div className="track-play__like-dis">
         <div className="track-play__like _btn-icon">
-          <svg className="track-play__like-svg" /* alt="like" */>
+          <svg
+            onClick={() => {
+              if (currentTrack?.id) {
+                handleAdd(currentTrack.id, `${token}`);
+              }
+            }}
+            className="track-play__like-svg" /* alt="like" */
+          >
             <use xlinkHref="/img/icon/sprite.svg#icon-like"></use>
           </svg>
         </div>
         <div className="track-play__dislike _btn-icon">
-          <svg className="track-play__dislike-svg" /* alt="dislike" */>
+          <svg
+            onClick={() => {
+              if (currentTrack?.id) {
+                handleDelete(currentTrack.id, `${token}`);
+              }
+            }}
+            className="track-play__dislike-svg" /* alt="dislike" */
+          >
             <use xlinkHref="/img/icon/sprite.svg#icon-dislike"></use>
           </svg>
         </div>

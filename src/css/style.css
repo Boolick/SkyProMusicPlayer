@@ -469,6 +469,8 @@ body {
 .player__track-play {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  width: fit-content;
 }
 
 .track-play__contain {

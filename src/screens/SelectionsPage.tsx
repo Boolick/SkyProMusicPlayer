@@ -16,8 +16,9 @@ import Search from "../components/Search/Search";
 import { useTrackPlayer } from "../components/PlayTrack";
 import { RootState } from "../Store/store";
 import { setVolume, updateTracks } from "../Store/Actions/playerSlice";
-import { selectFilteredTracks } from "../Store/Selectors/searchSelector";
+import { foundTracks } from "../Store/Selectors/searchSelector";
 import { secondsToMinutesAndSeconds } from "../components/ControlButton/Player";
+import { setResetSearchTerm } from "../Store/Reducers/SearchSlice";
 
 const selections: { id: number; title: string; items: any[] }[] = [
   { id: 0, title: "Плейлист дня", items: [] },
@@ -41,7 +42,7 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
   const token = useSelector((state: RootState) => state.auth.access);
 
   //Используем селектор треков по поиску
-  const filteredTracks = useSelector(selectFilteredTracks);
+  const filteredTracks = useSelector(foundTracks);
 
   const { data: favoriteTracks, refetch } = useGetAllFavoriteTracksQuery({
     token,
@@ -57,6 +58,7 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
   useEffect(() => {
     console.log("Updating tracks with selection:", selection);
     if (selection && selection.items.length > 0) {
+      dispatch(setResetSearchTerm());
       dispatch(updateTracks(selection.items));
       dispatch(setVolume(0.5)); //  0.5 это половина звука
     }
@@ -158,7 +160,7 @@ function SelectionsPage({ selectionId }: SelectionsPageProps) {
           )}
         </main>
       </div>
-      <Bar />
+      <Bar tracks={filteredTracks} />
     </>
   );
 }

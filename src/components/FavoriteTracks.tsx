@@ -10,9 +10,11 @@ import {
   useGetAllFavoriteTracksQuery,
 } from "./trackApi";
 import { RootState } from "../Store/store";
-import { selectFilteredTracks } from "../Store/Selectors/searchSelector";
+import { foundTracks } from "../Store/Selectors/searchSelector";
 import { setVolume, updateTracks } from "../Store/Actions/playerSlice";
 import { secondsToMinutesAndSeconds } from "./ControlButton/Player";
+import { setResetSearchTerm } from "../Store/Reducers/SearchSlice";
+import Bar from "./Bar";
 
 function FavoriteTracks() {
   const token = useSelector((state: RootState) => state.auth.access);
@@ -30,7 +32,7 @@ function FavoriteTracks() {
     (state: RootState) => state.player.currentTrack
   );
   //Используем селектор треков по поиску
-  const filteredTracks = useSelector(selectFilteredTracks);
+  const filteredTracks = useSelector(foundTracks);
 
   const handleDelete = (id: number, token: string) => {
     deleteFavoriteTrack({ id, token });
@@ -41,6 +43,7 @@ function FavoriteTracks() {
   useEffect(() => {
     console.log("Updating tracks with data:", favoriteTraks);
     if (favoriteTraks && favoriteTraks.length > 0) {
+      dispatch(setResetSearchTerm());
       dispatch(updateTracks(favoriteTraks));
       dispatch(setVolume(0.5)); //  0.5 это половина звука
     }
@@ -120,6 +123,7 @@ function FavoriteTracks() {
           <div>Loading...</div>
         )}
       </ul>
+      <Bar tracks={filteredTracks} />
     </>
   );
 }

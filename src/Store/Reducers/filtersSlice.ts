@@ -2,12 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface FiltersState {
   sortByReleaseDate: string;
-  selectedAuthor: string ;
-  selectedGenre: string ;
+  selectedAuthor: string;
+  selectedGenre: string;
 }
 
 const initialState: FiltersState = {
-  sortByReleaseDate: "asc",
+  sortByReleaseDate: "",
   selectedAuthor: "",
   selectedGenre: "",
 };
@@ -25,10 +25,15 @@ export const filtersSlice = createSlice({
     setSelectedGenre: (state, action) => {
       state.selectedGenre = action.payload;
     },
+    setResetFilters: (state) => {
+      state.sortByReleaseDate = "";
+      state.selectedAuthor = "";
+      state.selectedGenre = "";
+    },
   },
 });
 
-export const { setSortByReleaseDate, setSelectedAuthor, setSelectedGenre } =
+export const { setSortByReleaseDate, setSelectedAuthor, setSelectedGenre, setResetFilters } =
   filtersSlice.actions;
 
 export default filtersSlice.reducer;

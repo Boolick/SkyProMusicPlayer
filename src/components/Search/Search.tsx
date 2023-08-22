@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { setSearchTerm } from "../../Store/Actions/SearchSlice";
+import { setSearchTerm } from "../../Store/Reducers/SearchSlice";
 import styles from "./Search.module.css";
 
 import { ThemeContext } from "../../Context/ThemeContext";

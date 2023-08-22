@@ -18,9 +18,6 @@ const ProgressBar = () => {
   const [isPlaying, setIsplaying] = useState(false);
 
   const dispatch = useDispatch();
-  const currentTrack = useSelector(
-    (state: RootState) => state.player.currentTrack
-  );
   const { currentTime, duration } = useSelector(
     (state: RootState) => state.player
   );

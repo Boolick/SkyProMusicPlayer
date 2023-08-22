@@ -3,19 +3,21 @@ import { useDispatch, useSelector } from "react-redux";
 import cn from "classnames";
 import { useEffect } from "react";
 
-
 import { RootState } from "../Store/store";
 import {
   useGetAllTracksQuery,
   useAddFavoriteTrackByIdMutation,
   useGetAllFavoriteTracksQuery,
 } from "../components/trackApi";
-import { selectFilteredTracks } from "../Store/Selectors/searchSelector";
+import { selectFilteredAndSearchedTracks } from "../Store/Selectors/indexSelector";
 import styles from "./Item/Item.module.css";
 
 import { useTrackPlayer } from "./PlayTrack";
 import { setVolume, updateTracks } from "../Store/Actions/playerSlice";
 import { secondsToMinutesAndSeconds } from "./ControlButton/Player";
+import { setResetFilters } from "../Store/Reducers/filtersSlice";
+import { setResetSearchTerm } from "../Store/Reducers/SearchSlice";
+import Bar from "./Bar";
 
 export const TrackAlbum = () => {
   const dispatch = useDispatch();
@@ -28,7 +30,8 @@ export const TrackAlbum = () => {
   );
 
   //Используем селектор треков по поиску
-  const tracks = useSelector(selectFilteredTracks);
+  const tracks = useSelector(selectFilteredAndSearchedTracks);
+
   const { data: favoriteTracks, refetch } = useGetAllFavoriteTracksQuery({
     token,
   });
@@ -41,6 +44,8 @@ export const TrackAlbum = () => {
   // Обновляем список треков и уровень громкости
   useEffect(() => {
     if (data && data.length > 0) {
+      dispatch(setResetSearchTerm());
+      dispatch(setResetFilters());
       dispatch(updateTracks(data));
       dispatch(setVolume(0.5)); //  0.5 это половина звука
     }
@@ -52,7 +57,7 @@ export const TrackAlbum = () => {
     <>
       <audio id="audio-player" style={{ display: "none" }} />
       <ul className={styles.playlist}>
-        {tracks.map((track) => (
+        {tracks?.map((track) => (
           <>
             <li
               key={track.id}
@@ -135,6 +140,7 @@ export const TrackAlbum = () => {
           </>
         ))}
       </ul>
+      {tracks && <Bar tracks={tracks} />}
     </>
   );
 };

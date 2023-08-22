@@ -12,12 +12,12 @@ import {
   toggleIsRepeat,
   updateTracks,
 } from "../../Store/Actions/playerSlice";
+import { Track } from "../trackApi";
 
-function Controls() {
+function Controls(tracks: { tracks: Track[] }) {
   const dispatch = useDispatch();
   const { handleSelectTrack } = useTrackPlayer();
 
-  const tracks = useSelector((state: RootState) => state.player.tracks);
   const currentTrack = useSelector(
     (state: RootState) => state.player.currentTrack
   );
@@ -27,7 +27,7 @@ function Controls() {
     if (!tracks) return;
 
     // Находим индекс текущего трека в массиве tracks
-    const currentTrackIndex = tracks.findIndex(
+    const currentTrackIndex = tracks.tracks?.findIndex(
       (track) => track.id === currentTrack?.id
     );
 
@@ -35,12 +35,12 @@ function Controls() {
     let nextTrackIndex = currentTrackIndex + 1;
 
     // Если индекс выходит за пределы массива, то возвращаем его к началу
-    if (nextTrackIndex >= tracks.length) {
+    if (nextTrackIndex >= tracks.tracks?.length) {
       nextTrackIndex = 0;
     }
 
     // Получаем следующий трек из массива tracks
-    const nextTrack = tracks[nextTrackIndex];
+    const nextTrack = tracks.tracks?.[nextTrackIndex];
 
     // Выбираем следующий трек для воспроизведения
     handleSelectTrack(nextTrack);
@@ -51,7 +51,7 @@ function Controls() {
     if (!tracks) return;
 
     // Находим индекс текущего трека в массиве tracks
-    const currentTrackIndex = tracks.findIndex(
+    const currentTrackIndex = tracks.tracks?.findIndex(
       (track) => track.id === currentTrack?.id
     );
     console.log(currentTrackIndex);
@@ -60,11 +60,11 @@ function Controls() {
 
     // Если индекс меньше нуля, то переходим к концу массива
     if (prevTrackIndex < 0) {
-      prevTrackIndex = tracks.length - 1;
+      prevTrackIndex = tracks.tracks?.length - 1;
     }
 
     // Получаем предыдущий трек из массива tracks
-    const prevTrack = tracks[prevTrackIndex];
+    const prevTrack = tracks.tracks[prevTrackIndex];
 
     // Выбираем предыдущий трек для воспроизведения
     handleSelectTrack(prevTrack);
@@ -90,7 +90,6 @@ function Controls() {
 
   // Получаем треки из состояния среза player
   const playerTracks = useSelector((state: RootState) => state.player.tracks);
-  // Получаем избранные треки из состояния среза favorite
 
   function handleShuffleTracks() {
     // Добавляем копии массивов
